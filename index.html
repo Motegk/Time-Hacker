@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Time Hacker</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #071019;
+      --panel: rgba(8, 16, 26, 0.9);
+      --surface: rgba(9, 18, 29, 0.92);
+      --surface-soft: rgba(7, 14, 24, 0.84);
+      --surface-strong: rgba(8, 15, 24, 0.94);
+      --border: #4be7ff;
+      --accent: #ff4bd8;
+      --good: #8dff76;
+      --warn: #ff8b55;
+      --text: #dffcff;
+      --soft: #8ab7c7;
+      --font: "Courier New", monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #03070d;
+      font-family: var(--font);
+    }
+
+    canvas {
+      display: block;
+      width: 100vw;
+      height: 100vh;
+      background: radial-gradient(circle at top, #11233a 0%, #050912 55%, #02050a 100%);
+    }
+
+    body, canvas {
+      image-rendering: pixelated;
+    }
+
+    .overlay, .hud, .touch, .toast {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .screen {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: linear-gradient(180deg, rgba(206, 226, 239, 0.66), rgba(188, 210, 223, 0.9));
+      z-index: 30;
+      pointer-events: auto;
+    }
+
+    .screen.active {
+      display: flex;
+    }
+
+    .panel {
+      width: min(980px, 94vw);
+      max-height: 92vh;
+      overflow: auto;
+      padding: 18px;
+      background: var(--panel);
+      border: 3px solid rgba(90, 184, 255, 0.62);
+      box-shadow: 0 0 0 3px rgba(255, 122, 223, 0.18), 0 0 35px rgba(90, 184, 255, 0.12), 0 20px 40px rgba(91, 137, 166, 0.2);
+    }
+
+    .title {
+      margin: 0 0 10px;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: #1e3f54;
+      font-size: clamp(28px, 6vw, 56px);
+      text-shadow: 0 0 12px rgba(90, 184, 255, 0.18), 0 0 24px rgba(255, 122, 223, 0.14);
+    }
+
+    .subtitle {
+      margin: 0 0 16px;
+      text-align: center;
+      color: var(--soft);
+      line-height: 1.55;
+      font-size: 14px;
+    }
+
+    .grid, .levels, .stats {
+      display: grid;
+      gap: 12px;
+    }
+
+    .grid {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .levels {
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+
+    .stats {
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      margin-top: 14px;
+    }
+
+    .btn, .card, .hud-box {
+      border: 2px solid rgba(90, 184, 255, 0.46);
+      box-shadow: 0 0 0 2px rgba(255, 122, 223, 0.12), inset 0 0 18px rgba(90, 184, 255, 0.08);
+      background: var(--surface);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 14px 16px;
+      color: var(--text);
+      font: inherit;
+      font-size: 17px;
+      text-transform: uppercase;
+      cursor: pointer;
+      pointer-events: auto;
+      transition: transform 0.08s ease, filter 0.16s ease;
+    }
+
+    .btn:hover, .btn:focus-visible {
+      transform: translateY(-2px);
+      filter: brightness(1.14);
+      outline: none;
+    }
+
+    .btn.alt {
+      border-color: rgba(255, 122, 223, 0.44);
+      box-shadow: 0 0 0 2px rgba(90, 184, 255, 0.1), inset 0 0 18px rgba(255, 122, 223, 0.08);
+    }
+
+    .btn.warn {
+      border-color: rgba(255, 173, 114, 0.58);
+      box-shadow: 0 0 0 2px rgba(255, 173, 114, 0.14), inset 0 0 18px rgba(255, 173, 114, 0.08);
+    }
+
+    .card {
+      padding: 12px;
+      color: var(--soft);
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+      color: var(--text);
+      font-size: 15px;
+      text-transform: uppercase;
+    }
+
+    .card p {
+      margin: 5px 0;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .hud {
+      z-index: 12;
+    }
+
+    .hud-top, .hud-bottom {
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .hud-top {
+      top: 10px;
+      align-items: flex-start;
+    }
+
+    .hud-bottom {
+      bottom: 12px;
+      align-items: flex-end;
+    }
+
+    .hud-box {
+      min-width: 180px;
+      padding: 10px 12px;
+      color: var(--text);
+      background: var(--surface-soft);
+    }
+
+    .hud-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      color: var(--soft);
+      margin-bottom: 4px;
+      letter-spacing: 1px;
+    }
+
+    .bar {
+      height: 14px;
+      margin-top: 8px;
+      background: rgba(224, 239, 247, 0.92);
+      border: 1px solid rgba(90, 184, 255, 0.34);
+      overflow: hidden;
+    }
+
+    .bar > div {
+      height: 100%;
+      width: 0%;
+      transition: width 0.08s linear;
+    }
+
+    #progressFill { background: linear-gradient(90deg, #4be7ff, #a47cff); }
+    #rewindFill { background: linear-gradient(90deg, #ff4bd8, #ff8b55); }
+
+    .toast {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 84px;
+      z-index: 18;
+    }
+
+    .toast span {
+      display: none;
+      padding: 10px 16px;
+      color: var(--text);
+      background: var(--surface-strong);
+      border: 2px solid rgba(90, 184, 255, 0.48);
+      box-shadow: 0 0 0 2px rgba(255, 122, 223, 0.1);
+      text-transform: uppercase;
+      font-size: 12px;
+    }
+
+    .toast.show span {
+      display: inline-block;
+    }
+
+    .touch {
+      display: none;
+      z-index: 14;
+    }
+
+    .touch-left, .touch-right {
+      position: absolute;
+      bottom: 18px;
+      display: flex;
+      gap: 10px;
+      pointer-events: auto;
+    }
+
+    .touch-left { left: 18px; }
+    .touch-right { right: 18px; }
+
+    .touch button {
+      width: 72px;
+      height: 72px;
+      background: var(--surface-soft);
+      color: var(--text);
+      border: 2px solid rgba(90, 184, 255, 0.48);
+      box-shadow: 0 0 0 2px rgba(255, 122, 223, 0.12);
+      font: inherit;
+      font-size: 13px;
+      pointer-events: auto;
+    }
+
+    @media (max-width: 900px) {
+      .touch { display: block; }
+      .hud-box { min-width: 132px; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="game"></canvas>
+
+  <div class="hud" id="hud" hidden>
+    <div class="hud-top">
+      <div class="hud-box">
+        <div class="hud-title">Уровень</div>
+        <div id="hudLevel">1. Разделение</div>
+        <div class="hud-title">Время / Клоны</div>
+        <div id="hudTime">0.0с / 0</div>
+      </div>
+      <div class="hud-box">
+        <div class="hud-title">Прогресс</div>
+        <div class="bar"><div id="progressFill"></div></div>
+        <div class="hud-title">Перемотка</div>
+        <div class="bar"><div id="rewindFill"></div></div>
+      </div>
+    </div>
+    <div class="hud-bottom">
+      <div class="hud-box">
+        <div class="hud-title">Подсказка</div>
+        <div id="hudHint">A/D или стрелки, W/↑/SPACE прыжок, SHIFT рывок, R перемотка</div>
+      </div>
+      <div class="hud-box">
+        <div class="hud-title">Клоны / Рывки / FPS</div>
+        <div id="hudStats">0 / 60 fps</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"><span id="toastText">Перемотка</span></div>
+
+  <div class="touch" id="touchControls">
+    <div class="touch-left">
+      <button id="touchLeft">LEFT</button>
+      <button id="touchRight">RIGHT</button>
+    </div>
+    <div class="touch-right">
+      <button id="touchJump">JUMP</button>
+      <button id="touchDash">DASH</button>
+      <button id="touchRewind">REWIND</button>
+    </div>
+  </div>
+
+  <div class="overlay screen active" id="mainMenu">
+    <div class="panel">
+      <h1 class="title">Time Hacker</h1>
+      <p class="subtitle">Платформер-головоломка, где ты взламываешь время. Перематывай назад, оставляй клонов, удерживай кнопки прошлыми версиями себя и проходи через сложные киберпанк-схемы.</p>
+      <div class="grid">
+        <button class="btn" id="playBtn">Играть</button>
+        <button class="btn alt" id="levelsBtn">Уровни</button>
+        <button class="btn alt" id="settingsBtn">Настройки</button>
+        <button class="btn alt" id="howBtn">Как играть</button>
+        <button class="btn warn" id="fullscreenBtn">Полный экран</button>
+      </div>
+      <div class="stats" id="menuStats"></div>
+    </div>
+  </div>
+
+  <div class="overlay screen" id="settingsMenu">
+    <div class="panel">
+      <h2 class="title">Настройки</h2>
+      <div class="card">
+        <h3>Режим игроков</h3>
+        <p id="coopStatus">Сейчас: 1 игрок</p>
+        <button class="btn alt" id="coopToggleBtn">Переключить на 2 игроков</button>
+        <p>В режиме на двоих:
+          игрок 1 двигается стрелками, прыгает стрелкой вверх или пробелом, рывок на правый Shift.
+          Игрок 2 двигается W/A/D, прыгает на W, рывок на левый Shift.
+          Перемотка на R общая для обоих.
+        </p>
+      </div>
+      <div class="card" style="margin-top:12px;">
+        <h3>Тема</h3>
+        <p id="themeStatus">Сейчас: тёмная</p>
+        <button class="btn alt" id="themeToggleBtn">Переключить на светлую тему</button>
+      </div>
+      <div class="grid" style="margin-top:16px;">
+        <button class="btn alt" id="settingsBackBtn">Назад</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay screen" id="levelsMenu">
+    <div class="panel">
+      <h2 class="title">Уровни</h2>
+      <div class="levels" id="levelsGrid"></div>
+      <div class="grid" style="margin-top:16px;">
+        <button class="btn alt" id="levelsBackBtn">Назад</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay screen" id="howMenu">
+    <div class="panel">
+      <h2 class="title">Как играть</h2>
+      <div class="card">
+        <h3>Главная механика</h3>
+        <p>Сначала делай действия сам: нажимай кнопки, катайся на платформе, открывай путь. Потом жми <strong>R</strong> и перематывай время назад. После перемотки твой прошлый путь превращается в клона, который повторяет сделанные действия.</p>
+        <p>Так можно удержать кнопку клоном, пока настоящий игрок проходит дальше. Чем дальше уровень, тем больше нужно синхронизировать несколько временных копий.</p>
+      </div>
+      <div class="card">
+        <h3>Управление</h3>
+        <p>Стрелки влево и вправо или A/D для движения, W, стрелка вверх или SPACE для прыжка, SHIFT для рывка, R для перемотки времени. На мобильном есть экранные кнопки.</p>
+      </div>
+      <div class="grid" style="margin-top:16px;">
+        <button class="btn alt" id="howBackBtn">Назад</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay screen" id="pauseMenu">
+    <div class="panel">
+      <h2 class="title">Пауза</h2>
+      <div class="grid">
+        <button class="btn" id="resumeBtn">Продолжить</button>
+        <button class="btn alt" id="restartBtn">Перезапуск уровня</button>
+        <button class="btn warn" id="pauseLevelsBtn">К уровням</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay screen" id="completeMenu">
+    <div class="panel">
+      <h2 class="title">Уровень пройден</h2>
+      <div class="stats" id="completeStats"></div>
+      <div class="grid" style="margin-top:16px;">
+        <button class="btn" id="nextBtn">Следующий</button>
+        <button class="btn alt" id="completeLevelsBtn">К уровням</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const STORAGE_KEY = "time_hacker_save_v1";
+      const TILE = 24;
+      const GRAVITY = 1450;
+      const MAX_FALL = 840;
+      const REWIND_SECONDS = 5;
+      const TRAIL_LENGTH = 14;
+
+      const COLORS = {
+        bg: "#04101b",
+        bg2: "#08192a",
+        cyan: "#4be7ff",
+        cyanSoft: "rgba(75,231,255,0.16)",
+        pink: "#ff4bd8",
+        orange: "#ff8b55",
+        violet: "#9f71ff",
+        green: "#8dff76",
+        red: "#ff5d73",
+        white: "#ecfbff",
+        steel: "#6f89a0",
+        dark: "#0a1521"
+      };
+
+      function applyTheme(theme) {
+        state.theme = theme;
+        const dark = theme === "dark";
+        const root = document.documentElement;
+        root.style.setProperty("--bg", dark ? "#071019" : "#dbeaf3");
+        root.style.setProperty("--panel", dark ? "rgba(8, 16, 26, 0.9)" : "rgba(236, 244, 249, 0.9)");
+        root.style.setProperty("--surface", dark ? "rgba(9, 18, 29, 0.92)" : "rgba(255, 255, 255, 0.9)");
+        root.style.setProperty("--surface-soft", dark ? "rgba(7, 14, 24, 0.84)" : "rgba(255, 255, 255, 0.86)");
+        root.style.setProperty("--surface-strong", dark ? "rgba(8, 15, 24, 0.94)" : "rgba(255, 255, 255, 0.95)");
+        root.style.setProperty("--border", dark ? "#4be7ff" : "#5ab8ff");
+        root.style.setProperty("--accent", dark ? "#ff4bd8" : "#ff7adf");
+        root.style.setProperty("--good", dark ? "#8dff76" : "#79d965");
+        root.style.setProperty("--warn", dark ? "#ff8b55" : "#ffad72");
+        root.style.setProperty("--text", dark ? "#dffcff" : "#1f3849");
+        root.style.setProperty("--soft", dark ? "#8ab7c7" : "#648295");
+        document.body.style.background = dark ? "#03070d" : "#dfeaf2";
+        Object.assign(COLORS, dark ? {
+          bg: "#04101b", bg2: "#08192a", cyan: "#4be7ff", cyanSoft: "rgba(75,231,255,0.16)", pink: "#ff4bd8", orange: "#ff8b55", violet: "#9f71ff", green: "#8dff76", red: "#ff5d73", white: "#ecfbff", steel: "#6f89a0", dark: "#0a1521"
+        } : {
+          bg: "#eaf7ff", bg2: "#d8efff", cyan: "#58bfff", cyanSoft: "rgba(88,191,255,0.14)", pink: "#ff7adf", orange: "#ffb27d", violet: "#b79aff", green: "#83dd73", red: "#ff8798", white: "#ffffff", steel: "#8aa8ba", dark: "#d5e9f5"
+        });
+      }
+
+      const canvas = document.getElementById("game");
+      const ctx = canvas.getContext("2d", { alpha: false });
+      ctx.imageSmoothingEnabled = false;
+
+      const dom = {
+        hud: document.getElementById("hud"),
+        hudLevel: document.getElementById("hudLevel"),
+        hudTime: document.getElementById("hudTime"),
+        hudHint: document.getElementById("hudHint"),
+        hudStats: document.getElementById("hudStats"),
+        progressFill: document.getElementById("progressFill"),
+        rewindFill: document.getElementById("rewindFill"),
+        toast: document.getElementById("toast"),
+        toastText: document.getElementById("toastText"),
+        mainMenu: document.getElementById("mainMenu"),
+        levelsMenu: document.getElementById("levelsMenu"),
+        howMenu: document.getElementById("howMenu"),
+        settingsMenu: document.getElementById("settingsMenu"),
+        pauseMenu: document.getElementById("pauseMenu"),
+        completeMenu: document.getElementById("completeMenu"),
+        levelsGrid: document.getElementById("levelsGrid"),
+        completeStats: document.getElementById("completeStats"),
+        menuStats: document.getElementById("menuStats"),
+        playBtn: document.getElementById("playBtn"),
+        levelsBtn: document.getElementById("levelsBtn"),
+        settingsBtn: document.getElementById("settingsBtn"),
+        howBtn: document.getElementById("howBtn"),
+        fullscreenBtn: document.getElementById("fullscreenBtn"),
+        levelsBackBtn: document.getElementById("levelsBackBtn"),
+        settingsBackBtn: document.getElementById("settingsBackBtn"),
+        coopStatus: document.getElementById("coopStatus"),
+        coopToggleBtn: document.getElementById("coopToggleBtn"),
+        themeStatus: document.getElementById("themeStatus"),
+        themeToggleBtn: document.getElementById("themeToggleBtn"),
+        howBackBtn: document.getElementById("howBackBtn"),
+        resumeBtn: document.getElementById("resumeBtn"),
+        restartBtn: document.getElementById("restartBtn"),
+        pauseLevelsBtn: document.getElementById("pauseLevelsBtn"),
+        nextBtn: document.getElementById("nextBtn"),
+        completeLevelsBtn: document.getElementById("completeLevelsBtn"),
+        touchLeft: document.getElementById("touchLeft"),
+        touchRight: document.getElementById("touchRight"),
+        touchJump: document.getElementById("touchJump"),
+        touchDash: document.getElementById("touchDash"),
+        touchRewind: document.getElementById("touchRewind")
+      };
+
+      const input = {
+        p1: { left: false, right: false, jumpHeld: false, jumpPressed: false, dashPressed: false },
+        p2: { left: false, right: false, jumpHeld: false, jumpPressed: false, dashPressed: false },
+        rewindPressed: false
+      };
+
+      const state = {
+        width: innerWidth,
+        height: innerHeight,
+        pixelRatio: Math.min(devicePixelRatio || 1, 2),
+        lastFrame: 0,
+        time: 0,
+        fps: 60,
+        screen: "main",
+        paused: false,
+        save: loadSave(),
+        coopEnabled: false,
+        theme: "dark",
+        levelIndex: 0,
+        level: null,
+        player: null,
+        player2: null,
+        clones: [],
+        drones: [],
+        particles: [],
+        bullets: [],
+        trails: [],
+        recording: [],
+        replayTime: 0,
+        runTime: 0,
+        rewindMeter: 1,
+        rewinding: false,
+        rewindVisual: 0,
+        toastTimer: 0,
+        camera: { x: 0, y: 0, zoom: 2.2, shake: 0, sx: 0, sy: 0 },
+        audio: null
+      };
+
+      class AudioSystem {
+        constructor() {
+          this.ctx = null;
+          this.master = null;
+          this.musicGain = null;
+          this.lastBeat = 0;
+          this.seq = [220, 261.63, 329.63, 392, 329.63, 293.66];
+        }
+        ensure() {
+          if (this.ctx) return;
+          const AC = window.AudioContext || window.webkitAudioContext;
+          if (!AC) return;
+          this.ctx = new AC();
+          this.master = this.ctx.createGain();
+          this.musicGain = this.ctx.createGain();
+          this.master.gain.value = 0.55;
+          this.musicGain.gain.value = 0.16;
+          this.musicGain.connect(this.master);
+          this.master.connect(this.ctx.destination);
+        }
+        unlock() {
+          this.ensure();
+          if (this.ctx && this.ctx.state === "suspended") this.ctx.resume();
+        }
+        osc(freq, dur, type, gain, glide = null, target = null) {
+          if (!this.ctx) return;
+          const o = this.ctx.createOscillator();
+          const g = this.ctx.createGain();
+          o.type = type;
+          o.frequency.value = freq;
+          if (glide) o.frequency.exponentialRampToValueAtTime(glide, this.ctx.currentTime + dur);
+          g.gain.value = gain;
+          g.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + dur);
+          o.connect(g);
+          g.connect(target || this.master);
+          o.start();
+          o.stop(this.ctx.currentTime + dur);
+        }
+        noise(dur, gain, freq) {
+          if (!this.ctx) return;
+          const buffer = this.ctx.createBuffer(1, this.ctx.sampleRate * dur, this.ctx.sampleRate);
+          const data = buffer.getChannelData(0);
+          for (let i = 0; i < data.length; i += 1) data[i] = (Math.random() * 2 - 1) * (1 - i / data.length);
+          const source = this.ctx.createBufferSource();
+          const filter = this.ctx.createBiquadFilter();
+          const env = this.ctx.createGain();
+          source.buffer = buffer;
+          filter.type = "lowpass";
+          filter.frequency.value = freq;
+          env.gain.value = gain;
+          env.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + dur);
+          source.connect(filter);
+          filter.connect(env);
+          env.connect(this.master);
+          source.start();
+        }
+        jump() { this.unlock(); this.osc(320, 0.1, "square", 0.05, 480); }
+        dash() { this.unlock(); this.noise(0.08, 0.05, 1300); this.osc(180, 0.07, "sawtooth", 0.03, 80); }
+        rewind() { this.unlock(); this.osc(520, 0.22, "triangle", 0.05, 120); this.noise(0.16, 0.04, 800); }
+        door() { this.unlock(); this.osc(260, 0.06, "square", 0.04); this.osc(390, 0.08, "square", 0.03); }
+        laser() { this.unlock(); this.osc(660, 0.08, "square", 0.025, 320); }
+        hit() { this.unlock(); this.noise(0.08, 0.08, 900); }
+        complete() { this.unlock(); this.osc(392, 0.14, "triangle", 0.05); this.osc(523.25, 0.18, "triangle", 0.05); this.osc(659.25, 0.24, "triangle", 0.04); }
+        musicTick(time) {
+          this.unlock();
+          if (state.screen !== "game" || state.paused) return;
+          const beat = 0.42;
+          if (time - this.lastBeat < beat) return;
+          this.lastBeat = time;
+          const note = this.seq[Math.floor(time / beat) % this.seq.length];
+          this.osc(note, 0.18, "triangle", 0.02, null, this.musicGain);
+          this.osc(note / 2, 0.24, "square", 0.01, null, this.musicGain);
+        }
+      }
+
+      state.audio = new AudioSystem();
+
+      function loadSave() {
+        try {
+          return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{"bestLevel":0,"totalClones":0,"bestTime":0}');
+        } catch {
+          return { bestLevel: 0, totalClones: 0, bestTime: 0 };
+        }
+      }
+
+      function saveMeta() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state.save));
+      }
+
+      function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
+      function lerp(a, b, t) { return a + (b - a) * t; }
+      function rand(min, max) { return Math.random() * (max - min) + min; }
+      function rectsIntersect(a, b) { return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y; }
+      function worldToScreenX(x) { return Math.round((x - state.camera.x) * state.camera.zoom + state.camera.sx); }
+      function worldToScreenY(y) { return Math.round((y - state.camera.y) * state.camera.zoom + state.camera.sy); }
+
+      function showTip(text, duration = 1.2) {
+        dom.toastText.textContent = text;
+        dom.toast.classList.add("show");
+        state.toastTimer = duration;
+      }
+
+      function createPlayer(x, y, tint = COLORS.cyan) {
+        return {
+          x, y, w: 18, h: 30, vx: 0, vy: 0, face: 1, onGround: false, coyote: 0, jumpBuffer: 0,
+          dashTimer: 0, dashCharges: 3, dashJumpWindow: 0, alive: true, slowTimer: 0, tint
+        };
+      }
+
+      function createClone(record) {
+        return {
+          x: record[0].x,
+          y: record[0].y,
+          w: 18,
+          h: 30,
+          step: 0,
+          record,
+          alive: true,
+          face: 1,
+          tint: COLORS.violet
+        };
+      }
+
+      function createCoopClone(record, tint) {
+        return {
+          x: record[0].x,
+          y: record[0].y,
+          w: 18,
+          h: 30,
+          step: 0,
+          record,
+          alive: true,
+          face: 1,
+          tint
+        };
+      }
+
+      function makeLevel(name, hint, width, data) {
+        return { name, hint, width, ...data };
+      }
+
+      const levels = [
+        makeLevel("1. Разделение", "Нажми кнопку и перемотай время, чтобы клон удержал дверь.", 900, {
+          spawn: { x: 70, y: 360 }, exit: { x: 820, y: 314, w: 30, h: 46 },
+          solids: [{ x: 0, y: 400, w: 900, h: 90 }, { x: 220, y: 340, w: 90, h: 20 }, { x: 520, y: 320, w: 120, h: 20 }],
+          buttons: [{ x: 240, y: 320, w: 22, h: 10, id: "a" }],
+          doors: [{ x: 420, y: 280, w: 26, h: 120, id: "a", mode: "hold" }],
+          lasers: [],
+          movers: [],
+          traps: [],
+          turrets: [],
+          drones: []
+        }),
+        makeLevel("2. Окно", "Клон открывает путь, настоящий игрок прыгает выше.", 980, {
+          spawn: { x: 70, y: 360 }, exit: { x: 900, y: 214, w: 30, h: 46 },
+          solids: [{ x: 0, y: 400, w: 980, h: 90 }, { x: 190, y: 330, w: 110, h: 20 }, { x: 520, y: 290, w: 120, h: 20 }, { x: 760, y: 250, w: 120, h: 20 }],
+          buttons: [{ x: 212, y: 310, w: 22, h: 10, id: "a" }],
+          doors: [{ x: 670, y: 220, w: 26, h: 180, id: "a", mode: "hold" }],
+          lasers: [],
+          movers: [],
+          traps: [],
+          turrets: [],
+          drones: []
+        }),
+        makeLevel("3. Двойник", "Сделай два цикла: один клон на кнопку, второй помогает дальше.", 1100, {
+          spawn: { x: 70, y: 360 }, exit: { x: 1010, y: 194, w: 30, h: 46 },
+          solids: [{ x: 0, y: 400, w: 1100, h: 90 }, { x: 180, y: 320, w: 110, h: 20 }, { x: 400, y: 280, w: 110, h: 20 }, { x: 720, y: 240, w: 110, h: 20 }],
+          buttons: [{ x: 200, y: 300, w: 22, h: 10, id: "a" }, { x: 420, y: 260, w: 22, h: 10, id: "b" }],
+          doors: [{ x: 300, y: 260, w: 24, h: 140, id: "a", mode: "hold" }, { x: 860, y: 180, w: 24, h: 220, id: "b", mode: "hold" }],
+          lasers: [],
+          movers: [],
+          traps: [],
+          turrets: [],
+          drones: []
+        }),
+        makeLevel("4. Рывок", "Используй SHIFT, чтобы перескочить разрыв после перемотки.", 1160, {
+          spawn: { x: 60, y: 360 }, exit: { x: 1070, y: 314, w: 30, h: 46 },
+          solids: [{ x: 0, y: 400, w: 220, h: 90 }, { x: 360, y: 400, w: 230, h: 90 }, { x: 730, y: 400, w: 430, h: 90 }, { x: 470, y: 310, w: 80, h: 20 }],
+          buttons: [{ x: 490, y: 290, w: 22, h: 10, id: "a" }],
+          doors: [{ x: 640, y: 300, w: 26, h: 100, id: "a", mode: "hold" }],
+          lasers: [],
+          movers: [],
+          traps: [{ x: 220, y: 396, w: 140, h: 8 }, { x: 590, y: 396, w: 140, h: 8 }],
+          turrets: [],
+          drones: []
+        }),
+        makeLevel("5. Лазерная линия", "Перемотай время так, чтобы клон выключил луч.", 1120, {
+          spawn: { x: 70, y: 360 }, exit: { x: 1030, y: 214, w: 30, h: 46 },
+          solids: [{ x: 0, y: 400, w: 1120, h: 90 }, { x: 260, y: 330, w: 120, h: 20 }, { x: 670, y: 260, w: 120, h: 20 }, { x: 930, y: 240, w: 120, h: 20 }],
+          buttons: [{ x: 278, y: 310, w: 22, h: 10, id: "a" }],
+          doors: [],
+          lasers: [{ x: 520, y: 290, w: 16, h: 110, id: "a", activeWhen: false }],
+          movers: [],
+          traps: [],
+          turrets: [],
+          drones: []
+        }),
+        makeLevel("6. Платформа времени", "Клон едет на платформе, а ты идёшь вторым циклом.", 1260, {
+          spawn: { x: 60, y: 360 }, exit: { x: 1170, y: 214, w: 30, h: 46 },
+          solids: [{ x: 0, y: 400, w: 250, h: 90 }, { x: 960, y: 240, w: 220, h: 20 }, { x: 1160, y: 400, w: 100, h: 90 }],
+          buttons: [{ x: 1040, y: 220, w: 22, h: 10, id: "a" }],
+          doors: [{ x: 760, y: 250, w: 24, h: 150, id: "a", mode: "hold" }],
+          lasers: [],
+          movers: [{ x: 270, y: 320, w: 110, h: 18, axis: "x", range: 280, speed: 0.8 }],
+          traps: [{ x: 780, y: 396, w: 150, h: 8 }],
+          turrets: [],
+          drones: []
+        }),
+        makeLevel("7. Медленный сектор", "В замедлении проще пережить турель и синхронизировать кнопку.", 1300, {
+          spawn: { x: 60, y: 360 }, exit: { x: 1210, y: 214, w: 30, h: 46 },
+          solids: [{ x: 0, y: 400, w: 1300, h: 90 }, { x: 330, y: 320, w: 110, h: 20 }, { x: 690, y: 280, w: 120, h: 20 }, { x: 1040, y: 240, w: 120, h: 20 }],
+          buttons: [{ x: 350, y: 300, w: 22, h: 10, id: "a" }],
+          doors: [{ x: 880, y: 240, w: 24, h: 160, id: "a", mode: "hold" }],
+          lasers: [],
+          movers: [],
+          traps: [],
+          turrets: [{ x: 560, y: 350, dir: 1, rate: 1.5 }],
+          drones: [],
+          slowZones: [{ x: 500, y: 280, w: 160, h: 120 }]
+        }),
+        makeLevel("8. Дрон", "Дрон охраняет коридор, а клон нажимает кнопку позади.", 1340, {
+          spawn: { x: 60, y: 360 }, exit: { x: 1260, y: 214, w: 30, h: 46 },
+          solids: [{ x: 0, y: 400, w: 1340, h: 90 }, { x: 250, y: 320, w: 140, h: 20 }, { x: 660, y: 280, w: 140, h: 20 }, { x: 1080, y: 240, w: 140, h: 20 }],
+          buttons: [{ x: 268, y: 300, w: 22, h: 10, id: "a" }],
+          doors: [{ x: 510, y: 290, w: 24, h: 110, id: "a", mode: "hold" }],
+          lasers: [],
+          movers: [],
+          traps: [{ x: 830, y: 396, w: 120, h: 8 }],
+          turrets: [],
+          drones: [{ x1: 760, x2: 980, y: 210, speed: 1.2 }]
+        }),
+        makeLevel("9. Турели", "Перемотка помогает пройти под огнём сразу нескольких турелей.", 1400, {
+          spawn: { x: 50, y: 360 }, exit: { x: 1320, y: 214, w: 30, h: 46 },
+          solids: [{ x: 0, y: 400, w: 1400, h: 90 }, { x: 240, y: 330, w: 100, h: 20 }, { x: 520, y: 290, w: 110, h: 20 }, { x: 860, y: 250, w: 130, h: 20 }, { x: 1180, y: 240, w: 120, h: 20 }],
+          buttons: [{ x: 545, y: 270, w: 22, h: 10, id: "a" }],
+          doors: [{ x: 690, y: 240, w: 24, h: 160, id: "a", mode: "hold" }],
+          lasers: [],
+          movers: [],
+          traps: [],
+          turrets: [{ x: 410, y: 350, dir: 1, rate: 1.3 }, { x: 1040, y: 200, dir: -1, rate: 1.1 }],
+          drones: []
+        }),
+        makeLevel("10. Три ритма", "Построй цепочку из нескольких клонов.", 1460, {
+          spawn: { x: 60, y: 360 }, exit: { x: 1370, y: 194, w: 30, h: 46 },
+          solids: [{ x: 0, y: 400, w: 1460, h: 90 }, { x: 220, y: 320, w: 100, h: 20 }, { x: 420, y: 280, w: 100, h: 20 }, { x: 660, y: 240, w: 110, h: 20 }, { x: 980, y: 220, w: 110, h: 20 }],
+          buttons: [{ x: 240, y: 300, w: 22, h: 10, id: "a" }, { x: 440, y: 260, w: 22, h: 10, id: "b" }, { x: 1000, y: 200, w: 22, h: 10, id: "c" }],
+          doors: [{ x: 330, y: 250, w: 20, h: 150, id: "a", mode: "hold" }, { x: 780, y: 200, w: 20, h: 200, id: "b", mode: "hold" }, { x: 1160, y: 180, w: 20, h: 220, id: "c", mode: "hold" }],
+          lasers: [],
+          movers: [],
+          traps: [],
+          turrets: [],
+          drones: []
+        }),
+        makeLevel("11. Шахматный коридор", "Лазеры и двери нужно удержать в правильной последовательности.", 1520, {
+          spawn: { x: 50, y: 360 }, exit: { x: 1440, y: 194, w: 30, h: 46 },
+          solids: [{ x: 0, y: 400, w: 1520, h: 90 }, { x: 310, y: 330, w: 120, h: 20 }, { x: 770, y: 280, w: 110, h: 20 }, { x: 1190, y: 230, w: 130, h: 20 }],
+          buttons: [{ x: 332, y: 310, w: 22, h: 10, id: "a" }, { x: 790, y: 260, w: 22, h: 10, id: "b" }],
+          doors: [{ x: 560, y: 240, w: 24, h: 160, id: "a", mode: "hold" }],
+          lasers: [{ x: 980, y: 260, w: 16, h: 140, id: "b", activeWhen: false }, { x: 1080, y: 240, w: 16, h: 160, id: "a", activeWhen: false }],
+          movers: [],
+          traps: [],
+          turrets: [],
+          drones: []
+        }),
+        makeLevel("12. Выход из сетки", "Платформа, турель и лазер требуют точного тайминга.", 1560, {
+          spawn: { x: 50, y: 360 }, exit: { x: 1480, y: 174, w: 30, h: 46 },
+          solids: [{ x: 0, y: 400, w: 1560, h: 90 }, { x: 960, y: 220, w: 110, h: 20 }, { x: 1330, y: 200, w: 120, h: 20 }],
+          buttons: [{ x: 1000, y: 200, w: 22, h: 10, id: "a" }],
+          doors: [{ x: 1200, y: 240, w: 24, h: 160, id: "a", mode: "hold" }],
+          lasers: [{ x: 720, y: 280, w: 16, h: 120, id: "a", activeWhen: true }],
+          movers: [{ x: 180, y: 330, w: 110, h: 18, axis: "x", range: 450, speed: 1.2 }],
+          traps: [{ x: 780, y: 396, w: 140, h: 8 }],
+          turrets: [{ x: 840, y: 350, dir: 1, rate: 1.2 }],
+          drones: []
+        }),
+        makeLevel("13. Рой", "Дроны и двойные двери требуют нескольких временных слоёв.", 1620, {
+          spawn: { x: 50, y: 360 }, exit: { x: 1530, y: 194, w: 30, h: 46 },
+          solids: [{ x: 0, y: 400, w: 1620, h: 90 }, { x: 280, y: 320, w: 120, h: 20 }, { x: 620, y: 280, w: 120, h: 20 }, { x: 980, y: 240, w: 120, h: 20 }, { x: 1290, y: 220, w: 120, h: 20 }],
+          buttons: [{ x: 300, y: 300, w: 22, h: 10, id: "a" }, { x: 1000, y: 220, w: 22, h: 10, id: "b" }],
+          doors: [{ x: 470, y: 260, w: 24, h: 140, id: "a", mode: "hold" }, { x: 1180, y: 220, w: 24, h: 180, id: "b", mode: "hold" }],
+          lasers: [],
+          movers: [],
+          traps: [],
+          turrets: [],
+          drones: [{ x1: 760, x2: 930, y: 170, speed: 1.5 }, { x1: 1320, x2: 1470, y: 150, speed: 1.3 }]
+        }),
+        makeLevel("14. Парадокс", "Почти всё сразу: slow motion, турели, кнопки, перемещение.", 1700, {
+          spawn: { x: 50, y: 360 }, exit: { x: 1610, y: 174, w: 30, h: 46 },
+          solids: [{ x: 0, y: 400, w: 1700, h: 90 }, { x: 280, y: 320, w: 120, h: 20 }, { x: 630, y: 300, w: 120, h: 20 }, { x: 940, y: 250, w: 120, h: 20 }, { x: 1270, y: 220, w: 120, h: 20 }],
+          buttons: [{ x: 300, y: 300, w: 22, h: 10, id: "a" }, { x: 650, y: 280, w: 22, h: 10, id: "b" }],
+          doors: [{ x: 470, y: 260, w: 24, h: 140, id: "a", mode: "hold" }, { x: 1120, y: 210, w: 24, h: 190, id: "b", mode: "hold" }],
+          lasers: [{ x: 820, y: 260, w: 16, h: 140, id: "a", activeWhen: false }],
+          movers: [{ x: 1460, y: 250, w: 110, h: 18, axis: "y", range: 120, speed: 0.9 }],
+          traps: [{ x: 540, y: 396, w: 90, h: 8 }, { x: 1520, y: 396, w: 90, h: 8 }],
+          turrets: [{ x: 900, y: 210, dir: 1, rate: 0.9 }],
+          drones: [{ x1: 1320, x2: 1520, y: 160, speed: 1.3 }],
+          slowZones: [{ x: 720, y: 230, w: 190, h: 140 }]
+        }),
+        makeLevel("15. Time Hacker", "Финальный уровень: собери всё, что выучил, в одну временную схему.", 1860, {
+          spawn: { x: 50, y: 360 }, exit: { x: 1780, y: 154, w: 30, h: 46 },
+          solids: [{ x: 0, y: 400, w: 1860, h: 90 }, { x: 250, y: 320, w: 110, h: 20 }, { x: 500, y: 280, w: 110, h: 20 }, { x: 760, y: 240, w: 110, h: 20 }, { x: 1040, y: 220, w: 110, h: 20 }, { x: 1350, y: 200, w: 110, h: 20 }, { x: 1640, y: 180, w: 110, h: 20 }],
+          buttons: [{ x: 272, y: 300, w: 22, h: 10, id: "a" }, { x: 524, y: 260, w: 22, h: 10, id: "b" }, { x: 1060, y: 200, w: 22, h: 10, id: "c" }],
+          doors: [{ x: 390, y: 260, w: 22, h: 140, id: "a", mode: "hold" }, { x: 900, y: 200, w: 22, h: 200, id: "b", mode: "hold" }, { x: 1500, y: 160, w: 22, h: 240, id: "c", mode: "hold" }],
+          lasers: [{ x: 670, y: 280, w: 16, h: 120, id: "a", activeWhen: false }, { x: 1230, y: 220, w: 16, h: 180, id: "b", activeWhen: false }],
+          movers: [{ x: 1160, y: 260, w: 110, h: 18, axis: "x", range: 160, speed: 1.2 }],
+          traps: [{ x: 690, y: 396, w: 110, h: 8 }, { x: 1550, y: 396, w: 90, h: 8 }],
+          turrets: [{ x: 820, y: 210, dir: 1, rate: 1.1 }, { x: 1400, y: 170, dir: 1, rate: 0.85 }],
+          drones: [{ x1: 1320, x2: 1520, y: 130, speed: 1.6 }],
+          slowZones: [{ x: 960, y: 180, w: 220, h: 150 }]
+        })
+      ];
+
+      function hideAllScreens() {
+        [dom.mainMenu, dom.levelsMenu, dom.settingsMenu, dom.howMenu, dom.pauseMenu, dom.completeMenu].forEach((el) => el.classList.remove("active"));
+      }
+
+      function showScreen(name) {
+        hideAllScreens();
+        state.screen = name || "game";
+        if (name === "main") dom.mainMenu.classList.add("active");
+        if (name === "levels") dom.levelsMenu.classList.add("active");
+        if (name === "settings") dom.settingsMenu.classList.add("active");
+        if (name === "how") dom.howMenu.classList.add("active");
+        if (name === "pause") dom.pauseMenu.classList.add("active");
+        if (name === "complete") dom.completeMenu.classList.add("active");
+        dom.hud.hidden = name !== null;
+      }
+
+      function resetLevel(index = state.levelIndex) {
+        state.levelIndex = index;
+        state.level = structuredClone(levels[index]);
+        state.player = createPlayer(state.level.spawn.x, state.level.spawn.y, COLORS.cyan);
+        state.player2 = state.coopEnabled ? createPlayer(state.level.spawn.x + 26, state.level.spawn.y, COLORS.green) : null;
+        state.clones = [];
+        state.drones = (state.level.drones || []).map((d) => ({ ...d, x: d.x1, dir: 1, yOffset: Math.random() * Math.PI * 2 }));
+        state.particles = [];
+        state.bullets = [];
+        state.trails = [];
+        state.recording = [];
+        state.runTime = 0;
+        state.replayTime = 0;
+        state.rewindMeter = 1;
+        state.rewinding = false;
+        state.rewindVisual = 0;
+        state.camera.x = Math.max(0, state.player.x - 140);
+        state.camera.y = Math.max(0, state.player.y - 110);
+        state.camera.zoom = innerWidth < 900 ? 1.9 : 2.3;
+        showScreen(null);
+        updateHud();
+      }
+
+      function resize() {
+        state.width = innerWidth;
+        state.height = innerHeight;
+        state.pixelRatio = Math.min(devicePixelRatio || 1, 2);
+        canvas.width = Math.floor(state.width * state.pixelRatio);
+        canvas.height = Math.floor(state.height * state.pixelRatio);
+        ctx.setTransform(state.pixelRatio, 0, 0, state.pixelRatio, 0, 0);
+        ctx.imageSmoothingEnabled = false;
+      }
+
+      function loadMetaToMenu() {
+        dom.menuStats.innerHTML = "";
+        [["Открыто уровней", `${Math.max(1, state.save.bestLevel + 1)}/${levels.length}`], ["Всего клонов", `${state.save.totalClones || 0}`], ["Лучшее время", state.save.bestTime ? `${state.save.bestTime.toFixed(1)}с` : "--"]].forEach(([title, value]) => {
+          const card = document.createElement("div");
+          card.className = "card";
+          card.innerHTML = `<h3>${title}</h3><p>${value}</p>`;
+          dom.menuStats.appendChild(card);
+        });
+      }
+
+      function renderLevelsMenu() {
+        dom.levelsGrid.innerHTML = "";
+        levels.forEach((level, index) => {
+          const unlocked = index <= Math.max(0, state.save.bestLevel);
+          const card = document.createElement("div");
+          card.className = "card";
+          card.innerHTML = `<h3>${level.name}</h3><p>${level.hint}</p><p>${unlocked ? "Доступен" : "Закрыт"}</p>`;
+          const btn = document.createElement("button");
+          btn.className = "btn" + (unlocked ? "" : " alt");
+          btn.textContent = unlocked ? "Играть" : "Сначала пройди предыдущие";
+          btn.disabled = !unlocked;
+          btn.addEventListener("click", () => resetLevel(index));
+          card.appendChild(btn);
+          dom.levelsGrid.appendChild(card);
+        });
+      }
+
+      function pushRecordFrame() {
+        state.recording.push({
+          p1: {
+            x: state.player.x,
+            y: state.player.y,
+            face: state.player.face,
+            alive: state.player.alive,
+            buttons: currentButtonContacts(state.player).slice()
+          },
+          p2: state.player2 ? {
+            x: state.player2.x,
+            y: state.player2.y,
+            face: state.player2.face,
+            alive: state.player2.alive,
+            buttons: currentButtonContacts(state.player2).slice()
+          } : null
+        });
+        const maxFrames = Math.floor(REWIND_SECONDS / (1 / 60));
+        if (state.recording.length > maxFrames) state.recording.shift();
+      }
+
+      function currentButtonContacts(entity = state.player) {
+        const hits = [];
+        for (const button of state.level.buttons) {
+          if (rectsIntersect(entityRect(entity), { x: button.x, y: button.y, w: button.w, h: button.h })) hits.push(button.id);
+        }
+        return hits;
+      }
+
+      function entityRect(e) {
+        return { x: e.x, y: e.y, w: e.w, h: e.h };
+      }
+
+      function activeButtons() {
+        const set = new Set();
+        currentButtonContacts(state.player).forEach((id) => set.add(id));
+        if (state.player2) currentButtonContacts(state.player2).forEach((id) => set.add(id));
+        state.clones.forEach((clone) => {
+          if (!clone.alive) return;
+          const frame = clone.record[clone.step] || clone.record[clone.record.length - 1];
+          if (frame?.buttons) frame.buttons.forEach((id) => set.add(id));
+        });
+        return set;
+      }
+
+      function solidRects() {
+        const list = [...state.level.solids];
+        const active = activeButtons();
+        state.level.doors.forEach((door) => {
+          const held = active.has(door.id);
+          door.open = door.mode === "hold" ? held : !held;
+          if (!door.open) {
+            list.push({ ...door, y: door.y - 180, h: door.h + 180 });
+          }
+        });
+        state.level.movers.forEach((m) => list.push(m));
+        return list;
+      }
+
+      function collideEntity(entity, axis) {
+        for (const rect of solidRects()) {
+          if (!rectsIntersect(entityRect(entity), rect)) continue;
+          if (axis === "x") {
+            if (entity.vx > 0) entity.x = rect.x - entity.w;
+            else if (entity.vx < 0) entity.x = rect.x + rect.w;
+            entity.vx = 0;
+          } else {
+            if (entity.vy > 0) {
+              entity.y = rect.y - entity.h;
+              entity.vy = 0;
+              entity.onGround = true;
+            } else if (entity.vy < 0) {
+              entity.y = rect.y + rect.h;
+              entity.vy = 0;
+            }
+          }
+        }
+      }
+
+      function updatePlayer(delta, p, controls) {
+        if (!p.alive) return;
+        const wasDashing = p.dashTimer > 0;
+        const slowScale = p.slowTimer > 0 ? 0.45 : 1;
+        p.coyote = p.onGround ? 0.16 : Math.max(0, p.coyote - delta * slowScale);
+        p.jumpBuffer = controls.jumpPressed ? 0.18 : Math.max(0, p.jumpBuffer - delta * slowScale);
+        p.dashTimer = Math.max(0, p.dashTimer - delta);
+        p.dashJumpWindow = Math.max(0, p.dashJumpWindow - delta);
+        p.slowTimer = Math.max(0, p.slowTimer - delta);
+        if (p.onGround) {
+          p.dashCharges = 3;
+          p.dashJumpWindow = 0;
+        }
+        if (wasDashing && p.dashTimer <= 0 && !p.onGround) p.dashJumpWindow = 0.12;
+        const accel = 840 * slowScale;
+        const maxSpeed = p.dashTimer > 0 ? 320 : 130;
+        if (controls.left) { p.vx -= accel * delta; p.face = -1; }
+        if (controls.right) { p.vx += accel * delta; p.face = 1; }
+        if (!controls.left && !controls.right && p.onGround) p.vx *= 0.8;
+        p.vx = clamp(p.vx, -maxSpeed, maxSpeed);
+        if (p.jumpBuffer > 0 && (p.onGround || p.coyote > 0 || p.dashJumpWindow > 0)) {
+          const dashJump = p.dashJumpWindow > 0 && !p.onGround && p.coyote <= 0;
+          p.vy = dashJump ? -360 : -520;
+          if (dashJump) p.vx *= 0.45;
+          p.onGround = false;
+          p.coyote = 0;
+          p.jumpBuffer = 0;
+          p.dashJumpWindow = 0;
+          state.audio.jump();
+          emitBurst(p.x + p.w / 2, p.y + p.h, 6, p.tint, 70);
+        }
+        if (controls.dashPressed && p.dashCharges > 0) {
+          p.dashTimer = 0.15;
+          p.dashCharges -= 1;
+          p.vx = p.face * 340;
+          p.vy = Math.min(p.vy, -30);
+          state.audio.dash();
+          state.camera.shake = 7;
+        }
+        p.vy = clamp(p.vy + GRAVITY * delta * slowScale, -700, MAX_FALL);
+        p.x += p.vx * delta;
+        collideEntity(p, "x");
+        p.y += p.vy * delta;
+        p.onGround = false;
+        collideEntity(p, "y");
+        if (!p.onGround) p.vx *= 0.992;
+        if (p.y > 560) killPlayer();
+      }
+
+      function updateClone(clone) {
+        if (!clone.alive) return;
+        if (clone.step >= clone.record.length) {
+          clone.alive = false;
+          return;
+        }
+        const frame = clone.record[clone.step];
+        clone.x = frame.x;
+        clone.y = frame.y;
+        clone.face = frame.face;
+        clone.alive = frame.alive;
+        clone.step += 1;
+      }
+
+      function rewindTime() {
+        if (state.recording.length < 20 || state.rewindMeter <= 0.05) return;
+        const p1Record = state.recording.map((f) => f.p1);
+        state.clones.push(createCoopClone(p1Record, COLORS.violet));
+        if (state.coopEnabled && state.player2) {
+          const p2Record = state.recording.map((f) => f.p2).filter(Boolean);
+          if (p2Record.length) state.clones.push(createCoopClone(p2Record, COLORS.green));
+        }
+        state.save.totalClones = (state.save.totalClones || 0) + 1;
+        saveMeta();
+        const framesBack = Math.min(state.recording.length - 1, Math.floor(state.recording.length * 0.7));
+        const rewindFrame = state.recording[Math.max(0, state.recording.length - 1 - framesBack)];
+        state.player = createPlayer(rewindFrame.p1.x, rewindFrame.p1.y, COLORS.cyan);
+        state.player.face = rewindFrame.p1.face;
+        if (state.coopEnabled && rewindFrame.p2) {
+          state.player2 = createPlayer(rewindFrame.p2.x, rewindFrame.p2.y, COLORS.green);
+          state.player2.face = rewindFrame.p2.face;
+        } else {
+          state.player2 = state.coopEnabled ? createPlayer(state.level.spawn.x + 26, state.level.spawn.y, COLORS.green) : null;
+        }
+        state.recording = [];
+        state.runTime = 0;
+        state.rewindMeter = clamp(state.rewindMeter - 0.28, 0, 1);
+        state.rewinding = true;
+        state.rewindVisual = 1;
+        state.audio.rewind();
+        state.camera.shake = 10;
+        emitBurst(state.player.x + state.player.w / 2, state.player.y + state.player.h / 2, 22, COLORS.pink, 160);
+        showTip("Клон создан");
+      }
+
+      function updateDoorsAndSystems(delta) {
+        const active = activeButtons();
+        state.level.lasers?.forEach((laser) => {
+          const signal = active.has(laser.id);
+          laser.on = laser.activeWhen ? signal : !signal;
+        });
+        state.level.movers?.forEach((m) => {
+          m.t = (m.t || 0) + delta * m.speed;
+          if (m.axis === "x") m.x = m.baseX ?? (m.baseX = m.x), m.x = m.baseX + Math.sin(m.t) * m.range;
+          if (m.axis === "y") m.y = m.baseY ?? (m.baseY = m.y), m.y = m.baseY + Math.sin(m.t) * m.range;
+        });
+      }
+
+      function updateHazards(delta) {
+        const targets = [state.player, state.player2].filter(Boolean);
+        state.level.lasers?.forEach((laser) => {
+          targets.forEach((p) => {
+            if (laser.on && rectsIntersect(entityRect(p), laser)) {
+              state.audio.laser();
+              killPlayer();
+            }
+          });
+        });
+        state.level.traps?.forEach((trap) => {
+          targets.forEach((p) => {
+            if (rectsIntersect(entityRect(p), trap)) killPlayer();
+          });
+        });
+        state.level.slowZones?.forEach((zone) => {
+          targets.forEach((p) => {
+            if (rectsIntersect(entityRect(p), zone)) p.slowTimer = 0.06;
+          });
+        });
+      }
+
+      function updateTurrets(delta) {
+        state.level.turrets?.forEach((turret) => {
+          turret.cool = (turret.cool || rand(0.2, 0.9)) - delta;
+          if (turret.cool <= 0) {
+            turret.cool = turret.rate;
+            state.bullets.push({ x: turret.x, y: turret.y, vx: turret.dir * 260, vy: 0, r: 4, life: 4 });
+            state.audio.laser();
+          }
+        });
+        for (let i = state.bullets.length - 1; i >= 0; i -= 1) {
+          const b = state.bullets[i];
+          b.x += b.vx * delta;
+          b.y += b.vy * delta;
+          b.life -= delta;
+          if ([state.player, state.player2].filter(Boolean).some((p) => rectsIntersect({ x: b.x - b.r, y: b.y - b.r, w: b.r * 2, h: b.r * 2 }, entityRect(p)))) {
+            killPlayer();
+            state.bullets.splice(i, 1);
+            continue;
+          }
+          if (solidRects().some((r) => rectsIntersect({ x: b.x - b.r, y: b.y - b.r, w: b.r * 2, h: b.r * 2 }, r)) || b.life <= 0) {
+            state.bullets.splice(i, 1);
+          }
+        }
+      }
+
+      function updateDrones(delta) {
+        state.drones.forEach((d) => {
+          d.x += d.dir * d.speed * 60 * delta;
+          if (d.x <= d.x1) d.dir = 1;
+          if (d.x >= d.x2) d.dir = -1;
+          d.y = d.y + Math.sin(state.time * 3 + d.yOffset) * 0.6;
+          if ([state.player, state.player2].filter(Boolean).some((p) => rectsIntersect({ x: d.x - 12, y: d.y - 12, w: 24, h: 24 }, entityRect(p)))) killPlayer();
+        });
+      }
+
+      function updateCamera(delta) {
+        const focusX = state.player2 ? (state.player.x + state.player2.x) * 0.5 : state.player.x;
+        const focusY = state.player2 ? (state.player.y + state.player2.y) * 0.5 : state.player.y;
+        const targetX = focusX - state.width * 0.33 / state.camera.zoom;
+        const targetY = focusY - state.height * 0.58 / state.camera.zoom;
+        state.camera.x = lerp(state.camera.x, clamp(targetX, 0, state.level.width - state.width / state.camera.zoom), 0.12);
+        state.camera.y = lerp(state.camera.y, clamp(targetY, 0, 470), 0.1);
+        state.camera.shake *= 0.82;
+        state.camera.sx = state.camera.shake > 0.2 ? rand(-state.camera.shake, state.camera.shake) : 0;
+        state.camera.sy = state.camera.shake > 0.2 ? rand(-state.camera.shake, state.camera.shake) : 0;
+      }
+
+      function emitBurst(x, y, count, color, speed) {
+        for (let i = 0; i < count; i += 1) {
+          const a = Math.random() * Math.PI * 2;
+          const s = Math.random() * speed;
+          state.particles.push({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, life: rand(0.25, 0.9), maxLife: 0.9, color, size: rand(2, 5) });
+        }
+      }
+
+      function updateParticles(delta) {
+        state.trails.push({ x: state.player.x + state.player.w / 2, y: state.player.y + state.player.h / 2, life: 0.5, color: state.player.slowTimer > 0 ? COLORS.orange : COLORS.cyan });
+        if (state.player2) state.trails.push({ x: state.player2.x + state.player2.w / 2, y: state.player2.y + state.player2.h / 2, life: 0.5, color: state.player2.slowTimer > 0 ? COLORS.orange : COLORS.green });
+        if (state.trails.length > TRAIL_LENGTH) state.trails.shift();
+        state.trails.forEach((t) => { t.life -= delta; });
+        state.trails = state.trails.filter((t) => t.life > 0);
+        for (let i = state.particles.length - 1; i >= 0; i -= 1) {
+          const p = state.particles[i];
+          p.life -= delta;
+          p.x += p.vx * delta;
+          p.y += p.vy * delta;
+          p.vy += 300 * delta;
+          p.vx *= 0.98;
+          if (p.life <= 0) state.particles.splice(i, 1);
+        }
+      }
+
+      function killPlayer() {
+        if (!state.player.alive) return;
+        state.player.alive = false;
+        if (state.player2) state.player2.alive = false;
+        emitBurst(state.player.x + state.player.w / 2, state.player.y + state.player.h / 2, 20, COLORS.red, 140);
+        state.camera.shake = 16;
+        state.audio.hit();
+        setTimeout(() => resetLevel(state.levelIndex), 800);
+      }
+
+      function levelComplete() {
+        state.audio.complete();
+        state.save.bestLevel = Math.max(state.save.bestLevel, Math.min(levels.length - 1, state.levelIndex + 1));
+        if (!state.save.bestTime || state.runTime < state.save.bestTime) state.save.bestTime = state.runTime;
+        saveMeta();
+        dom.completeStats.innerHTML = "";
+        [["Уровень", state.level.name], ["Время", `${state.runTime.toFixed(1)}с`], ["Клоны", `${state.clones.length}`], ["Игроки", state.coopEnabled ? "2" : "1"]].forEach(([title, value]) => {
+          const card = document.createElement("div");
+          card.className = "card";
+          card.innerHTML = `<h3>${title}</h3><p>${value}</p>`;
+          dom.completeStats.appendChild(card);
+        });
+        loadMetaToMenu();
+        renderLevelsMenu();
+        showScreen("complete");
+      }
+
+      function updateGame(delta, time) {
+        if (!state.level || state.paused || state.screen !== "game") return;
+        state.runTime += delta;
+        state.rewindMeter = clamp(state.rewindMeter + delta * 0.04, 0, 1);
+        state.rewindVisual = Math.max(0, state.rewindVisual - delta * 1.6);
+        updateDoorsAndSystems(delta);
+        updatePlayer(delta, state.player, input.p1);
+        if (state.player2) updatePlayer(delta, state.player2, input.p2);
+        state.clones.forEach(updateClone);
+        state.clones = state.clones.filter((c) => c.alive);
+        updateTurrets(delta);
+        updateDrones(delta);
+        updateHazards(delta);
+        updateParticles(delta);
+        updateCamera(delta);
+        pushRecordFrame();
+        const p1Exit = rectsIntersect(entityRect(state.player), state.level.exit);
+        const p2Exit = state.player2 ? rectsIntersect(entityRect(state.player2), state.level.exit) : true;
+        if (p1Exit && p2Exit) levelComplete();
+        state.audio.musicTick(time);
+      }
+
+      function updateHud() {
+        if (!state.level || !state.player) return;
+        dom.hudLevel.textContent = state.level.name;
+        dom.hudTime.textContent = `${state.runTime.toFixed(1)}с / ${state.clones.length}`;
+        dom.hudHint.textContent = state.coopEnabled
+          ? `${state.level.hint} | Игрок 1: стрелки + правый Shift | Игрок 2: W/A/D + левый Shift | R общая перемотка`
+          : state.level.hint;
+        dom.hudStats.textContent = state.coopEnabled
+          ? `${state.clones.length} / ${state.player.dashCharges}-${state.player2?.dashCharges ?? 0} / ${Math.round(state.fps)} fps`
+          : `${state.clones.length} / ${state.player.dashCharges} / ${Math.round(state.fps)} fps`;
+        const leadX = state.player2 ? Math.max(state.player.x, state.player2.x) : state.player.x;
+        dom.progressFill.style.width = `${clamp((leadX / state.level.width) * 100, 0, 100)}%`;
+        dom.rewindFill.style.width = `${state.rewindMeter * 100}%`;
+      }
+
+      function drawBackground() {
+        const g = ctx.createLinearGradient(0, 0, 0, state.height);
+        g.addColorStop(0, state.theme === "dark" ? "#0a1830" : "#e8f2f8");
+        g.addColorStop(1, state.theme === "dark" ? "#03060b" : "#c8dce8");
+        ctx.fillStyle = g;
+        ctx.fillRect(0, 0, state.width, state.height);
+        for (let i = 0; i < 18; i += 1) {
+          const x = (i * 140 - (state.camera.x * 0.15 % 140));
+          ctx.fillStyle = state.theme === "dark"
+            ? (i % 2 ? "rgba(75,231,255,0.08)" : "rgba(255,75,216,0.06)")
+            : (i % 2 ? "rgba(88,191,255,0.08)" : "rgba(255,122,223,0.06)");
+          ctx.fillRect(x, 0, 2, state.height);
+        }
+        for (let i = 0; i < 7; i += 1) {
+          const x = (i * 240 - (state.camera.x * 0.28 % 240));
+          const h = 80 + (i % 3) * 40;
+          ctx.fillStyle = state.theme === "dark"
+            ? (i % 2 ? "rgba(18,39,62,0.7)" : "rgba(12,28,47,0.8)")
+            : (i % 2 ? "rgba(154,191,211,0.72)" : "rgba(176,209,225,0.82)");
+          ctx.fillRect(x, state.height - 120 - h, 120, h);
+        }
+        ctx.strokeStyle = state.theme === "dark" ? "rgba(75,231,255,0.08)" : "rgba(88,191,255,0.08)";
+        for (let y = 0; y < state.height; y += 36) {
+          ctx.beginPath();
+          ctx.moveTo(0, y + Math.sin(state.time * 1.5 + y * 0.03) * 3);
+          ctx.lineTo(state.width, y + Math.sin(state.time * 1.5 + y * 0.03) * 3);
+          ctx.stroke();
+        }
+      }
+
+      function drawGlowRect(x, y, w, h, color, fill = null) {
+        ctx.shadowColor = color;
+        ctx.shadowBlur = 16;
+        ctx.fillStyle = fill || color;
+        ctx.fillRect(x, y, w, h);
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = color;
+        ctx.strokeRect(x, y, w, h);
+        ctx.shadowBlur = 0;
+      }
+
+      function drawLevel() {
+        state.level.solids.forEach((s) => {
+          const x = worldToScreenX(s.x), y = worldToScreenY(s.y);
+          drawGlowRect(x, y, s.w * state.camera.zoom, s.h * state.camera.zoom, COLORS.cyanSoft, state.theme === "dark" ? "#102133" : "#d8e8f1");
+          ctx.strokeStyle = state.theme === "dark" ? "rgba(75,231,255,0.35)" : "rgba(88,191,255,0.35)";
+          ctx.strokeRect(x, y, s.w * state.camera.zoom, s.h * state.camera.zoom);
+        });
+
+        state.level.buttons.forEach((b) => {
+          const pressed = currentButtonContacts(state.player).includes(b.id) || state.clones.some((c) => {
+            const f = c.record[Math.min(c.step, c.record.length - 1)];
+            return f?.buttons?.includes(b.id);
+          });
+          const x = worldToScreenX(b.x), y = worldToScreenY(b.y);
+          drawGlowRect(x, y, b.w * state.camera.zoom, b.h * state.camera.zoom, pressed ? COLORS.green : COLORS.pink, pressed ? "rgba(131,221,115,0.5)" : "rgba(255,122,223,0.32)");
+          ctx.strokeStyle = pressed ? "rgba(73,150,63,0.9)" : "rgba(166,67,140,0.95)";
+          ctx.strokeRect(x, y, b.w * state.camera.zoom, b.h * state.camera.zoom);
+        });
+
+        state.level.doors.forEach((d) => {
+          if (d.open) return;
+          const x = worldToScreenX(d.x), y = worldToScreenY(d.y - 180);
+          drawGlowRect(x, y, d.w * state.camera.zoom, (d.h + 180) * state.camera.zoom, COLORS.pink, "rgba(255,122,223,0.16)");
+        });
+
+        state.level.lasers?.forEach((l) => {
+          if (!l.on) return;
+          const x = worldToScreenX(l.x), y = worldToScreenY(l.y);
+          drawGlowRect(x, y, l.w * state.camera.zoom, l.h * state.camera.zoom, COLORS.red, "rgba(255,135,152,0.32)");
+          ctx.strokeStyle = "rgba(176,74,88,0.95)";
+          ctx.strokeRect(x, y, l.w * state.camera.zoom, l.h * state.camera.zoom);
+        });
+
+        state.level.movers?.forEach((m) => {
+          const x = worldToScreenX(m.x), y = worldToScreenY(m.y);
+          drawGlowRect(x, y, m.w * state.camera.zoom, m.h * state.camera.zoom, COLORS.violet, "rgba(183,154,255,0.24)");
+        });
+
+        state.level.traps?.forEach((t) => {
+          const x = worldToScreenX(t.x), y = worldToScreenY(t.y);
+          drawGlowRect(x, y, t.w * state.camera.zoom, t.h * state.camera.zoom, COLORS.orange, "rgba(255,178,125,0.34)");
+          ctx.strokeStyle = "rgba(173,104,57,0.95)";
+          ctx.strokeRect(x, y, t.w * state.camera.zoom, t.h * state.camera.zoom);
+        });
+
+        state.level.turrets?.forEach((t) => {
+          const x = worldToScreenX(t.x - 12), y = worldToScreenY(t.y - 12);
+          drawGlowRect(x, y, 24 * state.camera.zoom, 24 * state.camera.zoom, COLORS.orange, "rgba(255,178,125,0.22)");
+        });
+
+        state.level.slowZones?.forEach((z) => {
+          const x = worldToScreenX(z.x), y = worldToScreenY(z.y);
+          ctx.fillStyle = "rgba(255,178,125,0.08)";
+          ctx.fillRect(x, y, z.w * state.camera.zoom, z.h * state.camera.zoom);
+          ctx.strokeStyle = "rgba(255,178,125,0.28)";
+          ctx.strokeRect(x, y, z.w * state.camera.zoom, z.h * state.camera.zoom);
+        });
+
+        const ex = worldToScreenX(state.level.exit.x), ey = worldToScreenY(state.level.exit.y);
+        drawGlowRect(ex, ey, state.level.exit.w * state.camera.zoom, state.level.exit.h * state.camera.zoom, COLORS.green, "rgba(131,221,115,0.18)");
+      }
+
+      function drawEntity(entity, color, alpha = 1, glitch = false) {
+        const x = worldToScreenX(entity.x), y = worldToScreenY(entity.y);
+        const w = entity.w * state.camera.zoom, h = entity.h * state.camera.zoom;
+        ctx.globalAlpha = alpha;
+        ctx.shadowColor = color;
+        ctx.shadowBlur = 14;
+        ctx.fillStyle = color;
+        ctx.fillRect(x, y, w, h);
+        ctx.fillStyle = COLORS.white;
+        ctx.fillRect(x + w * 0.2, y + h * 0.2, w * 0.2, h * 0.16);
+        if (glitch) {
+          ctx.fillStyle = "rgba(255,255,255,0.14)";
+          ctx.fillRect(x - 3 + Math.sin(state.time * 20) * 2, y + h * 0.55, w + 6, 4);
+        }
+        ctx.shadowBlur = 0;
+        ctx.globalAlpha = 1;
+      }
+
+      function drawClones() {
+        state.clones.forEach((c) => drawEntity(c, c.tint || COLORS.violet, 0.55, true));
+      }
+
+      function drawTrails() {
+        state.trails.forEach((t, i) => {
+          ctx.globalAlpha = clamp(t.life, 0, 1) * (i / TRAIL_LENGTH);
+          ctx.fillStyle = t.color;
+          ctx.fillRect(worldToScreenX(t.x - 5), worldToScreenY(t.y - 5), 10 * state.camera.zoom * 0.45, 10 * state.camera.zoom * 0.45);
+        });
+        ctx.globalAlpha = 1;
+      }
+
+      function drawDrones() {
+        state.drones.forEach((d) => {
+          drawEntity({ x: d.x - 10, y: d.y - 10, w: 20, h: 20 }, COLORS.orange, 0.9, true);
+        });
+      }
+
+      function drawBullets() {
+        state.bullets.forEach((b) => {
+          ctx.shadowColor = COLORS.red;
+          ctx.shadowBlur = 12;
+          ctx.fillStyle = COLORS.red;
+          ctx.beginPath();
+          ctx.arc(worldToScreenX(b.x), worldToScreenY(b.y), b.r * state.camera.zoom, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.shadowBlur = 0;
+        });
+      }
+
+      function drawParticles() {
+        state.particles.forEach((p) => {
+          ctx.globalAlpha = clamp(p.life / p.maxLife, 0, 1);
+          ctx.fillStyle = p.color;
+          ctx.fillRect(worldToScreenX(p.x), worldToScreenY(p.y), p.size, p.size);
+        });
+        ctx.globalAlpha = 1;
+      }
+
+      function drawRewindOverlay() {
+        if (state.rewindVisual <= 0) return;
+        ctx.fillStyle = `rgba(255,75,216,${state.rewindVisual * 0.12})`;
+        ctx.fillRect(0, 0, state.width, state.height);
+        for (let i = 0; i < 14; i += 1) {
+          ctx.fillStyle = `rgba(75,231,255,${state.rewindVisual * 0.08})`;
+          ctx.fillRect(0, i * 40 + Math.sin(state.time * 18 + i) * 8, state.width, 6);
+        }
+      }
+
+      function render() {
+        drawBackground();
+        if (!state.level) return;
+        drawLevel();
+        drawTrails();
+        drawClones();
+        drawDrones();
+        if (state.player.alive) drawEntity(state.player, state.player.slowTimer > 0 ? COLORS.orange : COLORS.cyan, 1, false);
+        if (state.player2?.alive) drawEntity(state.player2, state.player2.slowTimer > 0 ? COLORS.orange : COLORS.green, 1, false);
+        drawBullets();
+        drawParticles();
+        drawRewindOverlay();
+      }
+
+      function bindTouch(btn, down, up) {
+        btn.addEventListener("pointerdown", (e) => { e.preventDefault(); down(); });
+        btn.addEventListener("pointerup", (e) => { e.preventDefault(); up(); });
+        btn.addEventListener("pointercancel", up);
+        btn.addEventListener("pointerleave", up);
+      }
+
+      function bindUi() {
+        dom.playBtn.addEventListener("click", () => resetLevel(0));
+        dom.levelsBtn.addEventListener("click", () => { renderLevelsMenu(); showScreen("levels"); });
+        dom.settingsBtn.addEventListener("click", () => {
+          dom.coopStatus.textContent = `Сейчас: ${state.coopEnabled ? "2 игрока" : "1 игрок"}`;
+          dom.coopToggleBtn.textContent = state.coopEnabled ? "Переключить на 1 игрока" : "Переключить на 2 игроков";
+          dom.themeStatus.textContent = `Сейчас: ${state.theme === "dark" ? "тёмная" : "светлая"}`;
+          dom.themeToggleBtn.textContent = state.theme === "dark" ? "Переключить на светлую тему" : "Переключить на тёмную тему";
+          showScreen("settings");
+        });
+        dom.howBtn.addEventListener("click", () => showScreen("how"));
+        dom.fullscreenBtn.addEventListener("click", async () => {
+          if (document.fullscreenElement) await document.exitFullscreen();
+          else await document.documentElement.requestFullscreen?.();
+        });
+        dom.levelsBackBtn.addEventListener("click", () => showScreen("main"));
+        dom.settingsBackBtn.addEventListener("click", () => showScreen("main"));
+        dom.coopToggleBtn.addEventListener("click", () => {
+          state.coopEnabled = !state.coopEnabled;
+          dom.coopStatus.textContent = `Сейчас: ${state.coopEnabled ? "2 игрока" : "1 игрок"}`;
+          dom.coopToggleBtn.textContent = state.coopEnabled ? "Переключить на 1 игрока" : "Переключить на 2 игроков";
+        });
+        dom.themeToggleBtn.addEventListener("click", () => {
+          applyTheme(state.theme === "dark" ? "light" : "dark");
+          dom.themeStatus.textContent = `Сейчас: ${state.theme === "dark" ? "тёмная" : "светлая"}`;
+          dom.themeToggleBtn.textContent = state.theme === "dark" ? "Переключить на светлую тему" : "Переключить на тёмную тему";
+        });
+        dom.howBackBtn.addEventListener("click", () => showScreen("main"));
+        dom.resumeBtn.addEventListener("click", () => { state.paused = false; showScreen(null); });
+        dom.restartBtn.addEventListener("click", () => resetLevel(state.levelIndex));
+        dom.pauseLevelsBtn.addEventListener("click", () => { state.paused = false; renderLevelsMenu(); showScreen("levels"); });
+        dom.nextBtn.addEventListener("click", () => resetLevel(Math.min(levels.length - 1, state.levelIndex + 1)));
+        dom.completeLevelsBtn.addEventListener("click", () => { renderLevelsMenu(); showScreen("levels"); });
+
+        addEventListener("resize", resize);
+        addEventListener("keydown", (event) => {
+          state.audio.unlock();
+          if (event.code === "ArrowLeft") input.p1.left = true;
+          if (event.code === "ArrowRight") input.p1.right = true;
+          if (event.code === "KeyA") input.p2.left = true;
+          if (event.code === "KeyD") input.p2.right = true;
+          if (event.code === "ArrowUp" || event.code === "Space") {
+            if (!input.p1.jumpHeld) input.p1.jumpPressed = true;
+            input.p1.jumpHeld = true;
+            event.preventDefault();
+          }
+          if (event.code === "KeyW") {
+            if (!input.p2.jumpHeld) input.p2.jumpPressed = true;
+            input.p2.jumpHeld = true;
+            event.preventDefault();
+          }
+          if (event.code === "ShiftRight") input.p1.dashPressed = true;
+          if (event.code === "ShiftLeft") input.p2.dashPressed = true;
+          if (event.code === "KeyR") input.rewindPressed = true;
+          if (event.code === "Escape" && state.screen === "game") {
+            state.paused = !state.paused;
+            showScreen(state.paused ? "pause" : null);
+          }
+        });
+        addEventListener("keyup", (event) => {
+          if (event.code === "ArrowLeft") input.p1.left = false;
+          if (event.code === "ArrowRight") input.p1.right = false;
+          if (event.code === "KeyA") input.p2.left = false;
+          if (event.code === "KeyD") input.p2.right = false;
+          if (event.code === "ArrowUp" || event.code === "Space") input.p1.jumpHeld = false;
+          if (event.code === "KeyW") input.p2.jumpHeld = false;
+        });
+
+        bindTouch(dom.touchLeft, () => input.p1.left = true, () => input.p1.left = false);
+        bindTouch(dom.touchRight, () => input.p1.right = true, () => input.p1.right = false);
+        bindTouch(dom.touchJump, () => { input.p1.jumpPressed = true; input.p1.jumpHeld = true; }, () => input.p1.jumpHeld = false);
+        bindTouch(dom.touchDash, () => input.p1.dashPressed = true, () => {});
+        bindTouch(dom.touchRewind, () => input.rewindPressed = true, () => {});
+      }
+
+      function loop(ts) {
+        const time = ts / 1000;
+        if (!state.lastFrame) state.lastFrame = time;
+        const delta = Math.min(0.033, time - state.lastFrame || 0.016);
+        state.lastFrame = time;
+        state.time = time;
+        state.fps = lerp(state.fps, 1 / Math.max(delta, 0.001), 0.1);
+        if (state.toastTimer > 0) {
+          state.toastTimer -= delta;
+          if (state.toastTimer <= 0) dom.toast.classList.remove("show");
+        }
+        if (state.screen === "game" && input.rewindPressed) rewindTime();
+        updateGame(delta, time);
+        render();
+        updateHud();
+        input.p1.jumpPressed = false;
+        input.p1.dashPressed = false;
+        input.p2.jumpPressed = false;
+        input.p2.dashPressed = false;
+        input.rewindPressed = false;
+        requestAnimationFrame(loop);
+      }
+
+      function init() {
+        applyTheme("dark");
+        resize();
+        bindUi();
+        loadMetaToMenu();
+        renderLevelsMenu();
+        showScreen("main");
+        requestAnimationFrame(loop);
+      }
+
+      init();
+    })();
+  </script>
+</body>
+</html>
