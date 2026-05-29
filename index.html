@@ -67,6 +67,84 @@
       display: flex;
     }
 
+    .editor-screen {
+      justify-content: flex-end;
+      align-items: stretch;
+      padding: 14px;
+      background: transparent;
+      pointer-events: none;
+    }
+
+    .editor-screen .panel {
+      width: min(420px, 42vw);
+      pointer-events: auto;
+    }
+
+    .editor-screen.collapsed {
+      justify-content: flex-end;
+      pointer-events: none;
+    }
+
+    .editor-screen.collapsed .panel {
+      display: none;
+    }
+
+    .editor-toggle {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: auto;
+      min-width: 76px;
+      z-index: 35;
+      pointer-events: auto;
+    }
+
+    .editor-screen:not(.collapsed) .editor-toggle {
+      right: min(430px, 44vw);
+    }
+
+    .editor-tools {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .editor-tools .btn.active {
+      border-color: rgba(131, 221, 115, 0.78);
+      box-shadow: 0 0 0 2px rgba(131, 221, 115, 0.16), inset 0 0 18px rgba(131, 221, 115, 0.08);
+    }
+
+    .editor-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .editor-meta label {
+      display: grid;
+      gap: 6px;
+      color: var(--soft);
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    .editor-meta input, .editor-meta textarea {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid rgba(90, 184, 255, 0.36);
+      background: var(--surface-soft);
+      color: var(--text);
+      font: inherit;
+    }
+
+    .editor-meta textarea {
+      min-height: 140px;
+      resize: vertical;
+      grid-column: 1 / -1;
+    }
+
     .panel {
       width: min(980px, 94vw);
       max-height: 92vh;
@@ -328,6 +406,8 @@
       <div class="grid">
         <button class="btn" id="playBtn">Играть</button>
         <button class="btn alt" id="levelsBtn">Уровни</button>
+        <button class="btn alt" id="shopBtn">Магазин</button>
+        <button class="btn alt" id="editorBtn">Редактор</button>
         <button class="btn alt" id="settingsBtn">Настройки</button>
         <button class="btn alt" id="howBtn">Как играть</button>
         <button class="btn warn" id="fullscreenBtn">Полный экран</button>
@@ -350,6 +430,11 @@
         </p>
       </div>
       <div class="card" style="margin-top:12px;">
+        <h3>Финиш в коопе</h3>
+        <p id="coopExitStatus">Сейчас: ждать обоих игроков</p>
+        <button class="btn alt" id="coopExitToggleBtn">Переключить на режим одного финишировавшего</button>
+      </div>
+      <div class="card" style="margin-top:12px;">
         <h3>Тема</h3>
         <p id="themeStatus">Сейчас: тёмная</p>
         <button class="btn alt" id="themeToggleBtn">Переключить на светлую тему</button>
@@ -366,6 +451,66 @@
       <div class="levels" id="levelsGrid"></div>
       <div class="grid" style="margin-top:16px;">
         <button class="btn alt" id="levelsBackBtn">Назад</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay screen" id="shopMenu">
+    <div class="panel">
+      <h2 class="title">Магазин</h2>
+      <div class="card">
+        <h3>Монеты</h3>
+        <p id="shopCoins">0</p>
+      </div>
+      <div class="card" style="margin-top:12px;">
+        <h3>Скины игрока 1</h3>
+        <div class="levels" id="shopP1Skins"></div>
+      </div>
+      <div class="card" style="margin-top:12px;">
+        <h3>Скины игрока 2</h3>
+        <div class="levels" id="shopP2Skins"></div>
+      </div>
+      <div class="card" style="margin-top:12px;">
+        <h3>Усиления</h3>
+        <div class="levels" id="shopBoosts"></div>
+      </div>
+      <div class="grid" style="margin-top:16px;">
+        <button class="btn alt" id="shopBackBtn">Назад</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay screen editor-screen" id="editorMenu">
+    <button class="btn alt editor-toggle" id="editorToggleBtn">Скрыть</button>
+    <div class="panel">
+      <h2 class="title">Редактор</h2>
+      <div class="card">
+        <h3>Как строить</h3>
+        <p>Выбери инструмент и кликай по полю. ЛКМ ставит объект, ПКМ стирает объект под курсором. Кнопки получают id по порядку, а двери и лазеры автоматически связываются с последней кнопкой.</p>
+      </div>
+      <div class="editor-tools" id="editorTools"></div>
+      <div class="editor-meta">
+        <label>Название
+          <input id="editorName" value="Мой уровень" />
+        </label>
+        <label>Ширина
+          <input id="editorWidth" type="number" min="800" step="20" value="1600" />
+        </label>
+        <label>Подсказка
+          <input id="editorHint" value="Собери свой временной пазл." />
+        </label>
+        <label>Сетка
+          <input id="editorGrid" type="number" min="10" step="2" value="20" />
+        </label>
+        <textarea id="editorData"></textarea>
+      </div>
+      <div class="grid" style="margin-top:12px;">
+        <button class="btn" id="editorNewBtn">Новый уровень</button>
+        <button class="btn alt" id="editorExportBtn">Экспорт JSON</button>
+        <button class="btn alt" id="editorImportBtn">Импорт JSON</button>
+        <button class="btn alt" id="editorSaveBtn">Сохранить в список</button>
+        <button class="btn alt" id="editorTestBtn">Играть тест</button>
+        <button class="btn warn" id="editorBackBtn">Назад</button>
       </div>
     </div>
   </div>
@@ -475,6 +620,8 @@
         toastText: document.getElementById("toastText"),
         mainMenu: document.getElementById("mainMenu"),
         levelsMenu: document.getElementById("levelsMenu"),
+        shopMenu: document.getElementById("shopMenu"),
+        editorMenu: document.getElementById("editorMenu"),
         howMenu: document.getElementById("howMenu"),
         settingsMenu: document.getElementById("settingsMenu"),
         pauseMenu: document.getElementById("pauseMenu"),
@@ -484,21 +631,43 @@
         menuStats: document.getElementById("menuStats"),
         playBtn: document.getElementById("playBtn"),
         levelsBtn: document.getElementById("levelsBtn"),
+        shopBtn: document.getElementById("shopBtn"),
+        editorBtn: document.getElementById("editorBtn"),
         settingsBtn: document.getElementById("settingsBtn"),
         howBtn: document.getElementById("howBtn"),
         fullscreenBtn: document.getElementById("fullscreenBtn"),
         levelsBackBtn: document.getElementById("levelsBackBtn"),
+        shopBackBtn: document.getElementById("shopBackBtn"),
         settingsBackBtn: document.getElementById("settingsBackBtn"),
         coopStatus: document.getElementById("coopStatus"),
         coopToggleBtn: document.getElementById("coopToggleBtn"),
+        coopExitStatus: document.getElementById("coopExitStatus"),
+        coopExitToggleBtn: document.getElementById("coopExitToggleBtn"),
         themeStatus: document.getElementById("themeStatus"),
         themeToggleBtn: document.getElementById("themeToggleBtn"),
+        editorTools: document.getElementById("editorTools"),
+        editorName: document.getElementById("editorName"),
+        editorWidth: document.getElementById("editorWidth"),
+        editorHint: document.getElementById("editorHint"),
+        editorGrid: document.getElementById("editorGrid"),
+        editorData: document.getElementById("editorData"),
+        editorNewBtn: document.getElementById("editorNewBtn"),
+        editorExportBtn: document.getElementById("editorExportBtn"),
+        editorImportBtn: document.getElementById("editorImportBtn"),
+        editorSaveBtn: document.getElementById("editorSaveBtn"),
+        editorTestBtn: document.getElementById("editorTestBtn"),
+        editorBackBtn: document.getElementById("editorBackBtn"),
+        editorToggleBtn: document.getElementById("editorToggleBtn"),
         howBackBtn: document.getElementById("howBackBtn"),
         resumeBtn: document.getElementById("resumeBtn"),
         restartBtn: document.getElementById("restartBtn"),
         pauseLevelsBtn: document.getElementById("pauseLevelsBtn"),
         nextBtn: document.getElementById("nextBtn"),
         completeLevelsBtn: document.getElementById("completeLevelsBtn"),
+        shopCoins: document.getElementById("shopCoins"),
+        shopP1Skins: document.getElementById("shopP1Skins"),
+        shopP2Skins: document.getElementById("shopP2Skins"),
+        shopBoosts: document.getElementById("shopBoosts"),
         touchLeft: document.getElementById("touchLeft"),
         touchRight: document.getElementById("touchRight"),
         touchJump: document.getElementById("touchJump"),
@@ -509,8 +678,10 @@
       const input = {
         p1: { left: false, right: false, jumpHeld: false, jumpPressed: false, dashPressed: false },
         p2: { left: false, right: false, jumpHeld: false, jumpPressed: false, dashPressed: false },
+        editor: { left: false, right: false, up: false, down: false },
         rewindPressed: false
       };
+      const BUILD_BLOCK_SIZE = 24;
 
       const state = {
         width: innerWidth,
@@ -523,13 +694,17 @@
         paused: false,
         save: loadSave(),
         coopEnabled: false,
+        coopExitMode: "both",
         theme: "dark",
         levelIndex: 0,
         level: null,
+        customLevel: null,
         player: null,
         player2: null,
         clones: [],
         drones: [],
+        chronoBots: [],
+        placedBlocks: [],
         particles: [],
         bullets: [],
         trails: [],
@@ -539,9 +714,11 @@
         rewindMeter: 1,
         rewinding: false,
         rewindVisual: 0,
+        runCoins: 0,
         toastTimer: 0,
         camera: { x: 0, y: 0, zoom: 2.2, shake: 0, sx: 0, sy: 0 },
-        audio: null
+        audio: null,
+        editor: null
       };
 
       class AudioSystem {
@@ -623,14 +800,77 @@
 
       function loadSave() {
         try {
-          return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{"bestLevel":0,"totalClones":0,"bestTime":0}');
+          const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{"bestLevel":0,"totalClones":0,"bestTime":0}');
+          const ownedSkins = {
+            p1: Array.isArray(parsed?.ownedSkins?.p1) ? parsed.ownedSkins.p1 : ["classic"],
+            p2: Array.isArray(parsed?.ownedSkins?.p2) ? parsed.ownedSkins.p2 : ["classic"]
+          };
+          if (!ownedSkins.p1.includes("classic")) ownedSkins.p1.unshift("classic");
+          if (!ownedSkins.p2.includes("classic")) ownedSkins.p2.unshift("classic");
+          return {
+            bestLevel: 0,
+            totalClones: 0,
+            bestTime: 0,
+            coins: 0,
+            ownedSkins,
+            equippedSkins: {
+              p1: parsed?.equippedSkins?.p1 || "classic",
+              p2: parsed?.equippedSkins?.p2 || "classic"
+            },
+            boughtBoosts: Array.isArray(parsed?.boughtBoosts) ? parsed.boughtBoosts : [],
+            ...parsed
+          };
         } catch {
-          return { bestLevel: 0, totalClones: 0, bestTime: 0 };
+          return {
+            bestLevel: 0,
+            totalClones: 0,
+            bestTime: 0,
+            coins: 0,
+            ownedSkins: { p1: ["classic"], p2: ["classic"] },
+            equippedSkins: { p1: "classic", p2: "classic" },
+            boughtBoosts: []
+          };
         }
       }
 
       function saveMeta() {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state.save));
+      }
+
+      const SKINS = [
+        { key: "classic", name: "Классика", price: 0, tint: null, accent: null, visor: null, glow: 1 },
+        { key: "ember", name: "Эмбер", price: 18, tint: "#ff9e57", accent: "#ffd4a8", visor: "#fff1d8", glow: 1.1 },
+        { key: "forest", name: "Форест", price: 20, tint: "#7ee07f", accent: "#d8ffd1", visor: "#f2fff3", glow: 1.05 },
+        { key: "royal", name: "Роял", price: 24, tint: "#8f86ff", accent: "#ddd9ff", visor: "#ffffff", glow: 1.2 },
+        { key: "chrome", name: "Хром", price: 28, tint: "#9ab4c6", accent: "#eef7ff", visor: "#ffffff", glow: 1.25 }
+      ];
+
+      const BOOSTS = [
+        { key: "armor", name: "Броня", price: 30, desc: "+20 к максимуму HP" },
+        { key: "dash", name: "Рывок+", price: 35, desc: "+1 заряд рывка" },
+        { key: "rewind", name: "Якорь времени", price: 26, desc: "Перемотка тратит чуть меньше шкалы" }
+      ];
+
+      function hasBoost(key) {
+        return (state.save.boughtBoosts || []).includes(key);
+      }
+
+      function skinByKey(key) {
+        return SKINS.find((s) => s.key === key) || SKINS[0];
+      }
+
+      function setupPlayerLoadout(player, slot = "p1") {
+        const skin = skinByKey(state.save.equippedSkins?.[slot] || "classic");
+        player.skinKey = skin.key;
+        player.skinAccent = skin.accent;
+        player.skinVisor = skin.visor;
+        player.skinGlow = skin.glow || 1;
+        if (skin.tint) player.tint = skin.tint;
+        player.maxHp = hasBoost("armor") ? 120 : 100;
+        player.hp = player.maxHp;
+        player.maxDashCharges = hasBoost("dash") ? 4 : 3;
+        player.dashCharges = player.maxDashCharges;
+        return player;
       }
 
       function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
@@ -649,7 +889,8 @@
       function createPlayer(x, y, tint = COLORS.cyan) {
         return {
           x, y, w: 18, h: 30, vx: 0, vy: 0, face: 1, onGround: false, coyote: 0, jumpBuffer: 0,
-          dashTimer: 0, dashCharges: 3, dashJumpWindow: 0, alive: true, slowTimer: 0, tint
+          dashTimer: 0, dashCharges: 3, dashJumpWindow: 0, alive: true, slowTimer: 0, tint, blocksLeft: 0, exited: false,
+          maxHp: 100, hp: 100, invuln: 0, hitFlash: 0
         };
       }
 
@@ -681,8 +922,236 @@
         };
       }
 
+      function addCampaignExtensionLevels() {
+        levels.push(
+          makeLevel("16. Заводской коридор", "Новый индустриальный сектор: тут меньше неона и больше тяжёлых механизмов. Собери монеты и держи тайминг под огнём турелей.", 1520, {
+            style: "industrial",
+            spawn: { x: 70, y: 360 }, exit: { x: 1430, y: 314, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 260, h: 90 }, { x: 320, y: 360, w: 160, h: 20 }, { x: 560, y: 320, w: 150, h: 20 }, { x: 820, y: 360, w: 170, h: 20 }, { x: 1090, y: 300, w: 170, h: 20 }, { x: 1320, y: 400, w: 200, h: 90 }],
+            buttons: [{ x: 590, y: 300, w: 22, h: 10, id: "a" }],
+            doors: [{ x: 1010, y: 220, w: 24, h: 180, id: "a", mode: "hold" }],
+            lasers: [],
+            movers: [{ x: 1010, y: 250, w: 100, h: 18, axis: "x", range: 120, speed: 0.45 }],
+            traps: [{ x: 260, y: 396, w: 60, h: 8 }, { x: 480, y: 396, w: 80, h: 8 }, { x: 990, y: 396, w: 100, h: 8 }],
+            turrets: [{ x: 690, y: 286, dir: 1, rate: 1.2 }],
+            drones: [],
+            chronoBots: [],
+            slowZones: [],
+            coins: [{ x: 345, y: 325 }, { x: 610, y: 280 }, { x: 1140, y: 260 }, { x: 1365, y: 365 }]
+          }),
+          makeLevel("17. Песочный шлюз", "Пустынный стиль: широкий светлый фон, длинные прыжки и монеты над опасными участками.", 1640, {
+            style: "sand",
+            spawn: { x: 60, y: 360 }, exit: { x: 1545, y: 254, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 280, h: 90 }, { x: 400, y: 380, w: 120, h: 20 }, { x: 640, y: 340, w: 130, h: 20 }, { x: 900, y: 300, w: 140, h: 20 }, { x: 1180, y: 260, w: 160, h: 20 }, { x: 1490, y: 340, w: 150, h: 20 }],
+            buttons: [],
+            doors: [],
+            lasers: [{ x: 800, y: 290, w: 18, h: 110, id: "z", activeWhen: false, on: true }],
+            movers: [{ x: 1340, y: 230, w: 90, h: 18, axis: "y", range: 90, speed: 0.5 }],
+            traps: [{ x: 280, y: 396, w: 120, h: 8 }, { x: 520, y: 396, w: 120, h: 8 }, { x: 1040, y: 396, w: 140, h: 8 }],
+            turrets: [],
+            drones: [{ x1: 1060, x2: 1420, y: 210, speed: 1.1 }],
+            chronoBots: [],
+            slowZones: [],
+            coins: [{ x: 440, y: 345 }, { x: 675, y: 305 }, { x: 940, y: 265 }, { x: 1240, y: 225 }, { x: 1530, y: 225 }]
+          }),
+          makeLevel("18. Гравий и время", "Два стиля встречаются: тяжёлые двери, хронобот и ценные монеты в безопасных окнах.", 1700, {
+            style: "industrial",
+            spawn: { x: 60, y: 360 }, exit: { x: 1610, y: 214, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 260, h: 90 }, { x: 340, y: 350, w: 130, h: 20 }, { x: 560, y: 320, w: 110, h: 20 }, { x: 760, y: 290, w: 110, h: 20 }, { x: 1010, y: 250, w: 120, h: 20 }, { x: 1280, y: 220, w: 150, h: 20 }, { x: 1520, y: 260, w: 180, h: 20 }],
+            buttons: [{ x: 780, y: 270, w: 22, h: 10, id: "a" }],
+            doors: [{ x: 1170, y: 180, w: 24, h: 220, id: "a", mode: "hold" }],
+            lasers: [],
+            movers: [],
+            traps: [{ x: 260, y: 396, w: 80, h: 8 }, { x: 470, y: 396, w: 90, h: 8 }, { x: 1130, y: 396, w: 140, h: 8 }],
+            turrets: [{ x: 625, y: 306, dir: 1, rate: 1.1 }],
+            drones: [],
+            chronoBots: [{ x1: 1320, x2: 1540, y: 190, speed: 1.1, teleportEvery: 3.2 }],
+            slowZones: [{ x: 1360, y: 140, w: 160, h: 120 }],
+            coins: [{ x: 375, y: 315 }, { x: 585, y: 285 }, { x: 1045, y: 215 }, { x: 1365, y: 185 }]
+          }),
+          makeLevel("19. Контурный марш", "Финальный марш по светлой технической секции. Тут полезны и скины, и усиления.", 1820, {
+            style: "mono",
+            spawn: { x: 60, y: 360 }, exit: { x: 1730, y: 194, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 230, h: 90 }, { x: 320, y: 360, w: 120, h: 20 }, { x: 540, y: 320, w: 140, h: 20 }, { x: 760, y: 280, w: 130, h: 20 }, { x: 1000, y: 320, w: 130, h: 20 }, { x: 1230, y: 280, w: 150, h: 20 }, { x: 1490, y: 240, w: 170, h: 20 }],
+            buttons: [{ x: 1010, y: 300, w: 22, h: 10, id: "a" }],
+            doors: [{ x: 1415, y: 120, w: 26, h: 280, id: "a", mode: "hold" }],
+            lasers: [{ x: 470, y: 290, w: 16, h: 110, id: "z", activeWhen: false, on: true }],
+            movers: [{ x: 1660, y: 210, w: 80, h: 18, axis: "y", range: 90, speed: 0.55 }],
+            traps: [{ x: 230, y: 396, w: 90, h: 8 }, { x: 680, y: 396, w: 80, h: 8 }, { x: 1130, y: 396, w: 100, h: 8 }],
+            turrets: [{ x: 820, y: 266, dir: 1, rate: 1.15 }],
+            drones: [{ x1: 1160, x2: 1450, y: 180, speed: 1.25 }],
+            chronoBots: [],
+            slowZones: [],
+            coins: [{ x: 355, y: 325 }, { x: 570, y: 285 }, { x: 1035, y: 285 }, { x: 1540, y: 205 }, { x: 1740, y: 155 }]
+          }),
+          makeLevel("20. Архив времени", "Бонусный сектор с монетами, смешанным стилем и длинной связкой механизмов.", 1900, {
+            style: "archive",
+            spawn: { x: 70, y: 360 }, exit: { x: 1810, y: 174, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 240, h: 90 }, { x: 330, y: 350, w: 120, h: 20 }, { x: 540, y: 300, w: 120, h: 20 }, { x: 760, y: 350, w: 110, h: 20 }, { x: 980, y: 290, w: 150, h: 20 }, { x: 1230, y: 240, w: 140, h: 20 }, { x: 1470, y: 210, w: 140, h: 20 }, { x: 1710, y: 250, w: 190, h: 20 }],
+            buttons: [{ x: 785, y: 330, w: 22, h: 10, id: "a" }, { x: 1255, y: 220, w: 22, h: 10, id: "b" }],
+            doors: [{ x: 900, y: 220, w: 24, h: 180, id: "a", mode: "hold" }, { x: 1640, y: 150, w: 24, h: 250, id: "b", mode: "hold" }],
+            lasers: [{ x: 690, y: 290, w: 16, h: 110, id: "a", activeWhen: false }],
+            movers: [{ x: 1370, y: 220, w: 90, h: 18, axis: "x", range: 120, speed: 0.45 }],
+            traps: [{ x: 240, y: 396, w: 90, h: 8 }, { x: 660, y: 396, w: 100, h: 8 }, { x: 1130, y: 396, w: 100, h: 8 }],
+            turrets: [{ x: 590, y: 286, dir: 1, rate: 1.1 }],
+            drones: [{ x1: 1470, x2: 1750, y: 155, speed: 1.15 }],
+            chronoBots: [{ x1: 1720, x2: 1860, y: 220, speed: 1.15, teleportEvery: 3 }],
+            slowZones: [{ x: 1510, y: 150, w: 130, h: 90 }],
+            coins: [{ x: 345, y: 315 }, { x: 565, y: 265 }, { x: 785, y: 315 }, { x: 1260, y: 195 }, { x: 1495, y: 170 }, { x: 1820, y: 135 }]
+          }),
+          makeLevel("21. Башня рывков", "Новая ветка: почти чистый паркур. Прыгай по узким полкам и расходуй рывки только в нужные окна.", 1560, {
+            style: "mono",
+            spawn: { x: 70, y: 360 }, exit: { x: 1450, y: 94, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 250, h: 90 }, { x: 300, y: 340, w: 70, h: 20 }, { x: 420, y: 280, w: 70, h: 20 }, { x: 540, y: 220, w: 70, h: 20 }, { x: 680, y: 300, w: 70, h: 20 }, { x: 820, y: 240, w: 70, h: 20 }, { x: 980, y: 180, w: 70, h: 20 }, { x: 1140, y: 140, w: 70, h: 20 }, { x: 1290, y: 120, w: 90, h: 20 }, { x: 1420, y: 140, w: 140, h: 20 }],
+            buttons: [], doors: [], lasers: [],
+            movers: [],
+            traps: [{ x: 250, y: 396, w: 50, h: 8 }, { x: 370, y: 396, w: 50, h: 8 }, { x: 490, y: 396, w: 190, h: 8 }, { x: 750, y: 396, w: 240, h: 8 }, { x: 1060, y: 396, w: 360, h: 8 }],
+            turrets: [], drones: [], chronoBots: [], slowZones: [],
+            coins: [{ x: 335, y: 305 }, { x: 455, y: 245 }, { x: 575, y: 185 }, { x: 835, y: 205 }, { x: 1165, y: 105 }, { x: 1455, y: 95 }]
+          }),
+          makeLevel("22. Стенка и разгон", "Длинные разрывы и коридоры для паркура с рывком. Здесь почти всё решает темп движения.", 1720, {
+            style: "industrial",
+            spawn: { x: 60, y: 360 }, exit: { x: 1630, y: 314, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 200, h: 90 }, { x: 360, y: 400, w: 150, h: 90 }, { x: 650, y: 360, w: 120, h: 20 }, { x: 900, y: 320, w: 120, h: 20 }, { x: 1170, y: 360, w: 130, h: 20 }, { x: 1450, y: 400, w: 270, h: 90 }],
+            buttons: [], doors: [], lasers: [],
+            movers: [{ x: 520, y: 300, w: 90, h: 18, axis: "y", range: 70, speed: 0.55 }, { x: 1310, y: 300, w: 90, h: 18, axis: "y", range: 80, speed: 0.48 }],
+            traps: [{ x: 200, y: 396, w: 160, h: 8 }, { x: 510, y: 396, w: 140, h: 8 }, { x: 770, y: 396, w: 130, h: 8 }, { x: 1020, y: 396, w: 150, h: 8 }, { x: 1300, y: 396, w: 150, h: 8 }],
+            turrets: [], drones: [], chronoBots: [], slowZones: [],
+            coins: [{ x: 545, y: 255 }, { x: 675, y: 325 }, { x: 925, y: 285 }, { x: 1195, y: 325 }, { x: 1340, y: 255 }]
+          }),
+          makeLevel("23. Вертикальный архив", "Вертикальная секция на время: поднимайся всё выше и держи ритм между короткими платформами.", 1480, {
+            style: "archive",
+            spawn: { x: 70, y: 360 }, exit: { x: 1320, y: 74, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 240, h: 90 }, { x: 260, y: 330, w: 80, h: 20 }, { x: 380, y: 270, w: 80, h: 20 }, { x: 500, y: 210, w: 80, h: 20 }, { x: 620, y: 150, w: 80, h: 20 }, { x: 760, y: 250, w: 80, h: 20 }, { x: 900, y: 190, w: 80, h: 20 }, { x: 1040, y: 130, w: 80, h: 20 }, { x: 1180, y: 90, w: 120, h: 20 }, { x: 1310, y: 120, w: 170, h: 20 }],
+            buttons: [], doors: [], lasers: [],
+            movers: [],
+            traps: [{ x: 240, y: 396, w: 240, h: 8 }, { x: 580, y: 396, w: 700, h: 8 }],
+            turrets: [], drones: [], chronoBots: [], slowZones: [{ x: 1080, y: 60, w: 110, h: 100 }],
+            coins: [{ x: 285, y: 295 }, { x: 405, y: 235 }, { x: 645, y: 115 }, { x: 785, y: 215 }, { x: 1065, y: 95 }, { x: 1335, y: 70 }]
+          }),
+          makeLevel("24. Лифт-спринт", "Паркур на движущихся платформах. Нужно читать траектории и не жать рывок слишком рано.", 1760, {
+            style: "sand",
+            spawn: { x: 60, y: 360 }, exit: { x: 1660, y: 174, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 260, h: 90 }, { x: 1540, y: 240, w: 220, h: 20 }],
+            buttons: [], doors: [], lasers: [],
+            movers: [
+              { x: 330, y: 330, w: 90, h: 18, axis: "y", range: 70, speed: 0.5 },
+              { x: 560, y: 290, w: 90, h: 18, axis: "y", range: 90, speed: 0.48 },
+              { x: 810, y: 250, w: 90, h: 18, axis: "y", range: 95, speed: 0.52 },
+              { x: 1080, y: 210, w: 90, h: 18, axis: "y", range: 95, speed: 0.46 },
+              { x: 1330, y: 170, w: 90, h: 18, axis: "y", range: 100, speed: 0.5 }
+            ],
+            traps: [{ x: 260, y: 396, w: 1280, h: 8 }],
+            turrets: [], drones: [], chronoBots: [], slowZones: [],
+            coins: [{ x: 355, y: 275 }, { x: 585, y: 225 }, { x: 835, y: 185 }, { x: 1105, y: 145 }, { x: 1355, y: 105 }, { x: 1655, y: 150 }]
+          }),
+          makeLevel("25. Ритм тоннеля", "Узкий тоннель, дроны и паркур через ритмичные окна. Это уже не пазл, а маршрут на исполнение.", 1840, {
+            style: "industrial",
+            spawn: { x: 60, y: 360 }, exit: { x: 1750, y: 314, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 300, h: 90 }, { x: 420, y: 360, w: 100, h: 20 }, { x: 630, y: 320, w: 100, h: 20 }, { x: 840, y: 360, w: 100, h: 20 }, { x: 1050, y: 320, w: 100, h: 20 }, { x: 1260, y: 360, w: 100, h: 20 }, { x: 1470, y: 320, w: 100, h: 20 }, { x: 1680, y: 400, w: 160, h: 90 }],
+            buttons: [], doors: [], lasers: [],
+            movers: [],
+            traps: [{ x: 300, y: 396, w: 120, h: 8 }, { x: 520, y: 396, w: 110, h: 8 }, { x: 730, y: 396, w: 110, h: 8 }, { x: 940, y: 396, w: 110, h: 8 }, { x: 1150, y: 396, w: 110, h: 8 }, { x: 1360, y: 396, w: 110, h: 8 }, { x: 1570, y: 396, w: 110, h: 8 }],
+            turrets: [],
+            drones: [{ x1: 540, x2: 780, y: 250, speed: 1.2 }, { x1: 1160, x2: 1500, y: 250, speed: 1.3 }],
+            chronoBots: [], slowZones: [],
+            coins: [{ x: 445, y: 325 }, { x: 655, y: 285 }, { x: 865, y: 325 }, { x: 1075, y: 285 }, { x: 1495, y: 285 }]
+          }),
+          makeLevel("26. Потолочный маршрут", "Паркур с низкими потолками. Нужно контролировать высоту прыжка и встраивать рывок в середину дуги.", 1680, {
+            style: "mono",
+            spawn: { x: 60, y: 360 }, exit: { x: 1580, y: 254, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 250, h: 90 }, { x: 300, y: 340, w: 110, h: 20 }, { x: 500, y: 300, w: 110, h: 20 }, { x: 700, y: 260, w: 110, h: 20 }, { x: 900, y: 300, w: 110, h: 20 }, { x: 1100, y: 260, w: 110, h: 20 }, { x: 1300, y: 220, w: 110, h: 20 }, { x: 1510, y: 280, w: 170, h: 20 }],
+            buttons: [], doors: [], lasers: [{ x: 630, y: 280, w: 16, h: 120, id: "z", activeWhen: false, on: true }],
+            movers: [],
+            traps: [{ x: 250, y: 396, w: 50, h: 8 }, { x: 410, y: 396, w: 90, h: 8 }, { x: 610, y: 396, w: 90, h: 8 }, { x: 1010, y: 396, w: 90, h: 8 }, { x: 1210, y: 396, w: 90, h: 8 }],
+            turrets: [], drones: [], chronoBots: [], slowZones: [],
+            coins: [{ x: 325, y: 305 }, { x: 525, y: 265 }, { x: 925, y: 265 }, { x: 1325, y: 185 }, { x: 1590, y: 225 }]
+          }),
+          makeLevel("27. Площадка дронов", "Свободнее по маршруту, но сложнее по чтению угроз: прыгай через ямы и не влетай в линии дронов.", 1880, {
+            style: "archive",
+            spawn: { x: 70, y: 360 }, exit: { x: 1780, y: 214, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 240, h: 90 }, { x: 360, y: 350, w: 140, h: 20 }, { x: 620, y: 310, w: 140, h: 20 }, { x: 890, y: 270, w: 140, h: 20 }, { x: 1180, y: 230, w: 140, h: 20 }, { x: 1490, y: 190, w: 160, h: 20 }, { x: 1720, y: 240, w: 160, h: 20 }],
+            buttons: [], doors: [], lasers: [],
+            movers: [],
+            traps: [{ x: 240, y: 396, w: 120, h: 8 }, { x: 500, y: 396, w: 120, h: 8 }, { x: 760, y: 396, w: 130, h: 8 }, { x: 1030, y: 396, w: 150, h: 8 }, { x: 1320, y: 396, w: 170, h: 8 }],
+            turrets: [],
+            drones: [{ x1: 420, x2: 760, y: 220, speed: 1.15 }, { x1: 1040, x2: 1420, y: 180, speed: 1.22 }],
+            chronoBots: [], slowZones: [{ x: 1530, y: 130, w: 100, h: 80 }],
+            coins: [{ x: 385, y: 315 }, { x: 645, y: 275 }, { x: 915, y: 235 }, { x: 1205, y: 195 }, { x: 1520, y: 155 }, { x: 1790, y: 175 }]
+          }),
+          makeLevel("28. Хронопрыжок", "Паркур с хроноботами. Здесь важно не только прыгать, но и не задерживаться на опасных полках.", 1940, {
+            style: "industrial",
+            spawn: { x: 60, y: 360 }, exit: { x: 1840, y: 154, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 220, h: 90 }, { x: 320, y: 350, w: 100, h: 20 }, { x: 510, y: 300, w: 100, h: 20 }, { x: 700, y: 250, w: 100, h: 20 }, { x: 930, y: 320, w: 100, h: 20 }, { x: 1130, y: 260, w: 100, h: 20 }, { x: 1360, y: 220, w: 110, h: 20 }, { x: 1600, y: 180, w: 110, h: 20 }, { x: 1810, y: 210, w: 130, h: 20 }],
+            buttons: [], doors: [], lasers: [],
+            movers: [{ x: 820, y: 205, w: 80, h: 18, axis: "y", range: 70, speed: 0.5 }],
+            traps: [{ x: 220, y: 396, w: 100, h: 8 }, { x: 420, y: 396, w: 90, h: 8 }, { x: 610, y: 396, w: 90, h: 8 }, { x: 1030, y: 396, w: 100, h: 8 }, { x: 1230, y: 396, w: 130, h: 8 }, { x: 1470, y: 396, w: 130, h: 8 }],
+            turrets: [],
+            drones: [],
+            chronoBots: [{ x1: 980, x2: 1260, y: 220, speed: 1.1, teleportEvery: 3.1 }, { x1: 1640, x2: 1860, y: 140, speed: 1.2, teleportEvery: 2.8 }],
+            slowZones: [],
+            coins: [{ x: 345, y: 315 }, { x: 535, y: 265 }, { x: 725, y: 215 }, { x: 1160, y: 225 }, { x: 1390, y: 185 }, { x: 1845, y: 135 }]
+          }),
+          makeLevel("29. Конвейер высоты", "Финальный длинный паркур на движущихся платформах и перемене высоты. Ошибка в темпе сразу чувствуется.", 2060, {
+            style: "sand",
+            spawn: { x: 60, y: 360 }, exit: { x: 1960, y: 114, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 230, h: 90 }, { x: 1900, y: 160, w: 160, h: 20 }],
+            buttons: [], doors: [], lasers: [],
+            movers: [
+              { x: 320, y: 340, w: 90, h: 18, axis: "x", range: 80, speed: 0.45 },
+              { x: 540, y: 300, w: 90, h: 18, axis: "y", range: 80, speed: 0.5 },
+              { x: 790, y: 260, w: 90, h: 18, axis: "x", range: 100, speed: 0.48 },
+              { x: 1080, y: 220, w: 90, h: 18, axis: "y", range: 85, speed: 0.52 },
+              { x: 1360, y: 190, w: 90, h: 18, axis: "x", range: 120, speed: 0.46 },
+              { x: 1650, y: 150, w: 90, h: 18, axis: "y", range: 90, speed: 0.5 }
+            ],
+            traps: [{ x: 230, y: 396, w: 1670, h: 8 }],
+            turrets: [], drones: [], chronoBots: [], slowZones: [],
+            coins: [{ x: 365, y: 315 }, { x: 565, y: 245 }, { x: 835, y: 235 }, { x: 1105, y: 165 }, { x: 1400, y: 155 }, { x: 1680, y: 95 }, { x: 1975, y: 95 }]
+          }),
+          makeLevel("30. Мастерский забег", "Финальный parkour-уровень: смешанный стиль, дроны, лифты, ловушки и длинная серия прыжков без опоры на старые головоломки.", 2200, {
+            style: "archive",
+            spawn: { x: 60, y: 360 }, exit: { x: 2100, y: 94, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 220, h: 90 }, { x: 330, y: 350, w: 90, h: 20 }, { x: 520, y: 300, w: 90, h: 20 }, { x: 700, y: 250, w: 90, h: 20 }, { x: 920, y: 320, w: 90, h: 20 }, { x: 1110, y: 270, w: 90, h: 20 }, { x: 1310, y: 220, w: 90, h: 20 }, { x: 1510, y: 180, w: 90, h: 20 }, { x: 1710, y: 150, w: 90, h: 20 }, { x: 1910, y: 120, w: 90, h: 20 }, { x: 2090, y: 140, w: 110, h: 20 }],
+            buttons: [], doors: [], lasers: [{ x: 830, y: 290, w: 16, h: 110, id: "z", activeWhen: false, on: true }],
+            movers: [{ x: 1210, y: 190, w: 85, h: 18, axis: "y", range: 75, speed: 0.52 }, { x: 1820, y: 110, w: 85, h: 18, axis: "x", range: 85, speed: 0.5 }],
+            traps: [{ x: 220, y: 396, w: 110, h: 8 }, { x: 420, y: 396, w: 100, h: 8 }, { x: 610, y: 396, w: 90, h: 8 }, { x: 790, y: 396, w: 130, h: 8 }, { x: 1010, y: 396, w: 100, h: 8 }, { x: 1200, y: 396, w: 110, h: 8 }, { x: 1400, y: 396, w: 110, h: 8 }, { x: 1600, y: 396, w: 110, h: 8 }, { x: 1800, y: 396, w: 110, h: 8 }],
+            turrets: [],
+            drones: [{ x1: 980, x2: 1280, y: 190, speed: 1.2 }, { x1: 1600, x2: 1960, y: 105, speed: 1.28 }],
+            chronoBots: [{ x1: 1450, x2: 1700, y: 140, speed: 1.1, teleportEvery: 3 }],
+            slowZones: [{ x: 2020, y: 70, w: 100, h: 80 }],
+            coins: [{ x: 355, y: 315 }, { x: 545, y: 265 }, { x: 725, y: 215 }, { x: 940, y: 285 }, { x: 1335, y: 185 }, { x: 1535, y: 145 }, { x: 1935, y: 85 }, { x: 2110, y: 75 }]
+          })
+        );
+      }
+
       function makeLevel(name, hint, width, data) {
         return { name, hint, width, ...data };
+      }
+
+      function emptyLevelData(name = "Мой уровень", hint = "Собери свой временной пазл.", width = 1600) {
+        return makeLevel(name, hint, width, {
+          spawn: { x: 60, y: 360 },
+          exit: { x: width - 80, y: 314, w: 30, h: 46 },
+          solids: [{ x: 0, y: 400, w: width, h: 90 }],
+          buttons: [],
+          doors: [],
+          lasers: [],
+          movers: [],
+          traps: [],
+          turrets: [],
+          drones: [],
+          chronoBots: [],
+          slowZones: []
+        });
+      }
+
+      function nextButtonId(level) {
+        return String.fromCharCode(97 + (level.buttons?.length || 0));
+      }
+
+      function cloneLevelData(level) {
+        return structuredClone(level);
       }
 
       const levels = [
@@ -743,11 +1212,11 @@
         }),
         makeLevel("6. Платформа времени", "Клон едет на платформе, а ты идёшь вторым циклом.", 1260, {
           spawn: { x: 60, y: 360 }, exit: { x: 1170, y: 214, w: 30, h: 46 },
-          solids: [{ x: 0, y: 400, w: 250, h: 90 }, { x: 960, y: 240, w: 220, h: 20 }, { x: 1160, y: 400, w: 100, h: 90 }],
-          buttons: [{ x: 1040, y: 220, w: 22, h: 10, id: "a" }],
+          solids: [{ x: 0, y: 400, w: 250, h: 90 }, { x: 860, y: 240, w: 320, h: 20 }, { x: 1160, y: 400, w: 100, h: 90 }],
+          buttons: [{ x: 920, y: 220, w: 22, h: 10, id: "a" }],
           doors: [{ x: 760, y: 250, w: 24, h: 150, id: "a", mode: "hold" }],
           lasers: [],
-          movers: [{ x: 270, y: 320, w: 110, h: 18, axis: "x", range: 280, speed: 0.8 }],
+          movers: [{ x: 270, y: 320, w: 110, h: 18, axis: "x", range: 620, speed: 0.38 }],
           traps: [{ x: 780, y: 396, w: 150, h: 8 }],
           turrets: [],
           drones: []
@@ -856,8 +1325,57 @@
         })
       ];
 
+      function buildAdvancedLevels() {
+        const created = [];
+        for (let i = 0; i < 15; i += 1) {
+          const idx = 16 + i;
+          const width = 1840 + i * 90;
+          const high = 340 - (i % 4) * 28;
+          const far = 620 + i * 36;
+          created.push(makeLevel(`${idx}. Разлом ${i + 1}`, "Во второй половине игры появляются хроноботы, телепорты и длинные связки кнопок.", width, {
+            spawn: { x: 60, y: 360 },
+            exit: { x: width - 90, y: 174, w: 30, h: 46 },
+            solids: [
+              { x: 0, y: 400, w: width, h: 90 },
+              { x: 220, y: high, w: 120, h: 20 },
+              { x: 480, y: high - 40, w: 120, h: 20 },
+              { x: far, y: high - 70, w: 130, h: 20 },
+              { x: far + 320, y: high - 108, w: 140, h: 20 },
+              { x: width - 420, y: 220, w: 170, h: 20 },
+              { x: width - 180, y: 220, w: 90, h: 20 }
+            ],
+            buttons: [
+              { x: 246, y: high - 20, w: 22, h: 10, id: "a" },
+              { x: far + 26, y: high - 90, w: 22, h: 10, id: "b" }
+            ],
+            doors: [
+              { x: 380, y: 270, w: 22, h: 130, id: "a", mode: "hold" },
+              { x: width - 520, y: 170, w: 22, h: 230, id: "b", mode: "hold" }
+            ],
+            lasers: i % 2 === 0 ? [{ x: far + 200, y: 260, w: 16, h: 140, id: "a", activeWhen: false }] : [],
+            movers: [
+              { x: 840 + i * 10, y: 250, w: 110, h: 18, axis: i % 2 === 0 ? "x" : "y", range: 120 + (i % 3) * 40, speed: 0.55 + i * 0.02 }
+            ],
+            traps: [
+              { x: 340, y: 396, w: 120, h: 8 },
+              { x: far + 120, y: 396, w: 110 + (i % 3) * 20, h: 8 },
+              { x: width - 660, y: 396, w: 110, h: 8 }
+            ],
+            turrets: i % 3 === 0 ? [{ x: width - 740, y: 210, dir: 1, rate: 1.2 }, { x: width - 260, y: 180, dir: -1, rate: 1 }] : [{ x: width - 300, y: 180, dir: -1, rate: 1.05 }],
+            drones: i % 2 === 1 ? [{ x1: far + 150, x2: far + 340, y: 180, speed: 1.1 + i * 0.04 }] : [],
+            chronoBots: [
+              { x1: width - 760, x2: width - 420, y: 360, speed: 1 + i * 0.05, teleportEvery: Math.max(2.2, 4 - i * 0.08), melee: 54 }
+            ],
+            slowZones: i % 4 === 2 ? [{ x: width - 980, y: 220, w: 180, h: 160 }] : []
+          }));
+        }
+        return created;
+      }
+
+      levels.push(...buildAdvancedLevels());
+
       function hideAllScreens() {
-        [dom.mainMenu, dom.levelsMenu, dom.settingsMenu, dom.howMenu, dom.pauseMenu, dom.completeMenu].forEach((el) => el.classList.remove("active"));
+        [dom.mainMenu, dom.levelsMenu, dom.editorMenu, dom.settingsMenu, dom.howMenu, dom.pauseMenu, dom.completeMenu].forEach((el) => el.classList.remove("active"));
       }
 
       function showScreen(name) {
@@ -865,6 +1383,8 @@
         state.screen = name || "game";
         if (name === "main") dom.mainMenu.classList.add("active");
         if (name === "levels") dom.levelsMenu.classList.add("active");
+        if (name === "shop") dom.shopMenu.classList.add("active");
+        if (name === "editor") dom.editorMenu.classList.add("active");
         if (name === "settings") dom.settingsMenu.classList.add("active");
         if (name === "how") dom.howMenu.classList.add("active");
         if (name === "pause") dom.pauseMenu.classList.add("active");
@@ -872,18 +1392,40 @@
         dom.hud.hidden = name !== null;
       }
 
-      function resetLevel(index = state.levelIndex) {
+      function loadLevelState(levelData, index = -1, customLevel = null) {
         state.levelIndex = index;
-        state.level = structuredClone(levels[index]);
-        state.player = createPlayer(state.level.spawn.x, state.level.spawn.y, COLORS.cyan);
-        state.player2 = state.coopEnabled ? createPlayer(state.level.spawn.x + 26, state.level.spawn.y, COLORS.green) : null;
+        state.customLevel = customLevel ? cloneLevelData(customLevel) : null;
+        state.level = structuredClone(levelData);
+        state.player = setupPlayerLoadout(createPlayer(state.level.spawn.x, state.level.spawn.y, COLORS.cyan), "p1");
+        state.player2 = state.coopEnabled ? setupPlayerLoadout(createPlayer(state.level.spawn.x + 26, state.level.spawn.y, COLORS.green), "p2") : null;
+        state.player.blocksLeft = state.coopEnabled ? 1 : 2;
+        if (state.player2) state.player2.blocksLeft = 1;
+        state.level.coins = (state.level.coins || []).map((coin) => ({ ...coin, collected: false, bob: Math.random() * Math.PI * 2 }));
         state.clones = [];
-        state.drones = (state.level.drones || []).map((d) => ({ ...d, x: d.x1, dir: 1, yOffset: Math.random() * Math.PI * 2 }));
+        state.drones = (state.level.drones || []).map((d) => ({
+          ...d,
+          x: d.x1,
+          dir: 1,
+          baseY: d.y,
+          yOffset: Math.random() * Math.PI * 2,
+          shootCooldown: 6
+        }));
+        state.chronoBots = (state.level.chronoBots || []).map((b) => ({
+          ...b,
+          x: b.x1,
+          y: b.y,
+          dir: 1,
+          baseY: b.y,
+          teleportCooldown: b.teleportEvery || 3.5,
+          attackCooldown: 0
+        }));
+        state.placedBlocks = [];
         state.particles = [];
         state.bullets = [];
         state.trails = [];
         state.recording = [];
         state.runTime = 0;
+        state.runCoins = 0;
         state.replayTime = 0;
         state.rewindMeter = 1;
         state.rewinding = false;
@@ -893,6 +1435,14 @@
         state.camera.zoom = innerWidth < 900 ? 1.9 : 2.3;
         showScreen(null);
         updateHud();
+      }
+
+      function resetLevel(index = state.levelIndex) {
+        loadLevelState(levels[index], index, null);
+      }
+
+      function startCustomLevel(levelData) {
+        loadLevelState(levelData, -1, levelData);
       }
 
       function resize() {
@@ -907,7 +1457,7 @@
 
       function loadMetaToMenu() {
         dom.menuStats.innerHTML = "";
-        [["Открыто уровней", `${Math.max(1, state.save.bestLevel + 1)}/${levels.length}`], ["Всего клонов", `${state.save.totalClones || 0}`], ["Лучшее время", state.save.bestTime ? `${state.save.bestTime.toFixed(1)}с` : "--"]].forEach(([title, value]) => {
+        [["Открыто уровней", `${Math.max(1, state.save.bestLevel + 1)}/${levels.length}`], ["Монеты", `${state.save.coins || 0}`], ["Всего клонов", `${state.save.totalClones || 0}`], ["Лучшее время", state.save.bestTime ? `${state.save.bestTime.toFixed(1)}с` : "--"]].forEach(([title, value]) => {
           const card = document.createElement("div");
           card.className = "card";
           card.innerHTML = `<h3>${title}</h3><p>${value}</p>`;
@@ -915,21 +1465,209 @@
         });
       }
 
+      function renderShopCards(container, items, slot = null, type = "skin") {
+        container.innerHTML = "";
+        items.forEach((item) => {
+          const card = document.createElement("div");
+          card.className = "card";
+          let owned = true;
+          let equipped = false;
+          if (type === "skin") {
+            owned = (state.save.ownedSkins?.[slot] || []).includes(item.key);
+            equipped = state.save.equippedSkins?.[slot] === item.key;
+          } else {
+            owned = hasBoost(item.key);
+          }
+          card.innerHTML = `<h3>${item.name}</h3><p>${item.desc || "Визуальный стиль персонажа"}</p><p>${item.price === 0 ? "Бесплатно" : `${item.price} монет`}</p>`;
+          const btn = document.createElement("button");
+          btn.className = "btn" + (owned ? " alt" : "");
+          if (!owned) btn.textContent = `Купить`;
+          else if (type === "skin") btn.textContent = equipped ? "Надет" : "Надеть";
+          else btn.textContent = "Куплено";
+          btn.disabled = type === "boost" && owned;
+          btn.addEventListener("click", () => {
+            if (!owned) {
+              if ((state.save.coins || 0) < item.price) {
+                showTip("Не хватает монет");
+                return;
+              }
+              state.save.coins -= item.price;
+              if (type === "skin") {
+                state.save.ownedSkins[slot].push(item.key);
+              } else {
+                state.save.boughtBoosts.push(item.key);
+              }
+            }
+            if (type === "skin") state.save.equippedSkins[slot] = item.key;
+            saveMeta();
+            loadMetaToMenu();
+            renderShop();
+            showTip(type === "skin" ? "Скин обновлён" : "Усиление куплено");
+          });
+          card.appendChild(btn);
+          container.appendChild(card);
+        });
+      }
+
+      function renderShop() {
+        dom.shopCoins.textContent = `${state.save.coins || 0} монет`;
+        renderShopCards(dom.shopP1Skins, SKINS, "p1", "skin");
+        renderShopCards(dom.shopP2Skins, SKINS, "p2", "skin");
+        renderShopCards(dom.shopBoosts, BOOSTS, null, "boost");
+      }
+
+      const editorTools = [
+        ["solid", "Платформа"],
+        ["button", "Кнопка"],
+        ["door", "Дверь"],
+        ["laser", "Лазер"],
+        ["mover", "Платформа+"],
+        ["trap", "Шипы"],
+        ["turret", "Турель"],
+        ["drone", "Дрон"],
+        ["chronoBot", "Хронобот"],
+        ["slowZone", "Замедление"],
+        ["spawn", "Старт"],
+        ["exit", "Выход"]
+      ];
+
+      function syncEditorFields() {
+        if (!state.editor) return;
+        dom.editorName.value = state.editor.level.name;
+        dom.editorHint.value = state.editor.level.hint;
+        dom.editorWidth.value = state.editor.level.width;
+        dom.editorGrid.value = state.editor.grid;
+        dom.editorData.value = JSON.stringify(state.editor.level, null, 2);
+      }
+
+      function renderEditorTools() {
+        dom.editorTools.innerHTML = "";
+        editorTools.forEach(([key, label]) => {
+          const btn = document.createElement("button");
+          btn.className = "btn alt" + (state.editor?.tool === key ? " active" : "");
+          btn.textContent = label;
+          btn.addEventListener("click", () => {
+            state.editor.tool = key;
+            renderEditorTools();
+          });
+          dom.editorTools.appendChild(btn);
+        });
+      }
+
+      function openEditor() {
+        state.editor = {
+          tool: state.editor?.tool || "solid",
+          grid: state.editor?.grid || 20,
+          cameraX: state.editor?.cameraX || 0,
+          cameraY: state.editor?.cameraY || 0,
+          collapsed: state.editor?.collapsed || false,
+          level: state.editor?.level ? cloneLevelData(state.editor.level) : emptyLevelData()
+        };
+        state.level = cloneLevelData(state.editor.level);
+        state.levelIndex = -2;
+        state.customLevel = null;
+        state.player = createPlayer(state.level.spawn.x, state.level.spawn.y, COLORS.cyan);
+        state.player2 = null;
+        state.clones = [];
+        state.drones = (state.level.drones || []).map((d) => ({ ...d, x: d.x1, dir: 1, baseY: d.y, yOffset: Math.random() * Math.PI * 2, shootCooldown: 6 }));
+        state.chronoBots = (state.level.chronoBots || []).map((b) => ({ ...b, x: b.x1, y: b.y, dir: 1, baseY: b.y, teleportCooldown: b.teleportEvery || 3.5, attackCooldown: 0 }));
+        state.bullets = [];
+        state.placedBlocks = [];
+        state.camera.x = state.editor.cameraX;
+        state.camera.y = state.editor.cameraY;
+        state.camera.zoom = innerWidth < 900 ? 1.45 : 1.75;
+        renderEditorTools();
+        syncEditorFields();
+        showScreen("editor");
+        dom.editorMenu.classList.toggle("collapsed", !!state.editor.collapsed);
+        dom.editorToggleBtn.textContent = state.editor.collapsed ? "Показать" : "Скрыть";
+      }
+
+      function placeEditorObject(worldX, worldY) {
+        if (!state.editor) return;
+        const level = state.editor.level;
+        const grid = Math.max(10, Number(dom.editorGrid.value) || state.editor.grid || 20);
+        state.editor.grid = grid;
+        level.name = dom.editorName.value || "Мой уровень";
+        level.hint = dom.editorHint.value || "Собери свой временной пазл.";
+        level.width = Math.max(800, Number(dom.editorWidth.value) || level.width || 1600);
+        const x = Math.floor(worldX / grid) * grid;
+        const y = Math.floor(worldY / grid) * grid;
+        const lastButtonId = level.buttons.length ? level.buttons[level.buttons.length - 1].id : "a";
+        const tool = state.editor.tool;
+        if (tool === "solid") level.solids.push({ x, y, w: grid * 4, h: grid });
+        if (tool === "button") level.buttons.push({ x, y, w: 22, h: 10, id: nextButtonId(level) });
+        if (tool === "door") level.doors.push({ x, y: y - grid * 5, w: 24, h: grid * 5, id: lastButtonId, mode: "hold" });
+        if (tool === "laser") level.lasers.push({ x, y: y - grid * 5, w: 16, h: grid * 5, id: lastButtonId, activeWhen: false });
+        if (tool === "mover") level.movers.push({ x, y, w: 110, h: 18, axis: "x", range: 120, speed: 0.6 });
+        if (tool === "trap") level.traps.push({ x, y, w: grid * 3, h: 8 });
+        if (tool === "turret") level.turrets.push({ x, y, dir: 1, rate: 1.1 });
+        if (tool === "drone") level.drones.push({ x1: x, x2: x + grid * 8, y, speed: 1.2 });
+        if (tool === "chronoBot") level.chronoBots.push({ x1: x, x2: x + grid * 6, y, speed: 1.1, teleportEvery: 3.5, melee: 54 });
+        if (tool === "slowZone") level.slowZones.push({ x, y: y - grid * 3, w: grid * 6, h: grid * 4 });
+        if (tool === "spawn") level.spawn = { x, y };
+        if (tool === "exit") level.exit = { x, y: y - 46, w: 30, h: 46 };
+        state.level = cloneLevelData(level);
+        state.drones = (state.level.drones || []).map((d) => ({ ...d, x: d.x1, dir: 1, baseY: d.y, yOffset: Math.random() * Math.PI * 2, shootCooldown: 6 }));
+        state.chronoBots = (state.level.chronoBots || []).map((b) => ({ ...b, x: b.x1, y: b.y, dir: 1, baseY: b.y, teleportCooldown: b.teleportEvery || 3.5, attackCooldown: 0 }));
+        syncEditorFields();
+      }
+
+      function eraseEditorObject(worldX, worldY) {
+        if (!state.editor) return;
+        const hit = { x: worldX, y: worldY, w: 1, h: 1 };
+        const level = state.editor.level;
+        ["buttons", "doors", "lasers", "movers", "traps", "slowZones", "solids"].forEach((key) => {
+          level[key] = level[key].filter((item) => !rectsIntersect(hit, item));
+        });
+        level.turrets = level.turrets.filter((t) => !rectsIntersect(hit, { x: t.x - 12, y: t.y - 12, w: 24, h: 24 }));
+        level.drones = level.drones.filter((d) => !rectsIntersect(hit, { x: d.x1, y: d.y - 12, w: (d.x2 - d.x1) || 24, h: 24 }));
+        level.chronoBots = level.chronoBots.filter((b) => !rectsIntersect(hit, { x: b.x1, y: b.y - 20, w: (b.x2 - b.x1) || 28, h: 40 }));
+        state.level = cloneLevelData(level);
+        state.drones = (state.level.drones || []).map((d) => ({ ...d, x: d.x1, dir: 1, baseY: d.y, yOffset: Math.random() * Math.PI * 2, shootCooldown: 6 }));
+        state.chronoBots = (state.level.chronoBots || []).map((b) => ({ ...b, x: b.x1, y: b.y, dir: 1, baseY: b.y, teleportCooldown: b.teleportEvery || 3.5, attackCooldown: 0 }));
+        syncEditorFields();
+      }
+
       function renderLevelsMenu() {
         dom.levelsGrid.innerHTML = "";
         levels.forEach((level, index) => {
-          const unlocked = index <= Math.max(0, state.save.bestLevel);
+          const unlocked = level.customMade || index <= Math.max(0, state.save.bestLevel);
           const card = document.createElement("div");
           card.className = "card";
-          card.innerHTML = `<h3>${level.name}</h3><p>${level.hint}</p><p>${unlocked ? "Доступен" : "Закрыт"}</p>`;
+          const styleLabel = level.style === "industrial" ? "Индустриальный" : level.style === "sand" ? "Песочный" : level.style === "mono" ? "Контурный" : level.style === "archive" ? "Архив" : "Неон";
+          card.innerHTML = `<h3>${level.name}</h3><p>${level.hint}</p><p>Стиль: ${styleLabel}</p><p>Монет: ${(level.coins || []).length}</p><p>${unlocked ? "Доступен" : "Закрыт"}</p>`;
           const btn = document.createElement("button");
           btn.className = "btn" + (unlocked ? "" : " alt");
           btn.textContent = unlocked ? "Играть" : "Сначала пройди предыдущие";
           btn.disabled = !unlocked;
           btn.addEventListener("click", () => resetLevel(index));
           card.appendChild(btn);
+          if (level.customMade) {
+            const removeBtn = document.createElement("button");
+            removeBtn.className = "btn warn";
+            removeBtn.style.marginTop = "8px";
+            removeBtn.textContent = "Удалить";
+            removeBtn.addEventListener("click", () => {
+              levels.splice(index, 1);
+              renderLevelsMenu();
+              showTip("Уровень удалён");
+            });
+            card.appendChild(removeBtn);
+          }
           dom.levelsGrid.appendChild(card);
         });
+      }
+
+      function trimCampaignLevels(maxCampaignLevels = 30) {
+        let campaignSeen = 0;
+        for (let i = levels.length - 1; i >= 0; i -= 1) {
+          if (levels[i].customMade) continue;
+          campaignSeen += 1;
+          if (campaignSeen > maxCampaignLevels) levels.splice(i, 1);
+        }
+        state.save.bestLevel = clamp(state.save.bestLevel, 0, Math.max(0, levels.length - 1));
+        saveMeta();
       }
 
       function pushRecordFrame() {
@@ -988,7 +1726,86 @@
           }
         });
         state.level.movers.forEach((m) => list.push(m));
+        state.placedBlocks.forEach((b) => list.push(b));
         return list;
+      }
+
+      function screenToWorld(x, y) {
+        return {
+          x: (x - state.camera.sx) / state.camera.zoom + state.camera.x,
+          y: (y - state.camera.sy) / state.camera.zoom + state.camera.y
+        };
+      }
+
+      function placeBuildBlock(clientX, clientY, ownerHint = null) {
+        if (state.screen !== "game" || !state.level || state.paused) return;
+        let candidates = [state.player, state.player2].filter((p) => p?.alive && p.blocksLeft > 0);
+        if (ownerHint === "p1") candidates = candidates.filter((p) => p === state.player);
+        if (ownerHint === "p2") candidates = candidates.filter((p) => p === state.player2);
+        if (!candidates.length) {
+          showTip("Блоков больше нет");
+          return;
+        }
+        const rect = canvas.getBoundingClientRect();
+        const world = screenToWorld(clientX - rect.left, clientY - rect.top);
+        const owner = !state.coopEnabled
+          ? candidates[0]
+          : ownerHint === "p1"
+            ? state.player
+            : ownerHint === "p2"
+              ? state.player2
+              : candidates.reduce((best, candidate) => {
+                if (!best) return candidate;
+                const bestDist = (best.x + best.w * 0.5 - world.x) ** 2 + (best.y + best.h * 0.5 - world.y) ** 2;
+                const candidateDist = (candidate.x + candidate.w * 0.5 - world.x) ** 2 + (candidate.y + candidate.h * 0.5 - world.y) ** 2;
+                return candidateDist < bestDist ? candidate : best;
+              }, null);
+        const ownerCenterX = owner.x + owner.w * 0.5;
+        const ownerCenterY = owner.y + owner.h * 0.5;
+        if (Math.hypot(world.x - ownerCenterX, world.y - ownerCenterY) > 170) {
+          showTip("Ставь блок ближе к игроку");
+          return;
+        }
+        const bx = Math.floor(world.x / BUILD_BLOCK_SIZE) * BUILD_BLOCK_SIZE;
+        const by = Math.floor(world.y / BUILD_BLOCK_SIZE) * BUILD_BLOCK_SIZE;
+        const block = { x: bx, y: by, w: BUILD_BLOCK_SIZE, h: BUILD_BLOCK_SIZE };
+        const occupied =
+          solidRects().some((r) => rectsIntersect(block, r)) ||
+          state.level.traps?.some((t) => rectsIntersect(block, t)) ||
+          state.level.lasers?.some((l) => rectsIntersect(block, l)) ||
+          state.drones.some((d) => rectsIntersect(block, { x: d.x - 12, y: d.y - 12, w: 24, h: 24 })) ||
+          state.level.turrets?.some((t) => rectsIntersect(block, { x: t.x - 12, y: t.y - 12, w: 24, h: 24 })) ||
+          [state.player, state.player2, ...state.clones].filter(Boolean).some((e) => rectsIntersect(block, entityRect(e))) ||
+          rectsIntersect(block, state.level.exit);
+        if (occupied) {
+          showTip("Тут блок не поставить");
+          return;
+        }
+        state.placedBlocks.push(block);
+        owner.blocksLeft -= 1;
+        emitBurst(block.x + block.w / 2, block.y + block.h / 2, 8, owner.tint, 60);
+      }
+
+      function removeBuildBlock(clientX, clientY, ownerHint = null) {
+        if (state.screen !== "game" || !state.level || state.paused || !state.placedBlocks.length) return false;
+        const rect = canvas.getBoundingClientRect();
+        const world = screenToWorld(clientX - rect.left, clientY - rect.top);
+        const hit = { x: world.x, y: world.y, w: 1, h: 1 };
+        for (let i = state.placedBlocks.length - 1; i >= 0; i -= 1) {
+          const block = state.placedBlocks[i];
+          if (!rectsIntersect(hit, block)) continue;
+          state.placedBlocks.splice(i, 1);
+          if (!state.coopEnabled) {
+            state.player.blocksLeft += 1;
+          } else if (ownerHint === "p1") {
+            state.player.blocksLeft += 1;
+          } else if (ownerHint === "p2" && state.player2) {
+            state.player2.blocksLeft += 1;
+          }
+          emitBurst(block.x + block.w / 2, block.y + block.h / 2, 6, COLORS.orange, 50);
+          return true;
+        }
+        return false;
       }
 
       function collideEntity(entity, axis) {
@@ -1012,16 +1829,18 @@
       }
 
       function updatePlayer(delta, p, controls) {
-        if (!p.alive) return;
+        if (!p.alive || p.exited) return;
         const wasDashing = p.dashTimer > 0;
         const slowScale = p.slowTimer > 0 ? 0.45 : 1;
+        p.invuln = Math.max(0, p.invuln - delta);
+        p.hitFlash = Math.max(0, p.hitFlash - delta * 2.4);
         p.coyote = p.onGround ? 0.16 : Math.max(0, p.coyote - delta * slowScale);
         p.jumpBuffer = controls.jumpPressed ? 0.18 : Math.max(0, p.jumpBuffer - delta * slowScale);
         p.dashTimer = Math.max(0, p.dashTimer - delta);
         p.dashJumpWindow = Math.max(0, p.dashJumpWindow - delta);
         p.slowTimer = Math.max(0, p.slowTimer - delta);
         if (p.onGround) {
-          p.dashCharges = 3;
+          p.dashCharges = p.maxDashCharges || 3;
           p.dashJumpWindow = 0;
         }
         if (wasDashing && p.dashTimer <= 0 && !p.onGround) p.dashJumpWindow = 0.12;
@@ -1057,7 +1876,7 @@
         p.onGround = false;
         collideEntity(p, "y");
         if (!p.onGround) p.vx *= 0.992;
-        if (p.y > 560) killPlayer();
+        if (p.y > 560) damagePlayer(p, 100, "void");
       }
 
       function updateClone(clone) {
@@ -1074,6 +1893,20 @@
         clone.step += 1;
       }
 
+      function damagePlayer(target, amount, source = "hit") {
+        if (!target || !target.alive || target.exited || target.invuln > 0) return false;
+        target.hp = clamp(target.hp - amount, 0, target.maxHp);
+        target.invuln = source === "void" ? 0 : 0.42;
+        target.hitFlash = 1;
+        emitBurst(target.x + target.w / 2, target.y + target.h / 2, Math.max(8, Math.round(amount / 3)), COLORS.red, 120);
+        state.camera.shake = Math.max(state.camera.shake, source === "void" ? 15 : 8);
+        state.audio.hit();
+        if (target.hp <= 0) {
+          killPlayer(target);
+        }
+        return true;
+      }
+
       function rewindTime() {
         if (state.recording.length < 20 || state.rewindMeter <= 0.05) return;
         const p1Record = state.recording.map((f) => f.p1);
@@ -1086,17 +1919,21 @@
         saveMeta();
         const framesBack = Math.min(state.recording.length - 1, Math.floor(state.recording.length * 0.7));
         const rewindFrame = state.recording[Math.max(0, state.recording.length - 1 - framesBack)];
-        state.player = createPlayer(rewindFrame.p1.x, rewindFrame.p1.y, COLORS.cyan);
+        state.player = setupPlayerLoadout(createPlayer(rewindFrame.p1.x, rewindFrame.p1.y, COLORS.cyan), "p1");
+        state.player.blocksLeft = state.coopEnabled ? 1 : 2;
         state.player.face = rewindFrame.p1.face;
         if (state.coopEnabled && rewindFrame.p2) {
-          state.player2 = createPlayer(rewindFrame.p2.x, rewindFrame.p2.y, COLORS.green);
+          state.player2 = setupPlayerLoadout(createPlayer(rewindFrame.p2.x, rewindFrame.p2.y, COLORS.green), "p2");
+          state.player2.blocksLeft = 1;
           state.player2.face = rewindFrame.p2.face;
         } else {
-          state.player2 = state.coopEnabled ? createPlayer(state.level.spawn.x + 26, state.level.spawn.y, COLORS.green) : null;
+          state.player2 = state.coopEnabled ? setupPlayerLoadout(createPlayer(state.level.spawn.x + 26, state.level.spawn.y, COLORS.green), "p2") : null;
+          if (state.player2) state.player2.blocksLeft = 1;
         }
+        state.placedBlocks = [];
         state.recording = [];
         state.runTime = 0;
-        state.rewindMeter = clamp(state.rewindMeter - 0.28, 0, 1);
+        state.rewindMeter = clamp(state.rewindMeter - (hasBoost("rewind") ? 0.2 : 0.28), 0, 1);
         state.rewinding = true;
         state.rewindVisual = 1;
         state.audio.rewind();
@@ -1112,31 +1949,62 @@
           laser.on = laser.activeWhen ? signal : !signal;
         });
         state.level.movers?.forEach((m) => {
+          const prevX = m.x;
+          const prevY = m.y;
           m.t = (m.t || 0) + delta * m.speed;
           if (m.axis === "x") m.x = m.baseX ?? (m.baseX = m.x), m.x = m.baseX + Math.sin(m.t) * m.range;
           if (m.axis === "y") m.y = m.baseY ?? (m.baseY = m.y), m.y = m.baseY + Math.sin(m.t) * m.range;
+          const dx = m.x - prevX;
+          const dy = m.y - prevY;
+          if (!dx && !dy) return;
+          [state.player, state.player2, ...state.clones].filter(Boolean).forEach((entity) => {
+            if (!entity.alive || !entity.onGround) return;
+            const feet = entity.y + entity.h;
+            const standingOnMover =
+              entity.x + entity.w > prevX + 6 &&
+              entity.x < prevX + m.w - 6 &&
+              Math.abs(feet - prevY) <= 8 &&
+              entity.vy >= -20;
+            if (!standingOnMover) return;
+            entity.x += dx;
+            entity.y += dy;
+          });
         });
       }
 
       function updateHazards(delta) {
-        const targets = [state.player, state.player2].filter(Boolean);
+        const targets = [state.player, state.player2].filter((p) => p?.alive && !p.exited);
         state.level.lasers?.forEach((laser) => {
           targets.forEach((p) => {
             if (laser.on && rectsIntersect(entityRect(p), laser)) {
               state.audio.laser();
-              killPlayer();
+              damagePlayer(p, 24, "laser");
             }
           });
         });
         state.level.traps?.forEach((trap) => {
           targets.forEach((p) => {
-            if (rectsIntersect(entityRect(p), trap)) killPlayer();
+            if (rectsIntersect(entityRect(p), trap)) damagePlayer(p, 34, "trap");
           });
         });
         state.level.slowZones?.forEach((zone) => {
           targets.forEach((p) => {
             if (rectsIntersect(entityRect(p), zone)) p.slowTimer = 0.06;
           });
+        });
+      }
+
+      function updateCoins() {
+        const targets = [state.player, state.player2].filter((p) => p?.alive && !p.exited);
+        state.level.coins?.forEach((coin) => {
+          if (coin.collected) return;
+          const coinRect = { x: coin.x - 8, y: coin.y - 8, w: 16, h: 16 };
+          if (targets.some((p) => rectsIntersect(entityRect(p), coinRect))) {
+            coin.collected = true;
+            state.runCoins += 1;
+            emitBurst(coin.x, coin.y, 9, "#ffd95e", 90);
+            showTip("+1 монета", 0.7);
+          }
         });
       }
 
@@ -1154,8 +2022,11 @@
           b.x += b.vx * delta;
           b.y += b.vy * delta;
           b.life -= delta;
-          if ([state.player, state.player2].filter(Boolean).some((p) => rectsIntersect({ x: b.x - b.r, y: b.y - b.r, w: b.r * 2, h: b.r * 2 }, entityRect(p)))) {
-            killPlayer();
+          const hitTarget = [state.player, state.player2]
+            .filter((p) => p?.alive && !p.exited)
+            .find((p) => rectsIntersect({ x: b.x - b.r, y: b.y - b.r, w: b.r * 2, h: b.r * 2 }, entityRect(p)));
+          if (hitTarget) {
+            damagePlayer(hitTarget, 18, "bullet");
             state.bullets.splice(i, 1);
             continue;
           }
@@ -1170,12 +2041,91 @@
           d.x += d.dir * d.speed * 60 * delta;
           if (d.x <= d.x1) d.dir = 1;
           if (d.x >= d.x2) d.dir = -1;
-          d.y = d.y + Math.sin(state.time * 3 + d.yOffset) * 0.6;
-          if ([state.player, state.player2].filter(Boolean).some((p) => rectsIntersect({ x: d.x - 12, y: d.y - 12, w: 24, h: 24 }, entityRect(p)))) killPlayer();
+          d.y = d.baseY + Math.sin(state.time * 3 + d.yOffset) * 8;
+          d.shootCooldown = (d.shootCooldown ?? 6) - delta;
+          if (d.shootCooldown <= 0) {
+            const targets = [state.player, state.player2].filter((p) => p?.alive);
+            if (targets.length) {
+              const target = targets.reduce((best, candidate) => {
+                if (!best) return candidate;
+                const bestDist = (best.x - d.x) ** 2 + (best.y - d.y) ** 2;
+                const candidateDist = (candidate.x - d.x) ** 2 + (candidate.y - d.y) ** 2;
+                return candidateDist < bestDist ? candidate : best;
+              }, null);
+              const tx = target.x + target.w * 0.5;
+              const ty = target.y + target.h * 0.5;
+              const baseAngle = Math.atan2(ty - d.y, tx - d.x);
+              [-0.14, 0, 0.14].forEach((offset) => {
+                const angle = baseAngle + offset;
+                state.bullets.push({
+                  x: d.x,
+                  y: d.y,
+                  vx: Math.cos(angle) * 250,
+                  vy: Math.sin(angle) * 250,
+                  r: 4,
+                  life: 4
+                });
+              });
+              state.audio.laser();
+            }
+            d.shootCooldown = 6;
+          }
+          const ramTarget = [state.player, state.player2]
+            .filter((p) => p?.alive && !p.exited)
+            .find((p) => rectsIntersect({ x: d.x - 12, y: d.y - 12, w: 24, h: 24 }, entityRect(p)));
+          if (ramTarget) damagePlayer(ramTarget, 28, "drone");
+        });
+      }
+
+      function updateChronoBots(delta) {
+        const targets = [state.player, state.player2].filter((p) => p?.alive);
+        state.chronoBots.forEach((bot) => {
+          const target = targets.reduce((best, candidate) => {
+            if (!best) return candidate;
+            const bestDist = Math.abs((best.x + best.w * 0.5) - bot.x);
+            const candidateDist = Math.abs((candidate.x + candidate.w * 0.5) - bot.x);
+            return candidateDist < bestDist ? candidate : best;
+          }, null);
+          if (!target) return;
+          bot.attackCooldown = Math.max(0, (bot.attackCooldown || 0) - delta);
+          bot.teleportCooldown = (bot.teleportCooldown ?? bot.teleportEvery ?? 3.5) - delta;
+          const targetX = target.x + target.w * 0.5;
+          bot.dir = targetX >= bot.x ? 1 : -1;
+          bot.x += bot.dir * (bot.speed * 72) * delta;
+          bot.x = clamp(bot.x, bot.x1, bot.x2);
+          bot.y = bot.baseY + Math.sin(state.time * 4 + bot.x * 0.01) * 5;
+          if (bot.teleportCooldown <= 0) {
+            bot.x = clamp(target.x - bot.dir * 90, bot.x1, bot.x2);
+            bot.teleportCooldown = bot.teleportEvery || 3.5;
+            emitBurst(bot.x, bot.y, 12, COLORS.violet, 110);
+            state.camera.shake = Math.max(state.camera.shake, 10);
+          }
+          const body = { x: bot.x - 14, y: bot.y - 18, w: 28, h: 36 };
+          if (rectsIntersect(body, entityRect(target)) && bot.attackCooldown <= 0) {
+            bot.attackCooldown = 0.9;
+            emitBurst(target.x + target.w * 0.5, target.y + target.h * 0.5, 10, COLORS.red, 120);
+            damagePlayer(target, 40, "chrono");
+          }
         });
       }
 
       function updateCamera(delta) {
+        if (state.screen === "editor" && state.editor) {
+          const panSpeed = 520 * delta;
+          if (input.editor.left) state.editor.cameraX -= panSpeed;
+          if (input.editor.right) state.editor.cameraX += panSpeed;
+          if (input.editor.up) state.editor.cameraY -= panSpeed * 0.7;
+          if (input.editor.down) state.editor.cameraY += panSpeed * 0.7;
+          const maxX = Math.max(0, state.level.width - state.width / state.camera.zoom);
+          state.editor.cameraX = clamp(state.editor.cameraX, 0, maxX);
+          state.editor.cameraY = clamp(state.editor.cameraY, 0, 470);
+          state.camera.x = lerp(state.camera.x, state.editor.cameraX, 0.22);
+          state.camera.y = lerp(state.camera.y, state.editor.cameraY, 0.22);
+          state.camera.shake *= 0.82;
+          state.camera.sx = 0;
+          state.camera.sy = 0;
+          return;
+        }
         const focusX = state.player2 ? (state.player.x + state.player2.x) * 0.5 : state.player.x;
         const focusY = state.player2 ? (state.player.y + state.player2.y) * 0.5 : state.player.y;
         const targetX = focusX - state.width * 0.33 / state.camera.zoom;
@@ -1212,23 +2162,30 @@
         }
       }
 
-      function killPlayer() {
+      function killPlayer(target = state.player) {
         if (!state.player.alive) return;
         state.player.alive = false;
         if (state.player2) state.player2.alive = false;
-        emitBurst(state.player.x + state.player.w / 2, state.player.y + state.player.h / 2, 20, COLORS.red, 140);
+        const victim = target || state.player;
+        emitBurst(victim.x + victim.w / 2, victim.y + victim.h / 2, 20, COLORS.red, 140);
         state.camera.shake = 16;
-        state.audio.hit();
-        setTimeout(() => resetLevel(state.levelIndex), 800);
+        setTimeout(() => {
+          if (state.levelIndex >= 0) resetLevel(state.levelIndex);
+          else if (state.customLevel) startCustomLevel(state.customLevel);
+        }, 800);
       }
 
       function levelComplete() {
         state.audio.complete();
-        state.save.bestLevel = Math.max(state.save.bestLevel, Math.min(levels.length - 1, state.levelIndex + 1));
-        if (!state.save.bestTime || state.runTime < state.save.bestTime) state.save.bestTime = state.runTime;
+        if (state.levelIndex >= 0) {
+          state.save.bestLevel = Math.max(state.save.bestLevel, Math.min(levels.length - 1, state.levelIndex + 1));
+          if (!state.save.bestTime || state.runTime < state.save.bestTime) state.save.bestTime = state.runTime;
+        }
+        const bonusCoins = 2 + (state.levelIndex >= 15 ? 2 : 0);
+        state.save.coins = (state.save.coins || 0) + state.runCoins + bonusCoins;
         saveMeta();
         dom.completeStats.innerHTML = "";
-        [["Уровень", state.level.name], ["Время", `${state.runTime.toFixed(1)}с`], ["Клоны", `${state.clones.length}`], ["Игроки", state.coopEnabled ? "2" : "1"]].forEach(([title, value]) => {
+        [["Уровень", state.level.name], ["Время", `${state.runTime.toFixed(1)}с`], ["Клоны", `${state.clones.length}`], ["Монеты", `+${state.runCoins + bonusCoins}`], ["Игроки", state.coopEnabled ? "2" : "1"]].forEach(([title, value]) => {
           const card = document.createElement("div");
           card.className = "card";
           card.innerHTML = `<h3>${title}</h3><p>${value}</p>`;
@@ -1251,13 +2208,31 @@
         state.clones = state.clones.filter((c) => c.alive);
         updateTurrets(delta);
         updateDrones(delta);
+        updateChronoBots(delta);
         updateHazards(delta);
+        updateCoins();
         updateParticles(delta);
         updateCamera(delta);
         pushRecordFrame();
-        const p1Exit = rectsIntersect(entityRect(state.player), state.level.exit);
-        const p2Exit = state.player2 ? rectsIntersect(entityRect(state.player2), state.level.exit) : true;
-        if (p1Exit && p2Exit) levelComplete();
+        const p1Exit = !state.player.exited && rectsIntersect(entityRect(state.player), state.level.exit);
+        const p2Exit = state.player2 ? (!state.player2.exited && rectsIntersect(entityRect(state.player2), state.level.exit)) : true;
+        if (state.coopEnabled && state.player2) {
+          if (p1Exit) {
+            state.player.exited = true;
+            emitBurst(state.player.x + state.player.w / 2, state.player.y + state.player.h / 2, 10, COLORS.green, 80);
+          }
+          if (p2Exit) {
+            state.player2.exited = true;
+            emitBurst(state.player2.x + state.player2.w / 2, state.player2.y + state.player2.h / 2, 10, COLORS.green, 80);
+          }
+          if (state.coopExitMode === "either") {
+            if (state.player.exited || state.player2.exited) levelComplete();
+          } else if (state.player.exited && state.player2.exited) {
+            levelComplete();
+          }
+        } else {
+          if (p1Exit) levelComplete();
+        }
         state.audio.musicTick(time);
       }
 
@@ -1266,38 +2241,71 @@
         dom.hudLevel.textContent = state.level.name;
         dom.hudTime.textContent = `${state.runTime.toFixed(1)}с / ${state.clones.length}`;
         dom.hudHint.textContent = state.coopEnabled
-          ? `${state.level.hint} | Игрок 1: стрелки + правый Shift | Игрок 2: W/A/D + левый Shift | R общая перемотка`
-          : state.level.hint;
+          ? `${state.level.hint} | Игрок 1: стрелки + правый Shift + ПКМ блок | Игрок 2: W/A/D + левый Shift + ЛКМ блок | Финиш: ${state.coopExitMode === "both" ? "ждать обоих" : "достаточно одного"} | R общая перемотка`
+          : `${state.level.hint} | W/A/D движение, W/SPACE/↑ прыжок, Shift рывок, R перемотка, ЛКМ или ПКМ ставит блок`;
+        const hp1 = Math.ceil((state.player.hp / state.player.maxHp) * 100);
+        const hp2 = state.player2 ? Math.ceil((state.player2.hp / state.player2.maxHp) * 100) : 0;
         dom.hudStats.textContent = state.coopEnabled
-          ? `${state.clones.length} / ${state.player.dashCharges}-${state.player2?.dashCharges ?? 0} / ${Math.round(state.fps)} fps`
-          : `${state.clones.length} / ${state.player.dashCharges} / ${Math.round(state.fps)} fps`;
+          ? `HP ${hp1}-${hp2} / рывки ${state.player.dashCharges}-${state.player2?.dashCharges ?? 0} / блоки ${state.player.blocksLeft}-${state.player2?.blocksLeft ?? 0} / монеты ${state.runCoins} / ${Math.round(state.fps)} fps`
+          : `HP ${hp1} / рывки ${state.player.dashCharges} / блоки ${state.player.blocksLeft} / монеты ${state.runCoins} / ${Math.round(state.fps)} fps`;
         const leadX = state.player2 ? Math.max(state.player.x, state.player2.x) : state.player.x;
         dom.progressFill.style.width = `${clamp((leadX / state.level.width) * 100, 0, 100)}%`;
         dom.rewindFill.style.width = `${state.rewindMeter * 100}%`;
       }
 
+      function currentStyle() {
+        return state.level?.style || "neon";
+      }
+
       function drawBackground() {
+        const style = currentStyle();
         const g = ctx.createLinearGradient(0, 0, 0, state.height);
-        g.addColorStop(0, state.theme === "dark" ? "#0a1830" : "#e8f2f8");
-        g.addColorStop(1, state.theme === "dark" ? "#03060b" : "#c8dce8");
+        if (style === "industrial") {
+          g.addColorStop(0, "#232a33");
+          g.addColorStop(1, "#0f1318");
+        } else if (style === "sand") {
+          g.addColorStop(0, "#5c4f3d");
+          g.addColorStop(1, "#20160f");
+        } else if (style === "mono") {
+          g.addColorStop(0, "#d9dde2");
+          g.addColorStop(1, "#8d97a0");
+        } else if (style === "archive") {
+          g.addColorStop(0, "#17303a");
+          g.addColorStop(1, "#081117");
+        } else {
+          g.addColorStop(0, state.theme === "dark" ? "#0a1830" : "#e8f2f8");
+          g.addColorStop(1, state.theme === "dark" ? "#03060b" : "#c8dce8");
+        }
         ctx.fillStyle = g;
         ctx.fillRect(0, 0, state.width, state.height);
         for (let i = 0; i < 18; i += 1) {
           const x = (i * 140 - (state.camera.x * 0.15 % 140));
-          ctx.fillStyle = state.theme === "dark"
-            ? (i % 2 ? "rgba(75,231,255,0.08)" : "rgba(255,75,216,0.06)")
-            : (i % 2 ? "rgba(88,191,255,0.08)" : "rgba(255,122,223,0.06)");
+          ctx.fillStyle = style === "industrial" ? (i % 2 ? "rgba(255,176,108,0.06)" : "rgba(214,232,255,0.04)")
+            : style === "sand" ? (i % 2 ? "rgba(255,220,140,0.07)" : "rgba(255,173,114,0.05)")
+            : style === "mono" ? (i % 2 ? "rgba(255,255,255,0.06)" : "rgba(40,40,40,0.05)")
+            : style === "archive" ? (i % 2 ? "rgba(131,221,115,0.05)" : "rgba(75,231,255,0.05)")
+            : state.theme === "dark"
+              ? (i % 2 ? "rgba(75,231,255,0.08)" : "rgba(255,75,216,0.06)")
+              : (i % 2 ? "rgba(88,191,255,0.08)" : "rgba(255,122,223,0.06)");
           ctx.fillRect(x, 0, 2, state.height);
         }
         for (let i = 0; i < 7; i += 1) {
           const x = (i * 240 - (state.camera.x * 0.28 % 240));
           const h = 80 + (i % 3) * 40;
-          ctx.fillStyle = state.theme === "dark"
-            ? (i % 2 ? "rgba(18,39,62,0.7)" : "rgba(12,28,47,0.8)")
-            : (i % 2 ? "rgba(154,191,211,0.72)" : "rgba(176,209,225,0.82)");
+          ctx.fillStyle = style === "industrial" ? (i % 2 ? "rgba(73,83,92,0.7)" : "rgba(44,51,58,0.82)")
+            : style === "sand" ? (i % 2 ? "rgba(144,109,73,0.72)" : "rgba(110,82,53,0.82)")
+            : style === "mono" ? (i % 2 ? "rgba(168,174,180,0.6)" : "rgba(106,112,118,0.76)")
+            : style === "archive" ? (i % 2 ? "rgba(26,59,54,0.7)" : "rgba(18,37,44,0.82)")
+            : state.theme === "dark"
+              ? (i % 2 ? "rgba(18,39,62,0.7)" : "rgba(12,28,47,0.8)")
+              : (i % 2 ? "rgba(154,191,211,0.72)" : "rgba(176,209,225,0.82)");
           ctx.fillRect(x, state.height - 120 - h, 120, h);
         }
-        ctx.strokeStyle = state.theme === "dark" ? "rgba(75,231,255,0.08)" : "rgba(88,191,255,0.08)";
+        ctx.strokeStyle = style === "industrial" ? "rgba(255,196,120,0.08)"
+          : style === "sand" ? "rgba(255,224,168,0.08)"
+          : style === "mono" ? "rgba(255,255,255,0.07)"
+          : style === "archive" ? "rgba(131,221,115,0.08)"
+          : state.theme === "dark" ? "rgba(75,231,255,0.08)" : "rgba(88,191,255,0.08)";
         for (let y = 0; y < state.height; y += 36) {
           ctx.beginPath();
           ctx.moveTo(0, y + Math.sin(state.time * 1.5 + y * 0.03) * 3);
@@ -1317,12 +2325,37 @@
         ctx.shadowBlur = 0;
       }
 
+      function drawBeveledPanel(x, y, w, h, baseFill, glowColor, strokeColor) {
+        ctx.shadowColor = glowColor;
+        ctx.shadowBlur = 16;
+        ctx.fillStyle = baseFill;
+        ctx.fillRect(x, y, w, h);
+        ctx.shadowBlur = 0;
+        ctx.fillStyle = "rgba(255,255,255,0.08)";
+        ctx.fillRect(x + 2, y + 2, Math.max(0, w - 4), Math.max(2, h * 0.18));
+        ctx.fillStyle = "rgba(0,0,0,0.16)";
+        ctx.fillRect(x + 2, y + h - Math.max(3, h * 0.16), Math.max(0, w - 4), Math.max(2, h * 0.16));
+        ctx.strokeStyle = strokeColor;
+        ctx.lineWidth = 2;
+        ctx.strokeRect(x, y, w, h);
+      }
+
       function drawLevel() {
+        const style = currentStyle();
+        const solidFill = style === "industrial" ? "#3a434b" : style === "sand" ? "#7c6244" : style === "mono" ? "#c0c7cf" : style === "archive" ? "#1c3e44" : (state.theme === "dark" ? "#102133" : "#d8e8f1");
+        const solidStroke = style === "industrial" ? "rgba(255,191,123,0.35)" : style === "sand" ? "rgba(255,220,164,0.35)" : style === "mono" ? "rgba(255,255,255,0.3)" : style === "archive" ? "rgba(131,221,115,0.35)" : (state.theme === "dark" ? "rgba(75,231,255,0.35)" : "rgba(88,191,255,0.35)");
         state.level.solids.forEach((s) => {
           const x = worldToScreenX(s.x), y = worldToScreenY(s.y);
-          drawGlowRect(x, y, s.w * state.camera.zoom, s.h * state.camera.zoom, COLORS.cyanSoft, state.theme === "dark" ? "#102133" : "#d8e8f1");
-          ctx.strokeStyle = state.theme === "dark" ? "rgba(75,231,255,0.35)" : "rgba(88,191,255,0.35)";
-          ctx.strokeRect(x, y, s.w * state.camera.zoom, s.h * state.camera.zoom);
+          const w = s.w * state.camera.zoom;
+          const h = s.h * state.camera.zoom;
+          drawBeveledPanel(x, y, w, h, solidFill, COLORS.cyanSoft, solidStroke);
+          ctx.strokeStyle = style === "industrial" ? "rgba(255,215,160,0.09)" : style === "sand" ? "rgba(255,236,186,0.08)" : style === "mono" ? "rgba(255,255,255,0.08)" : style === "archive" ? "rgba(131,221,115,0.1)" : (state.theme === "dark" ? "rgba(75,231,255,0.12)" : "rgba(88,191,255,0.12)");
+          for (let lx = x + 10; lx < x + w - 6; lx += 18) {
+            ctx.beginPath();
+            ctx.moveTo(lx, y + 2);
+            ctx.lineTo(lx, y + h - 2);
+            ctx.stroke();
+          }
         });
 
         state.level.buttons.forEach((b) => {
@@ -1331,40 +2364,96 @@
             return f?.buttons?.includes(b.id);
           });
           const x = worldToScreenX(b.x), y = worldToScreenY(b.y);
-          drawGlowRect(x, y, b.w * state.camera.zoom, b.h * state.camera.zoom, pressed ? COLORS.green : COLORS.pink, pressed ? "rgba(131,221,115,0.5)" : "rgba(255,122,223,0.32)");
-          ctx.strokeStyle = pressed ? "rgba(73,150,63,0.9)" : "rgba(166,67,140,0.95)";
-          ctx.strokeRect(x, y, b.w * state.camera.zoom, b.h * state.camera.zoom);
+          const w = b.w * state.camera.zoom;
+          const h = b.h * state.camera.zoom;
+          const baseH = Math.max(6, h * 0.65);
+          const capH = Math.max(6, h * 0.95);
+          const capY = y - (pressed ? 0 : h * 0.35);
+          drawBeveledPanel(x - 2, y + h * 0.2, w + 4, baseH, "rgba(12,24,34,0.9)", COLORS.cyanSoft, "rgba(90,184,255,0.28)");
+          drawBeveledPanel(x, capY, w, capH, pressed ? "rgba(131,221,115,0.72)" : "rgba(255,122,223,0.72)", pressed ? COLORS.green : COLORS.pink, pressed ? "rgba(73,150,63,0.95)" : "rgba(166,67,140,0.95)");
+          ctx.fillStyle = "rgba(255,255,255,0.14)";
+          ctx.fillRect(x + 3, capY + 3, w - 6, Math.max(2, capH * 0.18));
         });
 
         state.level.doors.forEach((d) => {
-          if (d.open) return;
-          const x = worldToScreenX(d.x), y = worldToScreenY(d.y - 180);
-          drawGlowRect(x, y, d.w * state.camera.zoom, (d.h + 180) * state.camera.zoom, COLORS.pink, "rgba(255,122,223,0.16)");
+          d.visualOpen = lerp(d.visualOpen ?? 0, d.open ? 1 : 0, 0.18);
+          const frameX = worldToScreenX(d.x - 4), frameY = worldToScreenY(d.y - 184);
+          const frameW = (d.w + 8) * state.camera.zoom, frameH = (d.h + 184) * state.camera.zoom;
+          drawBeveledPanel(frameX, frameY, frameW, frameH, "rgba(8,18,28,0.5)", COLORS.pink, "rgba(255,122,223,0.2)");
+          const rise = (d.h + 160) * (d.visualOpen ?? 0);
+          const slabX = worldToScreenX(d.x), slabY = worldToScreenY(d.y - 180 - rise);
+          const slabW = d.w * state.camera.zoom, slabH = (d.h + 180) * state.camera.zoom;
+          drawBeveledPanel(slabX, slabY, slabW, slabH, "rgba(72,20,74,0.86)", COLORS.pink, "rgba(255,122,223,0.9)");
+          ctx.fillStyle = "rgba(255,255,255,0.12)";
+          for (let sy = slabY + 8; sy < slabY + slabH - 6; sy += 14) {
+            ctx.fillRect(slabX + 3, sy, slabW - 6, 2);
+          }
         });
 
         state.level.lasers?.forEach((l) => {
-          if (!l.on) return;
+          if (!l.on && state.screen !== "editor") return;
           const x = worldToScreenX(l.x), y = worldToScreenY(l.y);
-          drawGlowRect(x, y, l.w * state.camera.zoom, l.h * state.camera.zoom, COLORS.red, "rgba(255,135,152,0.32)");
-          ctx.strokeStyle = "rgba(176,74,88,0.95)";
-          ctx.strokeRect(x, y, l.w * state.camera.zoom, l.h * state.camera.zoom);
+          const w = l.w * state.camera.zoom, h = l.h * state.camera.zoom;
+          drawBeveledPanel(x, y, w, h, "rgba(78,18,30,0.55)", COLORS.red, "rgba(176,74,88,0.95)");
+          ctx.fillStyle = "rgba(255,200,210,0.75)";
+          ctx.fillRect(x + w * 0.25, y, Math.max(2, w * 0.5), h);
+          if (state.screen === "editor") {
+            ctx.fillStyle = COLORS.white;
+            ctx.fillText("ЛАЗЕР", x + 4, y - 6);
+          }
         });
 
         state.level.movers?.forEach((m) => {
           const x = worldToScreenX(m.x), y = worldToScreenY(m.y);
-          drawGlowRect(x, y, m.w * state.camera.zoom, m.h * state.camera.zoom, COLORS.violet, "rgba(183,154,255,0.24)");
+          drawBeveledPanel(x, y, m.w * state.camera.zoom, m.h * state.camera.zoom, style === "industrial" ? "rgba(90,83,70,0.86)" : style === "sand" ? "rgba(160,126,82,0.82)" : "rgba(56,42,92,0.82)", style === "industrial" ? COLORS.orange : COLORS.violet, style === "industrial" ? "rgba(255,200,150,0.85)" : "rgba(183,154,255,0.85)");
+        });
+
+        state.placedBlocks.forEach((b) => {
+          const x = worldToScreenX(b.x), y = worldToScreenY(b.y);
+          drawGlowRect(x, y, b.w * state.camera.zoom, b.h * state.camera.zoom, COLORS.green, "rgba(131,221,115,0.18)");
+          ctx.strokeStyle = "rgba(73,150,63,0.95)";
+          ctx.strokeRect(x, y, b.w * state.camera.zoom, b.h * state.camera.zoom);
+        });
+
+        state.level.coins?.forEach((coin) => {
+          if (coin.collected) return;
+          const bobY = Math.sin(state.time * 4 + coin.bob) * 4;
+          const x = worldToScreenX(coin.x), y = worldToScreenY(coin.y + bobY);
+          const r = Math.max(5, state.camera.zoom * 3.2);
+          ctx.shadowColor = "#ffd95e";
+          ctx.shadowBlur = 14;
+          ctx.fillStyle = "#ffd95e";
+          ctx.beginPath();
+          ctx.arc(x, y, r, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.shadowBlur = 0;
+          ctx.strokeStyle = "rgba(120,84,10,0.95)";
+          ctx.lineWidth = 2;
+          ctx.stroke();
+          ctx.fillStyle = "rgba(255,255,255,0.45)";
+          ctx.fillRect(x - r * 0.2, y - r * 0.7, r * 0.4, r * 0.45);
         });
 
         state.level.traps?.forEach((t) => {
           const x = worldToScreenX(t.x), y = worldToScreenY(t.y);
-          drawGlowRect(x, y, t.w * state.camera.zoom, t.h * state.camera.zoom, COLORS.orange, "rgba(255,178,125,0.34)");
-          ctx.strokeStyle = "rgba(173,104,57,0.95)";
-          ctx.strokeRect(x, y, t.w * state.camera.zoom, t.h * state.camera.zoom);
+          const w = t.w * state.camera.zoom, h = t.h * state.camera.zoom;
+          drawBeveledPanel(x, y, w, h, "rgba(82,48,28,0.86)", COLORS.orange, "rgba(173,104,57,0.95)");
+          ctx.fillStyle = "rgba(255,215,185,0.5)";
+          for (let tx = x + 2; tx < x + w - 4; tx += 12) {
+            ctx.beginPath();
+            ctx.moveTo(tx, y + h);
+            ctx.lineTo(tx + 5, y);
+            ctx.lineTo(tx + 10, y + h);
+            ctx.fill();
+          }
         });
 
         state.level.turrets?.forEach((t) => {
           const x = worldToScreenX(t.x - 12), y = worldToScreenY(t.y - 12);
-          drawGlowRect(x, y, 24 * state.camera.zoom, 24 * state.camera.zoom, COLORS.orange, "rgba(255,178,125,0.22)");
+          const size = 24 * state.camera.zoom;
+          drawBeveledPanel(x, y, size, size, "rgba(78,48,28,0.88)", COLORS.orange, "rgba(255,178,125,0.92)");
+          ctx.fillStyle = COLORS.white;
+          ctx.fillRect(x + size * 0.55, y + size * 0.42, size * 0.35, size * 0.16);
         });
 
         state.level.slowZones?.forEach((z) => {
@@ -1376,25 +2465,104 @@
         });
 
         const ex = worldToScreenX(state.level.exit.x), ey = worldToScreenY(state.level.exit.y);
-        drawGlowRect(ex, ey, state.level.exit.w * state.camera.zoom, state.level.exit.h * state.camera.zoom, COLORS.green, "rgba(131,221,115,0.18)");
+        const exitW = state.level.exit.w * state.camera.zoom, exitH = state.level.exit.h * state.camera.zoom;
+        drawBeveledPanel(ex, ey, exitW, exitH, "rgba(18,74,42,0.68)", COLORS.green, "rgba(131,221,115,0.94)");
+        ctx.fillStyle = "rgba(220,255,232,0.4)";
+        ctx.fillRect(ex + 4, ey + 4, exitW - 8, Math.max(3, exitH * 0.16));
+        if (state.screen === "editor") {
+          const sx = worldToScreenX(state.level.spawn.x);
+          const sy = worldToScreenY(state.level.spawn.y);
+          ctx.strokeStyle = COLORS.cyan;
+          ctx.lineWidth = 2;
+          ctx.strokeRect(sx, sy, state.player.w * state.camera.zoom, state.player.h * state.camera.zoom);
+          ctx.fillStyle = COLORS.white;
+          ctx.font = "12px Courier New";
+          ctx.fillText("СТАРТ", sx, sy - 8);
+          ctx.fillText("ВЫХОД", ex, ey - 8);
+        }
       }
 
       function drawEntity(entity, color, alpha = 1, glitch = false) {
+        const baseColor = color === COLORS.orange ? COLORS.orange : (entity.tint || color);
+        const accentColor = entity.skinAccent || COLORS.white;
+        const visorColor = entity.skinVisor || COLORS.white;
         const x = worldToScreenX(entity.x), y = worldToScreenY(entity.y);
         const w = entity.w * state.camera.zoom, h = entity.h * state.camera.zoom;
+        const head = Math.max(8, w * 0.52);
+        const headX = x + (w - head) * 0.5;
+        const headY = y + h * 0.04;
+        const torsoW = Math.max(6, w * 0.34);
+        const torsoH = h * 0.34;
+        const torsoX = x + (w - torsoW) * 0.5;
+        const torsoY = y + h * 0.34;
+        const limbW = Math.max(3, w * 0.12);
+        const armH = h * 0.22;
+        const legH = h * 0.24;
+        const swing = Math.sin(state.time * 10 + entity.x * 0.05) * Math.min(w * 0.12, 4);
+
         ctx.globalAlpha = alpha;
-        ctx.shadowColor = color;
-        ctx.shadowBlur = 14;
-        ctx.fillStyle = color;
-        ctx.fillRect(x, y, w, h);
-        ctx.fillStyle = COLORS.white;
-        ctx.fillRect(x + w * 0.2, y + h * 0.2, w * 0.2, h * 0.16);
+        ctx.shadowColor = baseColor;
+        ctx.shadowBlur = 16 * (entity.skinGlow || 1);
+
+        ctx.fillStyle = baseColor;
+        ctx.fillRect(headX, headY, head, head);
+        ctx.fillRect(torsoX, torsoY, torsoW, torsoH);
+
+        ctx.fillStyle = accentColor;
+        ctx.fillRect(torsoX - limbW + swing * 0.25, torsoY + h * 0.03, limbW, armH);
+        ctx.fillRect(torsoX + torsoW + swing * 0.25, torsoY + h * 0.03, limbW, armH);
+        ctx.fillRect(torsoX + torsoW * 0.12 - swing * 0.2, torsoY + torsoH, limbW, legH);
+        ctx.fillRect(torsoX + torsoW * 0.68 + swing * 0.2, torsoY + torsoH, limbW, legH);
+
+        ctx.fillStyle = visorColor;
+        ctx.fillRect(headX + head * 0.2, headY + head * 0.24, head * 0.18, head * 0.12);
+        ctx.fillRect(headX + head * 0.62, headY + head * 0.24, head * 0.18, head * 0.12);
+
+        ctx.strokeStyle = state.theme === "dark" ? "rgba(6,12,20,0.9)" : "rgba(210,230,240,0.95)";
+        ctx.lineWidth = Math.max(1, state.camera.zoom * 0.65);
+        ctx.strokeRect(headX, headY, head, head);
+        ctx.strokeRect(torsoX, torsoY, torsoW, torsoH);
+        ctx.strokeRect(torsoX - limbW + swing * 0.25, torsoY + h * 0.03, limbW, armH);
+        ctx.strokeRect(torsoX + torsoW + swing * 0.25, torsoY + h * 0.03, limbW, armH);
+        ctx.strokeRect(torsoX + torsoW * 0.12 - swing * 0.2, torsoY + torsoH, limbW, legH);
+        ctx.strokeRect(torsoX + torsoW * 0.68 + swing * 0.2, torsoY + torsoH, limbW, legH);
+
         if (glitch) {
           ctx.fillStyle = "rgba(255,255,255,0.14)";
-          ctx.fillRect(x - 3 + Math.sin(state.time * 20) * 2, y + h * 0.55, w + 6, 4);
+          ctx.fillRect(x - 2 + Math.sin(state.time * 20) * 2, y + h * 0.52, w + 4, 3);
+          ctx.fillRect(x + 1 - Math.sin(state.time * 18) * 1.5, y + h * 0.2, w - 2, 2);
         }
         ctx.shadowBlur = 0;
         ctx.globalAlpha = 1;
+
+        if (Number.isFinite(entity.hp) && Number.isFinite(entity.maxHp) && entity.maxHp > 0) {
+          const ratio = clamp(entity.hp / entity.maxHp, 0, 1);
+          const barW = Math.max(26, w + 8);
+          const barH = Math.max(5, state.camera.zoom * 2.8);
+          const barX = x + (w - barW) * 0.5;
+          const barY = y - 12 - barH;
+          const hpColor = ratio > 0.6 ? COLORS.green : ratio > 0.3 ? COLORS.orange : COLORS.red;
+
+          ctx.fillStyle = "rgba(5,10,18,0.78)";
+          ctx.fillRect(barX - 1, barY - 1, barW + 2, barH + 2);
+          ctx.strokeStyle = state.theme === "dark" ? "rgba(236,251,255,0.3)" : "rgba(31,56,73,0.35)";
+          ctx.lineWidth = 1;
+          ctx.strokeRect(barX - 1, barY - 1, barW + 2, barH + 2);
+
+          ctx.fillStyle = "rgba(255,255,255,0.08)";
+          ctx.fillRect(barX, barY, barW, barH);
+
+          ctx.shadowColor = hpColor;
+          ctx.shadowBlur = 10;
+          ctx.fillStyle = hpColor;
+          ctx.fillRect(barX, barY, barW * ratio, barH);
+          ctx.shadowBlur = 0;
+
+          if (entity.invuln > 0 || entity.hitFlash > 0) {
+            ctx.strokeStyle = `rgba(255,255,255,${0.35 + entity.hitFlash * 0.35})`;
+            ctx.strokeRect(barX - 2, barY - 2, barW + 4, barH + 4);
+          }
+        }
       }
 
       function drawClones() {
@@ -1413,6 +2581,36 @@
       function drawDrones() {
         state.drones.forEach((d) => {
           drawEntity({ x: d.x - 10, y: d.y - 10, w: 20, h: 20 }, COLORS.orange, 0.9, true);
+          if (state.screen === "editor") {
+            const x1 = worldToScreenX(d.x1);
+            const x2 = worldToScreenX(d.x2);
+            const y = worldToScreenY(d.y);
+            ctx.strokeStyle = "rgba(255,139,85,0.5)";
+            ctx.beginPath();
+            ctx.moveTo(x1, y);
+            ctx.lineTo(x2, y);
+            ctx.stroke();
+            ctx.fillStyle = COLORS.white;
+            ctx.fillText("ДРОН", worldToScreenX(d.x), y - 16);
+          }
+        });
+      }
+
+      function drawChronoBots() {
+        state.chronoBots.forEach((bot) => {
+          drawEntity({ x: bot.x - 14, y: bot.y - 18, w: 28, h: 36, face: bot.dir }, COLORS.violet, 0.94, true);
+          if (state.screen === "editor") {
+            const x1 = worldToScreenX(bot.x1);
+            const x2 = worldToScreenX(bot.x2);
+            const y = worldToScreenY(bot.y);
+            ctx.strokeStyle = "rgba(159,113,255,0.55)";
+            ctx.beginPath();
+            ctx.moveTo(x1, y);
+            ctx.lineTo(x2, y);
+            ctx.stroke();
+            ctx.fillStyle = COLORS.white;
+            ctx.fillText("ХРОНОБОТ", worldToScreenX(bot.x), y - 18);
+          }
         });
       }
 
@@ -1454,8 +2652,9 @@
         drawTrails();
         drawClones();
         drawDrones();
-        if (state.player.alive) drawEntity(state.player, state.player.slowTimer > 0 ? COLORS.orange : COLORS.cyan, 1, false);
-        if (state.player2?.alive) drawEntity(state.player2, state.player2.slowTimer > 0 ? COLORS.orange : COLORS.green, 1, false);
+        drawChronoBots();
+        if (state.player.alive && !state.player.exited) drawEntity(state.player, state.player.slowTimer > 0 ? COLORS.orange : COLORS.cyan, 1, false);
+        if (state.player2?.alive && !state.player2.exited) drawEntity(state.player2, state.player2.slowTimer > 0 ? COLORS.orange : COLORS.green, 1, false);
         drawBullets();
         drawParticles();
         drawRewindOverlay();
@@ -1469,11 +2668,15 @@
       }
 
       function bindUi() {
-        dom.playBtn.addEventListener("click", () => resetLevel(0));
+        dom.playBtn.addEventListener("click", () => resetLevel(clamp(state.save.bestLevel, 0, levels.length - 1)));
         dom.levelsBtn.addEventListener("click", () => { renderLevelsMenu(); showScreen("levels"); });
+        dom.shopBtn.addEventListener("click", () => { renderShop(); showScreen("shop"); });
+        dom.editorBtn.addEventListener("click", () => openEditor());
         dom.settingsBtn.addEventListener("click", () => {
           dom.coopStatus.textContent = `Сейчас: ${state.coopEnabled ? "2 игрока" : "1 игрок"}`;
           dom.coopToggleBtn.textContent = state.coopEnabled ? "Переключить на 1 игрока" : "Переключить на 2 игроков";
+          dom.coopExitStatus.textContent = `Сейчас: ${state.coopExitMode === "both" ? "ждать обоих игроков" : "достаточно одного игрока"}`;
+          dom.coopExitToggleBtn.textContent = state.coopExitMode === "both" ? "Переключить на режим одного финишировавшего" : "Переключить на режим ожидания обоих";
           dom.themeStatus.textContent = `Сейчас: ${state.theme === "dark" ? "тёмная" : "светлая"}`;
           dom.themeToggleBtn.textContent = state.theme === "dark" ? "Переключить на светлую тему" : "Переключить на тёмную тему";
           showScreen("settings");
@@ -1484,11 +2687,26 @@
           else await document.documentElement.requestFullscreen?.();
         });
         dom.levelsBackBtn.addEventListener("click", () => showScreen("main"));
+        dom.shopBackBtn.addEventListener("click", () => showScreen("main"));
         dom.settingsBackBtn.addEventListener("click", () => showScreen("main"));
+        dom.editorBackBtn.addEventListener("click", () => showScreen("main"));
+        dom.editorToggleBtn.addEventListener("click", () => {
+          if (!state.editor) return;
+          state.editor.collapsed = !state.editor.collapsed;
+          dom.editorMenu.classList.toggle("collapsed", state.editor.collapsed);
+          dom.editorToggleBtn.textContent = state.editor.collapsed ? "Показать" : "Скрыть";
+        });
         dom.coopToggleBtn.addEventListener("click", () => {
           state.coopEnabled = !state.coopEnabled;
           dom.coopStatus.textContent = `Сейчас: ${state.coopEnabled ? "2 игрока" : "1 игрок"}`;
           dom.coopToggleBtn.textContent = state.coopEnabled ? "Переключить на 1 игрока" : "Переключить на 2 игроков";
+        });
+        dom.coopExitToggleBtn.addEventListener("click", () => {
+          state.coopExitMode = state.coopExitMode === "both" ? "either" : "both";
+          dom.coopExitStatus.textContent = `Сейчас: ${state.coopExitMode === "both" ? "ждать обоих игроков" : "достаточно одного игрока"}`;
+          dom.coopExitToggleBtn.textContent = state.coopExitMode === "both"
+            ? "Переключить на режим одного финишировавшего"
+            : "Переключить на режим ожидания обоих";
         });
         dom.themeToggleBtn.addEventListener("click", () => {
           applyTheme(state.theme === "dark" ? "light" : "dark");
@@ -1496,31 +2714,98 @@
           dom.themeToggleBtn.textContent = state.theme === "dark" ? "Переключить на светлую тему" : "Переключить на тёмную тему";
         });
         dom.howBackBtn.addEventListener("click", () => showScreen("main"));
+        dom.editorNewBtn.addEventListener("click", () => {
+          state.editor = { tool: "solid", grid: 20, level: emptyLevelData() };
+          openEditor();
+        });
+        dom.editorExportBtn.addEventListener("click", () => {
+          if (!state.editor) return;
+          syncEditorFields();
+          showTip("JSON обновлён");
+        });
+        dom.editorImportBtn.addEventListener("click", () => {
+          try {
+            const parsed = JSON.parse(dom.editorData.value);
+            state.editor.level = parsed;
+            state.level = cloneLevelData(parsed);
+            state.editor.grid = Number(dom.editorGrid.value) || 20;
+            renderEditorTools();
+            syncEditorFields();
+            showTip("Импортировано");
+          } catch {
+            showTip("Ошибка JSON");
+          }
+        });
+        dom.editorSaveBtn.addEventListener("click", () => {
+          if (!state.editor) return;
+          const saved = { ...cloneLevelData(state.editor.level), customMade: true };
+          levels.push(saved);
+          renderLevelsMenu();
+          loadMetaToMenu();
+          showTip("Уровень добавлен в список");
+        });
+        dom.editorTestBtn.addEventListener("click", () => {
+          if (!state.editor) return;
+          state.editor.level.name = dom.editorName.value || state.editor.level.name;
+          state.editor.level.hint = dom.editorHint.value || state.editor.level.hint;
+          state.editor.level.width = Math.max(800, Number(dom.editorWidth.value) || state.editor.level.width);
+          startCustomLevel(state.editor.level);
+        });
         dom.resumeBtn.addEventListener("click", () => { state.paused = false; showScreen(null); });
-        dom.restartBtn.addEventListener("click", () => resetLevel(state.levelIndex));
+        dom.restartBtn.addEventListener("click", () => {
+          if (state.levelIndex >= 0) resetLevel(state.levelIndex);
+          else if (state.customLevel) startCustomLevel(state.customLevel);
+        });
         dom.pauseLevelsBtn.addEventListener("click", () => { state.paused = false; renderLevelsMenu(); showScreen("levels"); });
-        dom.nextBtn.addEventListener("click", () => resetLevel(Math.min(levels.length - 1, state.levelIndex + 1)));
+        dom.nextBtn.addEventListener("click", () => {
+          if (state.levelIndex >= 0) resetLevel(Math.min(levels.length - 1, state.levelIndex + 1));
+          else showScreen("levels");
+        });
         dom.completeLevelsBtn.addEventListener("click", () => { renderLevelsMenu(); showScreen("levels"); });
 
         addEventListener("resize", resize);
         addEventListener("keydown", (event) => {
           state.audio.unlock();
+          if (state.screen === "editor") {
+            if (event.code === "ArrowLeft" || event.code === "KeyA") input.editor.left = true;
+            if (event.code === "ArrowRight" || event.code === "KeyD") input.editor.right = true;
+            if (event.code === "ArrowUp" || event.code === "KeyW") input.editor.up = true;
+            if (event.code === "ArrowDown" || event.code === "KeyS") input.editor.down = true;
+            if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "KeyA", "KeyD", "KeyW", "KeyS"].includes(event.code)) {
+              event.preventDefault();
+              return;
+            }
+          }
           if (event.code === "ArrowLeft") input.p1.left = true;
           if (event.code === "ArrowRight") input.p1.right = true;
-          if (event.code === "KeyA") input.p2.left = true;
-          if (event.code === "KeyD") input.p2.right = true;
+          if (event.code === "KeyA") {
+            if (state.coopEnabled) input.p2.left = true;
+            else input.p1.left = true;
+          }
+          if (event.code === "KeyD") {
+            if (state.coopEnabled) input.p2.right = true;
+            else input.p1.right = true;
+          }
           if (event.code === "ArrowUp" || event.code === "Space") {
             if (!input.p1.jumpHeld) input.p1.jumpPressed = true;
             input.p1.jumpHeld = true;
             event.preventDefault();
           }
           if (event.code === "KeyW") {
-            if (!input.p2.jumpHeld) input.p2.jumpPressed = true;
-            input.p2.jumpHeld = true;
+            if (state.coopEnabled) {
+              if (!input.p2.jumpHeld) input.p2.jumpPressed = true;
+              input.p2.jumpHeld = true;
+            } else {
+              if (!input.p1.jumpHeld) input.p1.jumpPressed = true;
+              input.p1.jumpHeld = true;
+            }
             event.preventDefault();
           }
           if (event.code === "ShiftRight") input.p1.dashPressed = true;
-          if (event.code === "ShiftLeft") input.p2.dashPressed = true;
+          if (event.code === "ShiftLeft") {
+            if (state.coopEnabled) input.p2.dashPressed = true;
+            else input.p1.dashPressed = true;
+          }
           if (event.code === "KeyR") input.rewindPressed = true;
           if (event.code === "Escape" && state.screen === "game") {
             state.paused = !state.paused;
@@ -1528,12 +2813,48 @@
           }
         });
         addEventListener("keyup", (event) => {
+          if (event.code === "ArrowLeft" || event.code === "KeyA") input.editor.left = false;
+          if (event.code === "ArrowRight" || event.code === "KeyD") input.editor.right = false;
+          if (event.code === "ArrowUp" || event.code === "KeyW") input.editor.up = false;
+          if (event.code === "ArrowDown" || event.code === "KeyS") input.editor.down = false;
           if (event.code === "ArrowLeft") input.p1.left = false;
           if (event.code === "ArrowRight") input.p1.right = false;
-          if (event.code === "KeyA") input.p2.left = false;
-          if (event.code === "KeyD") input.p2.right = false;
+          if (event.code === "KeyA") {
+            if (state.coopEnabled) input.p2.left = false;
+            else input.p1.left = false;
+          }
+          if (event.code === "KeyD") {
+            if (state.coopEnabled) input.p2.right = false;
+            else input.p1.right = false;
+          }
           if (event.code === "ArrowUp" || event.code === "Space") input.p1.jumpHeld = false;
-          if (event.code === "KeyW") input.p2.jumpHeld = false;
+          if (event.code === "KeyW") {
+            if (state.coopEnabled) input.p2.jumpHeld = false;
+            else input.p1.jumpHeld = false;
+          }
+        });
+        canvas.addEventListener("contextmenu", (event) => event.preventDefault());
+        canvas.addEventListener("pointerdown", (event) => {
+          state.audio.unlock();
+          const rect = canvas.getBoundingClientRect();
+          const world = screenToWorld(event.clientX - rect.left, event.clientY - rect.top);
+          if (state.screen === "editor") {
+            if (event.button === 2) eraseEditorObject(world.x, world.y);
+            else if (event.button === 0) placeEditorObject(world.x, world.y);
+            return;
+          }
+          if (state.coopEnabled) {
+            if (event.button === 0) {
+              if (!removeBuildBlock(event.clientX, event.clientY, "p2")) placeBuildBlock(event.clientX, event.clientY, "p2");
+            }
+            if (event.button === 2) {
+              if (!removeBuildBlock(event.clientX, event.clientY, "p1")) placeBuildBlock(event.clientX, event.clientY, "p1");
+            }
+            return;
+          }
+          if (event.button === 0 || event.button === 2) {
+            if (!removeBuildBlock(event.clientX, event.clientY, "p1")) placeBuildBlock(event.clientX, event.clientY, "p1");
+          }
         });
 
         bindTouch(dom.touchLeft, () => input.p1.left = true, () => input.p1.left = false);
@@ -1556,6 +2877,7 @@
         }
         if (state.screen === "game" && input.rewindPressed) rewindTime();
         updateGame(delta, time);
+        if (state.screen === "editor" && state.level) updateCamera(delta);
         render();
         updateHud();
         input.p1.jumpPressed = false;
@@ -1567,10 +2889,13 @@
       }
 
       function init() {
+        addCampaignExtensionLevels();
+        trimCampaignLevels(30);
         applyTheme("dark");
         resize();
         bindUi();
         loadMetaToMenu();
+        renderShop();
         renderLevelsMenu();
         showScreen("main");
         requestAnimationFrame(loop);
