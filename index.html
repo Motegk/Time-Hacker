@@ -243,6 +243,126 @@
       line-height: 1.45;
     }
 
+    .shop-preview {
+      position: relative;
+      height: 110px;
+      margin-bottom: 10px;
+      border: 2px solid rgba(90, 184, 255, 0.28);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.06), rgba(0,0,0,0.08)),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.03) 0 8px, transparent 8px 16px);
+      overflow: hidden;
+    }
+
+    .shop-preview.skin {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 14px;
+    }
+
+    .shop-preview.boost {
+      display: grid;
+      place-items: center;
+    }
+
+    .shop-stick {
+      position: relative;
+      width: 44px;
+      height: 74px;
+      filter: drop-shadow(0 0 10px rgba(255,255,255,0.12));
+    }
+
+    .shop-stick .head,
+    .shop-stick .body,
+    .shop-stick .arm,
+    .shop-stick .leg {
+      position: absolute;
+      border: 2px solid rgba(8, 18, 28, 0.8);
+      box-sizing: border-box;
+    }
+
+    .shop-stick .head {
+      left: 10px;
+      top: 0;
+      width: 24px;
+      height: 24px;
+    }
+
+    .shop-stick .body {
+      left: 14px;
+      top: 26px;
+      width: 16px;
+      height: 24px;
+    }
+
+    .shop-stick .arm.left { left: 5px; top: 28px; width: 8px; height: 16px; }
+    .shop-stick .arm.right { right: 5px; top: 28px; width: 8px; height: 16px; }
+    .shop-stick .leg.left { left: 12px; bottom: 0; width: 8px; height: 20px; }
+    .shop-stick .leg.right { right: 12px; bottom: 0; width: 8px; height: 20px; }
+
+    .shop-stick .eyes {
+      position: absolute;
+      left: 15px;
+      top: 8px;
+      width: 14px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--eye, #fff) 0 4px, transparent 4px 10px, var(--eye, #fff) 10px 14px);
+    }
+
+    .shop-boost-icon {
+      width: 64px;
+      height: 64px;
+      border: 3px solid rgba(255,255,255,0.2);
+      box-shadow: inset 0 0 24px rgba(255,255,255,0.08);
+      position: relative;
+    }
+
+    .shop-boost-icon::before,
+    .shop-boost-icon::after {
+      content: "";
+      position: absolute;
+    }
+
+    .shop-boost-icon.armor::before {
+      left: 16px;
+      top: 10px;
+      width: 26px;
+      height: 34px;
+      background: linear-gradient(180deg, #89d8ff, #4be7ff);
+      clip-path: polygon(50% 0, 100% 18%, 100% 64%, 50% 100%, 0 64%, 0 18%);
+    }
+
+    .shop-boost-icon.dash::before {
+      left: 12px;
+      top: 18px;
+      width: 38px;
+      height: 18px;
+      background: linear-gradient(90deg, #ff8b55, #ffd95e);
+      transform: skewX(-28deg);
+      box-shadow: 0 18px 0 -6px rgba(255,217,94,0.55);
+    }
+
+    .shop-boost-icon.rewind::before {
+      left: 14px;
+      top: 14px;
+      width: 34px;
+      height: 34px;
+      border: 5px solid #9f71ff;
+      border-right-color: transparent;
+      border-radius: 50%;
+    }
+
+    .shop-boost-icon.rewind::after {
+      left: 10px;
+      top: 18px;
+      width: 0;
+      height: 0;
+      border-top: 8px solid transparent;
+      border-bottom: 8px solid transparent;
+      border-right: 12px solid #ff4bd8;
+    }
+
     .hud {
       z-index: 12;
     }
@@ -1478,7 +1598,25 @@
           } else {
             owned = hasBoost(item.key);
           }
-          card.innerHTML = `<h3>${item.name}</h3><p>${item.desc || "Визуальный стиль персонажа"}</p><p>${item.price === 0 ? "Бесплатно" : `${item.price} монет`}</p>`;
+          const preview = type === "skin"
+            ? `<div class="shop-preview skin">
+                <div class="shop-stick" style="--eye:${item.visor || "#ffffff"}; filter: drop-shadow(0 0 ${Math.round(10 * (item.glow || 1))}px ${item.tint || "#4be7ff"}55);">
+                  <div class="head" style="background:${item.tint || "#4be7ff"}"></div>
+                  <div class="body" style="background:${item.tint || "#4be7ff"}"></div>
+                  <div class="arm left" style="background:${item.accent || "#ecfbff"}"></div>
+                  <div class="arm right" style="background:${item.accent || "#ecfbff"}"></div>
+                  <div class="leg left" style="background:${item.accent || "#ecfbff"}"></div>
+                  <div class="leg right" style="background:${item.accent || "#ecfbff"}"></div>
+                  <div class="eyes"></div>
+                </div>
+              </div>`
+            : `<div class="shop-preview boost">
+                <div class="shop-boost-icon ${item.key}" style="background:${item.key === "armor" ? "rgba(75,231,255,0.12)" : item.key === "dash" ? "rgba(255,139,85,0.12)" : "rgba(159,113,255,0.12)"}"></div>
+              </div>`;
+          const extraVisual = type === "boost"
+            ? `<p>${item.key === "armor" ? "Визуально даёт более плотный запас HP." : item.key === "dash" ? "Добавляет ещё один заряд для комбо-рывков." : "Делает шкалу перемотки экономнее."}</p>`
+            : `<p>${owned ? (equipped ? "Сейчас надет" : "Уже куплен") : "Можно купить и сразу надеть"}</p>`;
+          card.innerHTML = `${preview}<h3>${item.name}</h3><p>${item.desc || "Визуальный стиль персонажа"}</p>${extraVisual}<p>${item.price === 0 ? "Бесплатно" : `${item.price} монет`}</p>`;
           const btn = document.createElement("button");
           btn.className = "btn" + (owned ? " alt" : "");
           if (!owned) btn.textContent = `Купить`;
