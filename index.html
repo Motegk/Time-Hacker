@@ -310,6 +310,119 @@
       background: linear-gradient(90deg, var(--eye, #fff) 0 4px, transparent 4px 10px, var(--eye, #fff) 10px 14px);
     }
 
+    .shop-stick .wing,
+    .shop-stick .hat,
+    .shop-stick .prop,
+    .shop-stick .badge {
+      position: absolute;
+      box-sizing: border-box;
+    }
+
+    .shop-stick .wing.left,
+    .shop-stick .wing.right {
+      top: 24px;
+      width: 16px;
+      height: 28px;
+      border: 2px solid rgba(8, 18, 28, 0.45);
+      background: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.08));
+      clip-path: polygon(50% 0, 100% 18%, 86% 52%, 100% 100%, 26% 82%, 0 42%);
+      opacity: 0.88;
+    }
+
+    .shop-stick .wing.left { left: -8px; transform: scaleX(-1) rotate(-8deg); transform-origin: right top; }
+    .shop-stick .wing.right { right: -8px; transform: rotate(8deg); transform-origin: left top; }
+
+    .shop-stick .hat.crown {
+      left: 8px;
+      top: -8px;
+      width: 28px;
+      height: 14px;
+      background: linear-gradient(180deg, #ffe27a, #ff9e57);
+      clip-path: polygon(0 100%, 0 58%, 18% 34%, 34% 60%, 50% 8%, 66% 60%, 82% 34%, 100% 58%, 100% 100%);
+      border: 2px solid rgba(120,72,18,0.7);
+    }
+
+    .shop-stick .hat.cap {
+      left: 8px;
+      top: -2px;
+      width: 28px;
+      height: 10px;
+      background: linear-gradient(180deg, #9fd5ff, #4b8fff);
+      border: 2px solid rgba(10,32,72,0.7);
+    }
+
+    .shop-stick .hat.cap::after {
+      content: "";
+      position: absolute;
+      left: 18px;
+      top: 6px;
+      width: 12px;
+      height: 5px;
+      background: #d8f1ff;
+      transform: skewX(28deg);
+    }
+
+    .shop-stick .hat.horns {
+      left: 8px;
+      top: -5px;
+      width: 28px;
+      height: 14px;
+    }
+
+    .shop-stick .hat.horns::before,
+    .shop-stick .hat.horns::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      width: 8px;
+      height: 12px;
+      background: linear-gradient(180deg, #fbe5ff, #b889ff);
+      border: 2px solid rgba(56,22,90,0.75);
+      clip-path: polygon(50% 0, 100% 100%, 0 100%);
+    }
+
+    .shop-stick .hat.horns::before { left: 2px; transform: rotate(-12deg); }
+    .shop-stick .hat.horns::after { right: 2px; transform: rotate(12deg); }
+
+    .shop-stick .prop.orb {
+      right: -7px;
+      top: 20px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #ffffff, #7afff0 55%, #3dc0ff 100%);
+      box-shadow: 0 0 10px rgba(61,192,255,0.8);
+    }
+
+    .shop-stick .prop.scarf {
+      left: 9px;
+      top: 24px;
+      width: 26px;
+      height: 7px;
+      background: linear-gradient(90deg, #ff8b55, #ffd95e);
+      border: 1px solid rgba(82,44,10,0.5);
+    }
+
+    .shop-stick .prop.scarf::after {
+      content: "";
+      position: absolute;
+      right: 1px;
+      top: 4px;
+      width: 8px;
+      height: 16px;
+      background: linear-gradient(180deg, #ffd95e, #ff8b55);
+    }
+
+    .shop-stick .badge.star {
+      left: 16px;
+      top: 33px;
+      width: 10px;
+      height: 10px;
+      background: #ffe27a;
+      clip-path: polygon(50% 0, 62% 34%, 100% 38%, 72% 58%, 82% 100%, 50% 74%, 18% 100%, 28% 58%, 0 38%, 38% 34%);
+      box-shadow: 0 0 10px rgba(255,226,122,0.75);
+    }
+
     .shop-boost-icon {
       width: 64px;
       height: 64px;
@@ -361,6 +474,36 @@
       border-top: 8px solid transparent;
       border-bottom: 8px solid transparent;
       border-right: 12px solid #ff4bd8;
+    }
+
+    .shop-boost-icon.regen::before {
+      left: 17px;
+      top: 13px;
+      width: 30px;
+      height: 30px;
+      background: linear-gradient(180deg, #8dff76, #4be7ff);
+      clip-path: polygon(50% 0, 62% 26%, 88% 26%, 68% 46%, 76% 72%, 50% 58%, 24% 72%, 32% 46%, 12% 26%, 38% 26%);
+    }
+
+    .shop-boost-icon.builder::before {
+      left: 14px;
+      top: 14px;
+      width: 36px;
+      height: 36px;
+      background:
+        linear-gradient(90deg, transparent 0 10px, #ffcf6a 10px 14px, transparent 14px 22px, #ffcf6a 22px 26px, transparent 26px),
+        linear-gradient(180deg, transparent 0 10px, #ffcf6a 10px 14px, transparent 14px 22px, #ffcf6a 22px 26px, transparent 26px);
+      border: 3px solid rgba(255,207,106,0.75);
+    }
+
+    .shop-boost-icon.overclock::before {
+      left: 14px;
+      top: 10px;
+      width: 34px;
+      height: 44px;
+      background: linear-gradient(180deg, #ff7adf, #9f71ff);
+      clip-path: polygon(52% 0, 100% 36%, 70% 36%, 100% 100%, 26% 58%, 50% 58%, 14% 0);
+      box-shadow: 0 0 16px rgba(159,113,255,0.5);
     }
 
     .hud {
@@ -971,6 +1114,20 @@
         { key: "rewind", name: "Якорь времени", price: 26, desc: "Перемотка тратит чуть меньше шкалы" }
       ];
 
+      SKINS.push(
+        { key: "angel", name: "Ангел", price: 36, tint: "#9fe6ff", accent: "#ffffff", visor: "#f7ffff", glow: 1.3, wings: "feather", badge: "star" },
+        { key: "captain", name: "Капитан", price: 34, tint: "#4b8fff", accent: "#d8f1ff", visor: "#ffffff", glow: 1.15, hat: "cap", accessory: "orb" },
+        { key: "oracle", name: "Оракул", price: 39, tint: "#b889ff", accent: "#f3e5ff", visor: "#fff7ff", glow: 1.35, hat: "horns", accessory: "orb" },
+        { key: "monarch", name: "Монарх", price: 42, tint: "#ffb85e", accent: "#fff1c9", visor: "#fffdf3", glow: 1.28, hat: "crown", badge: "star" },
+        { key: "wanderer", name: "Странник", price: 33, tint: "#7ee07f", accent: "#ffe3a8", visor: "#f6fff3", glow: 1.18, accessory: "scarf" }
+      );
+
+      BOOSTS.push(
+        { key: "regen", name: "Реген", price: 38, desc: "Медленная авторегенерация HP" },
+        { key: "builder", name: "Инженер", price: 32, desc: "+1 блок в запасе каждому игроку" },
+        { key: "overclock", name: "Овердрайв", price: 40, desc: "Чуть больше скорости и сильнее рывок" }
+      );
+
       function hasBoost(key) {
         return (state.save.boughtBoosts || []).includes(key);
       }
@@ -979,12 +1136,20 @@
         return SKINS.find((s) => s.key === key) || SKINS[0];
       }
 
+      function startingBlocks(isCoop = state.coopEnabled) {
+        return (isCoop ? 1 : 2) + (hasBoost("builder") ? 1 : 0);
+      }
+
       function setupPlayerLoadout(player, slot = "p1") {
         const skin = skinByKey(state.save.equippedSkins?.[slot] || "classic");
         player.skinKey = skin.key;
         player.skinAccent = skin.accent;
         player.skinVisor = skin.visor;
         player.skinGlow = skin.glow || 1;
+        player.skinHat = skin.hat || null;
+        player.skinWings = skin.wings || null;
+        player.skinAccessory = skin.accessory || null;
+        player.skinBadge = skin.badge || null;
         if (skin.tint) player.tint = skin.tint;
         player.maxHp = hasBoost("armor") ? 120 : 100;
         player.hp = player.maxHp;
@@ -1010,7 +1175,8 @@
         return {
           x, y, w: 18, h: 30, vx: 0, vy: 0, face: 1, onGround: false, coyote: 0, jumpBuffer: 0,
           dashTimer: 0, dashCharges: 3, dashJumpWindow: 0, alive: true, slowTimer: 0, tint, blocksLeft: 0, exited: false,
-          maxHp: 100, hp: 100, invuln: 0, hitFlash: 0
+          maxHp: 100, hp: 100, invuln: 0, hitFlash: 0, portalCooldown: 0, waterTimer: 0,
+          gravityDir: 1, gravityMix: 0, magRailTimer: 0
         };
       }
 
@@ -1119,7 +1285,7 @@
             slowZones: [{ x: 1510, y: 150, w: 130, h: 90 }],
             coins: [{ x: 345, y: 315 }, { x: 565, y: 265 }, { x: 785, y: 315 }, { x: 1260, y: 195 }, { x: 1495, y: 170 }, { x: 1820, y: 135 }]
           }),
-          makeLevel("21. Башня рывков", "Новая ветка: почти чистый паркур. Прыгай по узким полкам и расходуй рывки только в нужные окна.", 1560, {
+          makeLevel("21. Башня рывков", "Новая ветка после старой кампании: почти чистый паркур. Прыгай по узким полкам и расходуй рывки только в нужные окна.", 1560, {
             style: "mono",
             spawn: { x: 70, y: 360 }, exit: { x: 1450, y: 94, w: 30, h: 46 },
             solids: [{ x: 0, y: 400, w: 250, h: 90 }, { x: 300, y: 340, w: 70, h: 20 }, { x: 420, y: 280, w: 70, h: 20 }, { x: 540, y: 220, w: 70, h: 20 }, { x: 680, y: 300, w: 70, h: 20 }, { x: 820, y: 240, w: 70, h: 20 }, { x: 980, y: 180, w: 70, h: 20 }, { x: 1140, y: 140, w: 70, h: 20 }, { x: 1290, y: 120, w: 90, h: 20 }, { x: 1420, y: 140, w: 140, h: 20 }],
@@ -1241,8 +1407,486 @@
             chronoBots: [{ x1: 1450, x2: 1700, y: 140, speed: 1.1, teleportEvery: 3 }],
             slowZones: [{ x: 2020, y: 70, w: 100, h: 80 }],
             coins: [{ x: 355, y: 315 }, { x: 545, y: 265 }, { x: 725, y: 215 }, { x: 940, y: 285 }, { x: 1335, y: 185 }, { x: 1535, y: 145 }, { x: 1935, y: 85 }, { x: 2110, y: 75 }]
+          }),
+          makeLevel("31. Водосброс", "Первая новая механика: поток воды может снести в пропасть, если не держать направление.", 1700, {
+            style: "archive",
+            spawn: { x: 60, y: 340 }, exit: { x: 1600, y: 254, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 260, h: 90 }, { x: 530, y: 360, w: 130, h: 20 }, { x: 900, y: 320, w: 120, h: 20 }, { x: 1220, y: 280, w: 140, h: 20 }, { x: 1510, y: 300, w: 190, h: 20 }],
+            buttons: [], doors: [], lasers: [],
+            movers: [],
+            traps: [{ x: 260, y: 396, w: 270, h: 8 }, { x: 660, y: 396, w: 240, h: 8 }, { x: 1020, y: 396, w: 200, h: 8 }],
+            turrets: [], drones: [], chronoBots: [], slowZones: [],
+            waterZones: [{ x: 260, y: 250, w: 260, h: 150, flowX: 220, flowY: 60 }, { x: 660, y: 230, w: 230, h: 170, flowX: 250, flowY: 80 }],
+            portals: [],
+            coins: [{ x: 565, y: 325 }, { x: 925, y: 285 }, { x: 1245, y: 245 }, { x: 1620, y: 235 }]
+          }),
+          makeLevel("32. Разорванный коридор", "Порталы перебрасывают тебя в другие части того же уровня. Не теряй ориентацию.", 1960, {
+            style: "mono",
+            spawn: { x: 60, y: 360 }, exit: { x: 1860, y: 174, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 240, h: 90 }, { x: 420, y: 320, w: 120, h: 20 }, { x: 760, y: 260, w: 120, h: 20 }, { x: 1120, y: 200, w: 140, h: 20 }, { x: 1530, y: 220, w: 180, h: 20 }, { x: 1820, y: 240, w: 140, h: 20 }],
+            buttons: [], doors: [], lasers: [],
+            movers: [],
+            traps: [{ x: 240, y: 396, w: 180, h: 8 }, { x: 540, y: 396, w: 220, h: 8 }, { x: 880, y: 396, w: 240, h: 8 }, { x: 1260, y: 396, w: 270, h: 8 }],
+            turrets: [], drones: [], chronoBots: [], slowZones: [],
+            waterZones: [],
+            portals: [
+              { x: 260, y: 322, w: 26, h: 78, toX: 760, toY: 220, outVx: 80, outVy: -40 },
+              { x: 920, y: 322, w: 26, h: 78, toX: 1535, toY: 180, outVx: 70, outVy: -30 }
+            ],
+            coins: [{ x: 445, y: 285 }, { x: 785, y: 225 }, { x: 1145, y: 165 }, { x: 1880, y: 145 }]
+          }),
+          makeLevel("33. Лабиринт течений", "Лабиринт с водой: потоки мешают держаться на курсе и сбивают прыжки.", 1840, {
+            style: "industrial",
+            spawn: { x: 70, y: 360 }, exit: { x: 1730, y: 134, w: 30, h: 46 },
+            solids: [
+              { x: 0, y: 400, w: 280, h: 90 }, { x: 280, y: 340, w: 40, h: 60 }, { x: 320, y: 340, w: 180, h: 20 }, { x: 500, y: 260, w: 40, h: 140 },
+              { x: 540, y: 260, w: 200, h: 20 }, { x: 740, y: 180, w: 40, h: 220 }, { x: 780, y: 180, w: 220, h: 20 },
+              { x: 1000, y: 180, w: 40, h: 160 }, { x: 1040, y: 320, w: 210, h: 20 }, { x: 1250, y: 240, w: 40, h: 100 },
+              { x: 1290, y: 240, w: 180, h: 20 }, { x: 1470, y: 160, w: 40, h: 100 }, { x: 1510, y: 160, w: 220, h: 20 }
+            ],
+            buttons: [], doors: [], lasers: [],
+            movers: [],
+            traps: [{ x: 320, y: 396, w: 180, h: 8 }, { x: 540, y: 396, w: 200, h: 8 }, { x: 780, y: 396, w: 260, h: 8 }, { x: 1290, y: 396, w: 180, h: 8 }],
+            turrets: [], drones: [], chronoBots: [], slowZones: [],
+            waterZones: [{ x: 330, y: 280, w: 160, h: 120, flowX: -150, flowY: 30 }, { x: 790, y: 200, w: 200, h: 140, flowX: 170, flowY: 40 }, { x: 1300, y: 260, w: 160, h: 120, flowX: -190, flowY: 60 }],
+            portals: [],
+            coins: [{ x: 575, y: 225 }, { x: 855, y: 145 }, { x: 1570, y: 125 }, { x: 1750, y: 105 }]
+          }),
+          makeLevel("34. Петля порталов", "Порталы ведут по кольцевому маршруту внутри уровня. Нужно понять, какой вход куда переносит.", 2020, {
+            style: "sand",
+            spawn: { x: 60, y: 360 }, exit: { x: 1910, y: 94, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 240, h: 90 }, { x: 420, y: 320, w: 120, h: 20 }, { x: 760, y: 250, w: 120, h: 20 }, { x: 1110, y: 190, w: 130, h: 20 }, { x: 1480, y: 150, w: 130, h: 20 }, { x: 1870, y: 140, w: 150, h: 20 }],
+            buttons: [], doors: [], lasers: [],
+            movers: [{ x: 1660, y: 120, w: 90, h: 18, axis: "y", range: 70, speed: 0.52 }],
+            traps: [{ x: 240, y: 396, w: 180, h: 8 }, { x: 540, y: 396, w: 220, h: 8 }, { x: 880, y: 396, w: 230, h: 8 }, { x: 1240, y: 396, w: 240, h: 8 }],
+            turrets: [], drones: [], chronoBots: [], slowZones: [],
+            waterZones: [],
+            portals: [
+              { x: 260, y: 320, w: 26, h: 80, toX: 1115, toY: 150, outVx: 50, outVy: -20 },
+              { x: 610, y: 320, w: 26, h: 80, toX: 1490, toY: 110, outVx: 50, outVy: -20 },
+              { x: 1320, y: 320, w: 26, h: 80, toX: 760, toY: 210, outVx: -30, outVy: -20 }
+            ],
+            coins: [{ x: 445, y: 285 }, { x: 785, y: 215 }, { x: 1135, y: 155 }, { x: 1510, y: 115 }, { x: 1930, y: 65 }]
+          }),
+          makeLevel("35. Гидролабиринт", "Финальный уровень пакета: вода, порталы и лабиринт в одном длинном маршруте.", 2240, {
+            style: "archive",
+            spawn: { x: 60, y: 360 }, exit: { x: 2130, y: 74, w: 30, h: 46 },
+            solids: [
+              { x: 0, y: 400, w: 240, h: 90 }, { x: 320, y: 340, w: 40, h: 60 }, { x: 360, y: 340, w: 180, h: 20 }, { x: 540, y: 260, w: 40, h: 140 },
+              { x: 580, y: 260, w: 180, h: 20 }, { x: 760, y: 260, w: 40, h: 80 }, { x: 800, y: 320, w: 180, h: 20 }, { x: 980, y: 220, w: 40, h: 120 },
+              { x: 1020, y: 220, w: 200, h: 20 }, { x: 1220, y: 140, w: 40, h: 100 }, { x: 1260, y: 140, w: 180, h: 20 }, { x: 1460, y: 220, w: 40, h: 120 },
+              { x: 1500, y: 320, w: 170, h: 20 }, { x: 1700, y: 240, w: 40, h: 100 }, { x: 1740, y: 240, w: 180, h: 20 }, { x: 1960, y: 160, w: 180, h: 20 }
+            ],
+            buttons: [], doors: [], lasers: [],
+            movers: [],
+            traps: [{ x: 240, y: 396, w: 300, h: 8 }, { x: 580, y: 396, w: 220, h: 8 }, { x: 980, y: 396, w: 260, h: 8 }, { x: 1500, y: 396, w: 200, h: 8 }],
+            turrets: [], drones: [], chronoBots: [], slowZones: [],
+            waterZones: [
+              { x: 370, y: 280, w: 160, h: 120, flowX: 190, flowY: 40 },
+              { x: 810, y: 240, w: 160, h: 150, flowX: -170, flowY: 60 },
+              { x: 1270, y: 160, w: 160, h: 160, flowX: 220, flowY: 55 },
+              { x: 1750, y: 260, w: 160, h: 120, flowX: -200, flowY: 70 }
+            ],
+            portals: [
+              { x: 620, y: 322, w: 26, h: 78, toX: 1265, toY: 100, outVx: 30, outVy: -30 },
+              { x: 1530, y: 242, w: 26, h: 78, toX: 1975, toY: 120, outVx: 40, outVy: -20 }
+            ],
+            coins: [{ x: 395, y: 245 }, { x: 605, y: 225 }, { x: 845, y: 205 }, { x: 1295, y: 105 }, { x: 1775, y: 205 }, { x: 2145, y: 45 }]
           })
         );
+        levels.push(...buildAdvancedLevelsPack());
+      }
+
+      function buildAdvancedLevelsPack() {
+        const pack = [
+          makeLevel("36. Р“СЂР°РІРёС‚РѕРЅ", "Р’С…РѕРґ РІ РіСЂР°РІРёС‚Р°С†РёРѕРЅРЅС‹Рµ РїРѕР»СЏ РјРµРЅСЏРµС‚ С‚СЂР°РµРєС‚РѕСЂРёСЋ. РўСѓС‚ РЅСѓР¶РЅРѕ РїРѕРЅСЏС‚СЊ, РєРѕРіРґР° РїСЂС‹Р¶РѕРє Р»СѓС‡С€Рµ РѕС‚РїСѓСЃС‚РёС‚СЊ.", 1700, {
+            style: "mono",
+            spawn: { x: 60, y: 360 }, exit: { x: 1600, y: 114, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 260, h: 90 }, { x: 380, y: 330, w: 120, h: 20 }, { x: 650, y: 250, w: 120, h: 20 }, { x: 940, y: 170, w: 140, h: 20 }, { x: 1260, y: 240, w: 140, h: 20 }, { x: 1520, y: 160, w: 180, h: 20 }],
+            buttons: [], doors: [], lasers: [], movers: [],
+            traps: [{ x: 260, y: 396, w: 120, h: 8 }, { x: 500, y: 396, w: 150, h: 8 }, { x: 770, y: 396, w: 170, h: 8 }, { x: 1080, y: 396, w: 180, h: 8 }],
+            turrets: [], drones: [], chronoBots: [], slowZones: [], waterZones: [], portals: [],
+            gravityZones: [{ x: 500, y: 220, w: 220, h: 180, mode: "flip" }, { x: 1090, y: 120, w: 260, h: 200, pullX: 160, pullY: -120, dampen: 0.992 }],
+            phaseWalls: [], fragilePlatforms: [], magRails: [],
+            coins: [{ x: 405, y: 295 }, { x: 675, y: 215 }, { x: 965, y: 135 }, { x: 1545, y: 125 }]
+          }),
+          makeLevel("37. РџРѕС‚РѕР»РѕРє РґСЂСѓРіРѕР№", "Р—РґРµСЃСЊ РЅСѓР¶РЅРѕ РЅРµ Р±РѕСЏС‚СЊСЃСЏ РёРЅРІРµСЂСЃРёРё: С‡Р°СЃС‚СЊ РјР°СЂС€СЂСѓС‚Р° РёРґС‘С‚ РїРѕРґ РїРѕС‚РѕР»РєРѕРј.", 1860, {
+            style: "archive",
+            spawn: { x: 60, y: 360 }, exit: { x: 1760, y: 84, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 250, h: 90 }, { x: 420, y: 320, w: 120, h: 20 }, { x: 760, y: 80, w: 180, h: 20 }, { x: 1120, y: 120, w: 140, h: 20 }, { x: 1450, y: 220, w: 150, h: 20 }, { x: 1700, y: 120, w: 160, h: 20 }],
+            buttons: [], doors: [], lasers: [], movers: [],
+            traps: [{ x: 250, y: 396, w: 170, h: 8 }, { x: 540, y: 396, w: 280, h: 8 }, { x: 1260, y: 396, w: 190, h: 8 }],
+            turrets: [], drones: [], chronoBots: [], slowZones: [], waterZones: [], portals: [],
+            gravityZones: [{ x: 560, y: 120, w: 520, h: 220, mode: "flip" }, { x: 1310, y: 170, w: 220, h: 140, pullX: 120, pullY: 60, dampen: 0.988 }],
+            phaseWalls: [], fragilePlatforms: [], magRails: [],
+            coins: [{ x: 445, y: 285 }, { x: 785, y: 120 }, { x: 1145, y: 80 }, { x: 1725, y: 80 }]
+          }),
+          makeLevel("38. Р¤Р°Р·РЅС‹Р№ СЂРёС‚Рј", "Р¤Р°Р·РѕРІС‹Рµ СЃС‚РµРЅС‹ РјРёРіР°СЋС‚ РїРѕ С‚Р°Р№РјРµСЂСѓ. РќР°Р±РµСЂРё С‚РµРјРї Рё РїСЂРѕС…РѕРґРё РІ РѕРєРЅРѕ.", 1760, {
+            style: "industrial",
+            spawn: { x: 60, y: 360 }, exit: { x: 1660, y: 314, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 320, h: 90 }, { x: 520, y: 360, w: 120, h: 20 }, { x: 860, y: 360, w: 120, h: 20 }, { x: 1200, y: 360, w: 120, h: 20 }, { x: 1540, y: 400, w: 220, h: 90 }],
+            buttons: [], doors: [], lasers: [], movers: [],
+            traps: [{ x: 320, y: 396, w: 200, h: 8 }, { x: 640, y: 396, w: 220, h: 8 }, { x: 980, y: 396, w: 220, h: 8 }, { x: 1320, y: 396, w: 220, h: 8 }],
+            turrets: [], drones: [], chronoBots: [], slowZones: [], waterZones: [], portals: [], gravityZones: [],
+            phaseWalls: [{ x: 430, y: 300, w: 26, h: 100, period: 2.2, duty: 0.52 }, { x: 770, y: 280, w: 26, h: 120, period: 2.2, duty: 0.48, phase: 0.65 }, { x: 1110, y: 260, w: 26, h: 140, period: 2.2, duty: 0.48, phase: 1.18 }],
+            fragilePlatforms: [], magRails: [],
+            coins: [{ x: 545, y: 325 }, { x: 885, y: 325 }, { x: 1225, y: 325 }, { x: 1675, y: 285 }]
+          }),
+          makeLevel("39. Р¤Р°Р·Р° Рё РєР»РѕРЅ", "РљР»РѕРЅ РґРµСЂР¶РёС‚ РєРЅРѕРїРєСѓ, Р° РјР°СЂС€СЂСѓС‚ РІРїРµСЂС‘Рґ РѕС‚РєСЂС‹РІР°РµС‚СЃСЏ С„Р°Р·РѕРІРѕР№ СЃС‚РµРЅРѕР№.", 1860, {
+            style: "neon",
+            spawn: { x: 60, y: 360 }, exit: { x: 1760, y: 214, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 250, h: 90 }, { x: 320, y: 330, w: 110, h: 20 }, { x: 540, y: 290, w: 140, h: 20 }, { x: 850, y: 250, w: 150, h: 20 }, { x: 1160, y: 210, w: 140, h: 20 }, { x: 1450, y: 250, w: 160, h: 20 }, { x: 1700, y: 260, w: 160, h: 20 }],
+            buttons: [{ x: 565, y: 270, w: 22, h: 10, id: "a" }],
+            doors: [], lasers: [], movers: [],
+            traps: [{ x: 250, y: 396, w: 70, h: 8 }, { x: 430, y: 396, w: 110, h: 8 }, { x: 680, y: 396, w: 170, h: 8 }, { x: 1000, y: 396, w: 160, h: 8 }, { x: 1300, y: 396, w: 150, h: 8 }],
+            turrets: [], drones: [], chronoBots: [], slowZones: [], waterZones: [], portals: [], gravityZones: [],
+            phaseWalls: [{ x: 1070, y: 170, w: 26, h: 120, buttonId: "a", activeWhenHeld: false }, { x: 1625, y: 150, w: 26, h: 110, period: 1.9, duty: 0.55, phase: 0.5 }],
+            fragilePlatforms: [], magRails: [],
+            coins: [{ x: 345, y: 295 }, { x: 875, y: 215 }, { x: 1185, y: 175 }, { x: 1780, y: 175 }]
+          }),
+          makeLevel("40. РҐСЂСѓРїРєРёР№ РјРѕСЃС‚", "РџР»Р°С‚С„РѕСЂРјС‹ С‚СЂРµСЃРєР°СЋС‚СЃСЏ РїРѕСЃР»Рµ РєР°СЃР°РЅРёСЏ. Р”РІРёРіР°Р№СЃСЏ Р±РµР· РїР°СѓР·.", 1700, {
+            style: "sand",
+            spawn: { x: 60, y: 360 }, exit: { x: 1600, y: 214, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 260, h: 90 }, { x: 1440, y: 260, w: 260, h: 20 }],
+            buttons: [], doors: [], lasers: [], movers: [],
+            traps: [{ x: 260, y: 396, w: 1180, h: 8 }],
+            turrets: [], drones: [], chronoBots: [], slowZones: [], waterZones: [], portals: [], gravityZones: [], phaseWalls: [],
+            fragilePlatforms: [{ x: 340, y: 340, w: 90, h: 18, delay: 0.45 }, { x: 500, y: 300, w: 90, h: 18, delay: 0.45 }, { x: 660, y: 260, w: 90, h: 18, delay: 0.45 }, { x: 820, y: 300, w: 90, h: 18, delay: 0.42 }, { x: 980, y: 260, w: 90, h: 18, delay: 0.42 }, { x: 1140, y: 220, w: 90, h: 18, delay: 0.4 }, { x: 1300, y: 240, w: 90, h: 18, delay: 0.4 }],
+            magRails: [],
+            coins: [{ x: 365, y: 305 }, { x: 685, y: 225 }, { x: 1005, y: 225 }, { x: 1325, y: 205 }, { x: 1620, y: 175 }]
+          }),
+          makeLevel("41. РћРґРёРЅ С€Р°РЅСЃ", "РҐСЂСѓРїРєРёРµ РїР»РёС‚С‹ Рё РєРЅРѕРїРєР° Р·Р°СЃС‚Р°РІР»СЏСЋС‚ РґСѓРјР°С‚СЊ Рѕ Р·Р°РїРёСЃРё РјР°СЂС€СЂСѓС‚Р°.", 1880, {
+            style: "archive",
+            spawn: { x: 60, y: 360 }, exit: { x: 1780, y: 174, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 250, h: 90 }, { x: 460, y: 300, w: 110, h: 20 }, { x: 1140, y: 250, w: 150, h: 20 }, { x: 1670, y: 220, w: 210, h: 20 }],
+            buttons: [{ x: 1180, y: 230, w: 22, h: 10, id: "a" }],
+            doors: [{ x: 1510, y: 120, w: 24, h: 280, id: "a", mode: "hold" }],
+            lasers: [], movers: [],
+            traps: [{ x: 250, y: 396, w: 210, h: 8 }, { x: 570, y: 396, w: 570, h: 8 }, { x: 1290, y: 396, w: 380, h: 8 }],
+            turrets: [], drones: [], chronoBots: [], slowZones: [], waterZones: [], portals: [], gravityZones: [], phaseWalls: [],
+            fragilePlatforms: [{ x: 320, y: 340, w: 90, h: 18, delay: 0.5 }, { x: 680, y: 280, w: 90, h: 18, delay: 0.45 }, { x: 870, y: 240, w: 90, h: 18, delay: 0.4 }],
+            magRails: [],
+            coins: [{ x: 345, y: 305 }, { x: 705, y: 245 }, { x: 895, y: 205 }, { x: 1165, y: 215 }, { x: 1800, y: 135 }]
+          }),
+          makeLevel("42. РњР°РіРЅРёС‚РЅС‹Р№ РїСѓС‚СЊ", "РњР°РіРЅРёС‚РЅС‹Рµ СЂРµР»СЊСЃС‹ С‚Р°С‰Р°С‚ РІРґРѕР»СЊ С‚СЂР°СЃСЃС‹. РќР°РґРѕ РІРѕРІСЂРµРјСЏ СЃРѕСЃРєР°РєРёРІР°С‚СЊ.", 1760, {
+            style: "industrial",
+            spawn: { x: 60, y: 360 }, exit: { x: 1660, y: 154, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 250, h: 90 }, { x: 1510, y: 200, w: 250, h: 20 }],
+            buttons: [], doors: [], lasers: [], movers: [],
+            traps: [{ x: 250, y: 396, w: 1260, h: 8 }],
+            turrets: [], drones: [], chronoBots: [], slowZones: [], waterZones: [], portals: [], gravityZones: [], phaseWalls: [], fragilePlatforms: [],
+            magRails: [{ x: 300, y: 320, w: 180, h: 32, dir: "right", force: 250 }, { x: 560, y: 260, w: 220, h: 32, dir: "right", force: 280 }, { x: 880, y: 210, w: 220, h: 32, dir: "right", force: 290 }, { x: 1190, y: 160, w: 220, h: 32, dir: "right", force: 300 }],
+            coins: [{ x: 335, y: 285 }, { x: 595, y: 225 }, { x: 915, y: 175 }, { x: 1225, y: 125 }, { x: 1680, y: 115 }]
+          }),
+          makeLevel("43. Р РµР»СЊСЃРѕРІС‹Р№ С€Р°С…С‚С‘СЂ", "Р’РµСЂС‚РёРєР°Р»СЊРЅС‹Рµ Рё РіРѕСЂРёР·РѕРЅС‚Р°Р»СЊРЅС‹Рµ СЂРµР»СЊСЃС‹ РЅР° РѕРґРЅРѕРј РјР°СЂС€СЂСѓС‚Рµ.", 1940, {
+            style: "mono",
+            spawn: { x: 60, y: 360 }, exit: { x: 1840, y: 74, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 250, h: 90 }, { x: 470, y: 280, w: 100, h: 20 }, { x: 960, y: 160, w: 110, h: 20 }, { x: 1480, y: 120, w: 130, h: 20 }, { x: 1760, y: 100, w: 180, h: 20 }],
+            buttons: [], doors: [], lasers: [], movers: [],
+            traps: [{ x: 250, y: 396, w: 220, h: 8 }, { x: 570, y: 396, w: 600, h: 8 }, { x: 1170, y: 396, w: 590, h: 8 }],
+            turrets: [], drones: [], chronoBots: [], slowZones: [], waterZones: [], portals: [], gravityZones: [], phaseWalls: [], fragilePlatforms: [],
+            magRails: [{ x: 320, y: 300, w: 36, h: 120, dir: "up", force: 260 }, { x: 600, y: 240, w: 220, h: 30, dir: "right", force: 280 }, { x: 890, y: 180, w: 36, h: 150, dir: "up", force: 300 }, { x: 1150, y: 120, w: 240, h: 30, dir: "right", force: 310 }],
+            coins: [{ x: 490, y: 245 }, { x: 625, y: 205 }, { x: 985, y: 125 }, { x: 1505, y: 85 }, { x: 1860, y: 45 }]
+          }),
+          makeLevel("44. Р›РѕР¶РЅС‹Р№ РІС…РѕРґ", "РћРґРёРЅ РїРѕСЂС‚Р°Р» РїРѕРјРѕРіР°РµС‚, РґСЂСѓРіРѕР№ СѓРІРѕРґРёС‚ РЅР°Р·Р°Рґ. РР°РїРѕРјРёРЅР°Р№ РјР°СЂС€СЂСѓС‚.", 1820, {
+            style: "sand",
+            spawn: { x: 60, y: 360 }, exit: { x: 1720, y: 154, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 240, h: 90 }, { x: 410, y: 330, w: 120, h: 20 }, { x: 740, y: 280, w: 120, h: 20 }, { x: 1080, y: 230, w: 120, h: 20 }, { x: 1420, y: 180, w: 140, h: 20 }, { x: 1670, y: 200, w: 150, h: 20 }],
+            buttons: [], doors: [], lasers: [], movers: [],
+            traps: [{ x: 240, y: 396, w: 170, h: 8 }, { x: 530, y: 396, w: 210, h: 8 }, { x: 860, y: 396, w: 220, h: 8 }, { x: 1200, y: 396, w: 220, h: 8 }],
+            turrets: [], drones: [], chronoBots: [], slowZones: [], waterZones: [], gravityZones: [], phaseWalls: [], fragilePlatforms: [], magRails: [],
+            portals: [{ x: 260, y: 322, w: 26, h: 78, toX: 1085, toY: 190, outVx: 40, outVy: -20 }, { x: 610, y: 322, w: 26, h: 78, toX: 150, toY: 340, outVx: 0, outVy: -10, fake: true }, { x: 950, y: 322, w: 26, h: 78, toX: 760, toY: 240, outVx: 0, outVy: -10, fake: true }],
+            coins: [{ x: 435, y: 295 }, { x: 765, y: 245 }, { x: 1105, y: 195 }, { x: 1740, y: 115 }]
+          }),
+          makeLevel("45. РџР°РјСЏС‚СЊ РїРѕСЂС‚Р°Р»РѕРІ", "Р›Р°Р±РёСЂРёРЅС‚ РёР· Р»РѕР¶РЅС‹С… РїРѕСЂС‚Р°Р»РѕРІ. РџСЂР°РІРёР»СЊРЅС‹Р№ РїСѓС‚СЊ РѕС‚РєСЂС‹РІР°РµС‚СЃСЏ С‚РѕР»СЊРєРѕ РїРѕСЃР»Рµ РЅРµСЃРєРѕР»СЊРєРёС… РїСЂРѕР±.", 2140, {
+            style: "archive",
+            spawn: { x: 60, y: 360 }, exit: { x: 2040, y: 94, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 240, h: 90 }, { x: 400, y: 340, w: 150, h: 20 }, { x: 750, y: 260, w: 160, h: 20 }, { x: 1100, y: 180, w: 160, h: 20 }, { x: 1450, y: 260, w: 160, h: 20 }, { x: 1820, y: 140, w: 150, h: 20 }, { x: 2000, y: 140, w: 140, h: 20 }],
+            buttons: [], doors: [], lasers: [], movers: [],
+            traps: [{ x: 240, y: 396, w: 160, h: 8 }, { x: 550, y: 396, w: 200, h: 8 }, { x: 910, y: 396, w: 190, h: 8 }, { x: 1260, y: 396, w: 190, h: 8 }, { x: 1610, y: 396, w: 210, h: 8 }],
+            turrets: [], drones: [], chronoBots: [], slowZones: [], waterZones: [], gravityZones: [], phaseWalls: [], fragilePlatforms: [], magRails: [],
+            portals: [{ x: 260, y: 322, w: 26, h: 78, toX: 1105, toY: 140, outVx: 20, outVy: -20 }, { x: 585, y: 322, w: 26, h: 78, toX: 160, toY: 340, outVx: 0, outVy: 0, fake: true }, { x: 960, y: 322, w: 26, h: 78, toX: 770, toY: 220, outVx: 10, outVy: -10, fake: true }, { x: 1310, y: 322, w: 26, h: 78, toX: 1830, toY: 100, outVx: 35, outVy: -18 }],
+            coins: [{ x: 425, y: 305 }, { x: 775, y: 225 }, { x: 1125, y: 145 }, { x: 1845, y: 105 }, { x: 2060, y: 55 }]
+          }),
+          makeLevel("46. РћР±СЂР°С‚РЅС‹Р№ СЂРµР°РєС‚РѕСЂ", "Р“СЂР°РІРёС‚Р°С†РёСЏ Рё С„Р°Р·РѕРІС‹Рµ СЃС‚РµРЅС‹ РЅР° РѕРґРЅРѕРј СѓС‡Р°СЃС‚РєРµ. РќР°РґРѕ РѕРґРЅРѕРІСЂРµРјРµРЅРЅРѕ С‡РёС‚Р°С‚СЊ Рё РІСЂРµРјСЏ, Рё РЅР°РїСЂР°РІР»РµРЅРёРµ РїР°РґРµРЅРёСЏ.", 1960, {
+            style: "industrial",
+            spawn: { x: 60, y: 360 }, exit: { x: 1860, y: 104, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 260, h: 90 }, { x: 460, y: 320, w: 130, h: 20 }, { x: 820, y: 100, w: 150, h: 20 }, { x: 1220, y: 280, w: 150, h: 20 }, { x: 1570, y: 160, w: 160, h: 20 }, { x: 1820, y: 140, w: 140, h: 20 }],
+            buttons: [], doors: [], lasers: [], movers: [],
+            traps: [{ x: 260, y: 396, w: 200, h: 8 }, { x: 590, y: 396, w: 230, h: 8 }, { x: 970, y: 396, w: 250, h: 8 }, { x: 1370, y: 396, w: 200, h: 8 }],
+            turrets: [], drones: [], chronoBots: [], slowZones: [], waterZones: [], portals: [],
+            gravityZones: [{ x: 620, y: 120, w: 430, h: 200, mode: "flip" }, { x: 1400, y: 120, w: 200, h: 180, pullX: 150, pullY: -70, dampen: 0.99 }],
+            phaseWalls: [{ x: 1080, y: 120, w: 26, h: 200, period: 2, duty: 0.5, phase: 0.3 }],
+            fragilePlatforms: [], magRails: [],
+            coins: [{ x: 485, y: 285 }, { x: 845, y: 65 }, { x: 1245, y: 245 }, { x: 1880, y: 65 }]
+          }),
+          makeLevel("47. РЎРєРѕР» Рё СЂРµР»СЊСЃ", "РҐСЂСѓРїРєРёРµ РїР»РёС‚С‹ РІС‹РІРѕРґСЏС‚ РЅР° РјР°РіРЅРёС‚РЅС‹Р№ РјР°СЂС€СЂСѓС‚.", 1880, {
+            style: "sand",
+            spawn: { x: 60, y: 360 }, exit: { x: 1780, y: 154, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 260, h: 90 }, { x: 1500, y: 200, w: 380, h: 20 }],
+            buttons: [], doors: [], lasers: [], movers: [],
+            traps: [{ x: 260, y: 396, w: 1240, h: 8 }],
+            turrets: [], drones: [], chronoBots: [], slowZones: [], waterZones: [], portals: [], gravityZones: [], phaseWalls: [],
+            fragilePlatforms: [{ x: 340, y: 340, w: 90, h: 18, delay: 0.45 }, { x: 520, y: 300, w: 90, h: 18, delay: 0.42 }, { x: 700, y: 260, w: 90, h: 18, delay: 0.38 }],
+            magRails: [{ x: 870, y: 220, w: 220, h: 30, dir: "right", force: 280 }, { x: 1160, y: 180, w: 220, h: 30, dir: "right", force: 300 }],
+            coins: [{ x: 365, y: 305 }, { x: 725, y: 225 }, { x: 895, y: 185 }, { x: 1185, y: 145 }, { x: 1800, y: 115 }]
+          }),
+          makeLevel("48. Р›Р°Р±РёСЂРёРЅС‚ РёСЃРєСЂРёРІР»РµРЅРёР№", "РџРѕСЂС‚Р°Р»С‹ РїРµСЂРµРєРёРґС‹РІР°СЋС‚ РјРµР¶РґСѓ СЏСЂСѓСЃР°РјРё РѕРґРЅРѕРіРѕ Р»Р°Р±РёСЂРёРЅС‚Р°.", 2100, {
+            style: "mono",
+            spawn: { x: 60, y: 360 }, exit: { x: 2000, y: 84, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 260, h: 90 }, { x: 320, y: 340, w: 40, h: 60 }, { x: 360, y: 340, w: 180, h: 20 }, { x: 540, y: 260, w: 40, h: 140 }, { x: 580, y: 260, w: 180, h: 20 }, { x: 760, y: 180, w: 40, h: 140 }, { x: 800, y: 180, w: 220, h: 20 }, { x: 1020, y: 260, w: 40, h: 140 }, { x: 1060, y: 340, w: 180, h: 20 }, { x: 1240, y: 220, w: 40, h: 140 }, { x: 1280, y: 220, w: 190, h: 20 }, { x: 1500, y: 140, w: 40, h: 140 }, { x: 1540, y: 140, w: 190, h: 20 }, { x: 1760, y: 100, w: 240, h: 20 }],
+            buttons: [], doors: [], lasers: [], movers: [],
+            traps: [{ x: 260, y: 396, w: 280, h: 8 }, { x: 580, y: 396, w: 180, h: 8 }, { x: 800, y: 396, w: 220, h: 8 }, { x: 1280, y: 396, w: 220, h: 8 }],
+            turrets: [], drones: [], chronoBots: [], slowZones: [], waterZones: [], gravityZones: [], phaseWalls: [], fragilePlatforms: [], magRails: [],
+            portals: [{ x: 450, y: 322, w: 26, h: 78, toX: 1285, toY: 180, outVx: 15, outVy: -18 }, { x: 920, y: 322, w: 26, h: 78, toX: 585, toY: 220, outVx: 0, outVy: -8, fake: true }, { x: 1335, y: 322, w: 26, h: 78, toX: 1545, toY: 100, outVx: 20, outVy: -18 }],
+            coins: [{ x: 605, y: 225 }, { x: 825, y: 145 }, { x: 1305, y: 185 }, { x: 1565, y: 105 }, { x: 2020, y: 45 }]
+          }),
+          makeLevel("49. РљРѕРјРЅР°С‚Р° РїРµСЂРµРІРµСЂС‚С‹С€РµР№", "Р‘РѕР»СЊС€Р°СЏ СЃРµРєС†РёСЏ СЃ РёРЅРІРµСЂСЃРёРµР№, РіРґРµ РІСЃС‘ РІРёРґРёС‚СЃСЏ РЅР°РёР·РЅР°РЅРєСѓ.", 2060, {
+            style: "archive",
+            spawn: { x: 60, y: 360 }, exit: { x: 1960, y: 94, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 260, h: 90 }, { x: 640, y: 80, w: 150, h: 20 }, { x: 980, y: 80, w: 150, h: 20 }, { x: 1320, y: 80, w: 150, h: 20 }, { x: 1680, y: 120, w: 160, h: 20 }, { x: 1910, y: 140, w: 150, h: 20 }],
+            buttons: [], doors: [], lasers: [], movers: [],
+            traps: [{ x: 260, y: 396, w: 1380, h: 8 }],
+            turrets: [], drones: [], chronoBots: [], slowZones: [], waterZones: [], portals: [], phaseWalls: [], fragilePlatforms: [], magRails: [],
+            gravityZones: [{ x: 360, y: 80, w: 1180, h: 260, mode: "flip" }, { x: 1540, y: 80, w: 220, h: 200, pullX: 180, pullY: -80, dampen: 0.99 }],
+            coins: [{ x: 665, y: 45 }, { x: 1005, y: 45 }, { x: 1345, y: 45 }, { x: 1930, y: 95 }]
+          }),
+          makeLevel("50. Р¤Р°Р·РѕРІС‹Р№ РЅР°РїРѕСЂ", "РЎС‚РµРЅС‹ С‚Рѕ РµСЃС‚СЊ, С‚Рѕ РЅРµС‚, Р° С‚СѓСЂРµР»Рё РЅРµ РґР°СЋС‚ СЃС‚РѕСЏС‚СЊ РЅР° РјРµСЃС‚Рµ.", 2140, {
+            style: "industrial",
+            spawn: { x: 60, y: 360 }, exit: { x: 2040, y: 154, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 260, h: 90 }, { x: 470, y: 340, w: 110, h: 20 }, { x: 840, y: 300, w: 110, h: 20 }, { x: 1220, y: 260, w: 110, h: 20 }, { x: 1600, y: 220, w: 130, h: 20 }, { x: 1990, y: 200, w: 150, h: 20 }],
+            buttons: [], doors: [], lasers: [], movers: [],
+            traps: [{ x: 260, y: 396, w: 210, h: 8 }, { x: 580, y: 396, w: 260, h: 8 }, { x: 950, y: 396, w: 270, h: 8 }, { x: 1330, y: 396, w: 270, h: 8 }],
+            turrets: [{ x: 930, y: 286, dir: 1, rate: 1.4 }, { x: 1710, y: 206, dir: 1, rate: 1.35 }],
+            drones: [], chronoBots: [], slowZones: [], waterZones: [], portals: [], gravityZones: [], fragilePlatforms: [], magRails: [],
+            phaseWalls: [{ x: 360, y: 280, w: 26, h: 120, period: 1.8, duty: 0.5 }, { x: 710, y: 240, w: 26, h: 160, period: 1.8, duty: 0.5, phase: 0.45 }, { x: 1080, y: 200, w: 26, h: 200, period: 1.8, duty: 0.5, phase: 0.9 }, { x: 1450, y: 160, w: 26, h: 240, period: 1.8, duty: 0.5, phase: 1.35 }],
+            coins: [{ x: 495, y: 305 }, { x: 865, y: 265 }, { x: 1245, y: 225 }, { x: 1625, y: 185 }, { x: 2060, y: 115 }]
+          }),
+          makeLevel("51. РњР°РіРЅРёС‚РЅР°СЏ РїРµС‡СЊ", "Р’РѕРґР°, СЂРµР»СЊСЃС‹ Рё РіСЂР°РІРёС‚Р°С†РёСЏ СЃРјРµС€РёРІР°СЋС‚СЃСЏ РІ РѕРґРЅРѕРј РёРЅРґСѓСЃС‚СЂРёР°Р»СЊРЅРѕРј СѓС‡Р°СЃС‚РєРµ.", 2200, {
+            style: "industrial",
+            spawn: { x: 60, y: 360 }, exit: { x: 2100, y: 94, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 260, h: 90 }, { x: 580, y: 300, w: 120, h: 20 }, { x: 1040, y: 220, w: 130, h: 20 }, { x: 1520, y: 180, w: 140, h: 20 }, { x: 2040, y: 140, w: 160, h: 20 }],
+            buttons: [], doors: [], lasers: [], movers: [],
+            traps: [{ x: 260, y: 396, w: 320, h: 8 }, { x: 700, y: 396, w: 340, h: 8 }, { x: 1170, y: 396, w: 350, h: 8 }, { x: 1660, y: 396, w: 380, h: 8 }],
+            turrets: [], drones: [{ x1: 1680, x2: 2020, y: 130, speed: 1.05 }], chronoBots: [], slowZones: [],
+            waterZones: [{ x: 280, y: 240, w: 240, h: 160, flowX: 190, flowY: 70 }],
+            portals: [], gravityZones: [{ x: 820, y: 150, w: 260, h: 170, pullX: 130, pullY: -90, dampen: 0.992 }], phaseWalls: [],
+            fragilePlatforms: [], magRails: [{ x: 1230, y: 180, w: 220, h: 30, dir: "right", force: 300 }, { x: 1740, y: 140, w: 220, h: 30, dir: "right", force: 320 }],
+            coins: [{ x: 605, y: 265 }, { x: 1065, y: 185 }, { x: 1255, y: 145 }, { x: 1765, y: 105 }, { x: 2120, y: 55 }]
+          }),
+          makeLevel("52. РђС‚Р»Р°СЃ РѕР±РјР°РЅР°", "Р›РѕР¶РЅС‹Рµ РїРѕСЂС‚Р°Р»С‹ Рё С„Р°Р·РѕРІС‹Рµ СЃС‚РµРЅС‹ Р»РѕРјР°СЋС‚ РїСЂРёРІС‹С‡РЅСѓСЋ РЅР°РІРёРіР°С†РёСЋ.", 2280, {
+            style: "mono",
+            spawn: { x: 60, y: 360 }, exit: { x: 2180, y: 114, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 240, h: 90 }, { x: 420, y: 340, w: 130, h: 20 }, { x: 780, y: 300, w: 130, h: 20 }, { x: 1140, y: 240, w: 140, h: 20 }, { x: 1520, y: 190, w: 140, h: 20 }, { x: 1900, y: 150, w: 150, h: 20 }, { x: 2140, y: 160, w: 140, h: 20 }],
+            buttons: [], doors: [], lasers: [], movers: [],
+            traps: [{ x: 240, y: 396, w: 180, h: 8 }, { x: 550, y: 396, w: 230, h: 8 }, { x: 910, y: 396, w: 230, h: 8 }, { x: 1280, y: 396, w: 240, h: 8 }, { x: 1660, y: 396, w: 240, h: 8 }],
+            turrets: [], drones: [], chronoBots: [], slowZones: [], waterZones: [], gravityZones: [], fragilePlatforms: [], magRails: [],
+            portals: [{ x: 260, y: 322, w: 26, h: 78, toX: 1145, toY: 200, outVx: 20, outVy: -15 }, { x: 610, y: 322, w: 26, h: 78, toX: 200, toY: 340, fake: true, outVx: 0, outVy: 0 }, { x: 980, y: 322, w: 26, h: 78, toX: 420, toY: 300, fake: true, outVx: 0, outVy: -10 }, { x: 1680, y: 322, w: 26, h: 78, toX: 1910, toY: 110, outVx: 20, outVy: -15 }],
+            phaseWalls: [{ x: 1430, y: 150, w: 26, h: 110, period: 2.1, duty: 0.48 }],
+            coins: [{ x: 445, y: 305 }, { x: 805, y: 265 }, { x: 1165, y: 205 }, { x: 1925, y: 115 }, { x: 2200, y: 75 }]
+          }),
+          makeLevel("53. РҐСЂСѓРїРєР°СЏ Р±Р°С€РЅСЏ", "РЎРµСЂРёСЏ РЅР°РґР»РѕРјР»РµРЅРЅС‹С… РїР»Р°С‚С„РѕСЂРј Рё РјРёРЅРё-Р»Р°Р±РёСЂРёРЅС‚ РёР· РІРµСЂС‚РёРєР°Р»СЊРЅС‹С… РїРѕРґСЉС‘РјРѕРІ.", 1960, {
+            style: "archive",
+            spawn: { x: 60, y: 360 }, exit: { x: 1860, y: 74, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 240, h: 90 }, { x: 1740, y: 120, w: 220, h: 20 }],
+            buttons: [], doors: [], lasers: [], movers: [],
+            traps: [{ x: 240, y: 396, w: 1500, h: 8 }],
+            turrets: [], drones: [], chronoBots: [], slowZones: [], waterZones: [], portals: [], gravityZones: [], phaseWalls: [], magRails: [],
+            fragilePlatforms: [{ x: 320, y: 340, w: 80, h: 18, delay: 0.48 }, { x: 460, y: 300, w: 80, h: 18, delay: 0.45 }, { x: 600, y: 260, w: 80, h: 18, delay: 0.42 }, { x: 740, y: 220, w: 80, h: 18, delay: 0.4 }, { x: 900, y: 180, w: 80, h: 18, delay: 0.38 }, { x: 1080, y: 220, w: 80, h: 18, delay: 0.38 }, { x: 1260, y: 180, w: 80, h: 18, delay: 0.36 }, { x: 1440, y: 140, w: 80, h: 18, delay: 0.35 }, { x: 1600, y: 120, w: 80, h: 18, delay: 0.35 }],
+            coins: [{ x: 345, y: 305 }, { x: 625, y: 225 }, { x: 925, y: 145 }, { x: 1285, y: 145 }, { x: 1625, y: 85 }, { x: 1880, y: 45 }]
+          }),
+          makeLevel("54. РњР°РіРЅРёС‚РЅС‹Р№ Р»Р°Р±РёСЂРёРЅС‚", "Р РµР»СЊСЃС‹ С‚СЏРЅСѓС‚ РІ СЂР°Р·РЅС‹Рµ СЃС‚РѕСЂРѕРЅС‹, Рё РЅСѓР¶РЅРѕ РІС‹Р±РёСЂР°С‚СЊСЃСЏ С‡РµСЂРµР· РєРѕСЂРёРґРѕСЂС‹.", 2240, {
+            style: "sand",
+            spawn: { x: 60, y: 360 }, exit: { x: 2140, y: 114, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 240, h: 90 }, { x: 500, y: 340, w: 40, h: 60 }, { x: 540, y: 340, w: 180, h: 20 }, { x: 920, y: 260, w: 40, h: 140 }, { x: 960, y: 260, w: 180, h: 20 }, { x: 1350, y: 190, w: 40, h: 150 }, { x: 1390, y: 320, w: 180, h: 20 }, { x: 1770, y: 150, w: 40, h: 110 }, { x: 1810, y: 150, w: 200, h: 20 }, { x: 2080, y: 160, w: 160, h: 20 }],
+            buttons: [], doors: [], lasers: [], movers: [],
+            traps: [{ x: 240, y: 396, w: 260, h: 8 }, { x: 720, y: 396, w: 200, h: 8 }, { x: 1140, y: 396, w: 210, h: 8 }, { x: 1570, y: 396, w: 200, h: 8 }],
+            turrets: [], drones: [], chronoBots: [], slowZones: [], waterZones: [], portals: [], gravityZones: [], phaseWalls: [], fragilePlatforms: [],
+            magRails: [{ x: 300, y: 320, w: 150, h: 30, dir: "right", force: 260 }, { x: 750, y: 260, w: 36, h: 120, dir: "up", force: 290 }, { x: 1160, y: 210, w: 180, h: 30, dir: "left", force: 260 }, { x: 1600, y: 180, w: 36, h: 120, dir: "up", force: 300 }],
+            coins: [{ x: 565, y: 305 }, { x: 985, y: 225 }, { x: 1415, y: 285 }, { x: 1835, y: 115 }, { x: 2160, y: 75 }]
+          }),
+          makeLevel("55. РЈР·РµР» РёСЃРєР°Р¶РµРЅРёР№", "Р¤РёРЅР°Р»СЊРЅР°СЏ РЅРѕРІР°СЏ РІРµС‚РєР°: РІСЃРµ РјРµС…Р°РЅРёРєРё СЃРѕР±СЂР°РЅС‹ РІ РѕРґРЅРѕРј РґР»РёРЅРЅРѕРј РјР°СЂС€СЂСѓС‚Рµ.", 2520, {
+            style: "neon",
+            spawn: { x: 60, y: 360 }, exit: { x: 2420, y: 74, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 240, h: 90 }, { x: 420, y: 330, w: 100, h: 20 }, { x: 760, y: 240, w: 120, h: 20 }, { x: 1140, y: 160, w: 120, h: 20 }, { x: 1520, y: 280, w: 130, h: 20 }, { x: 1900, y: 180, w: 140, h: 20 }, { x: 2300, y: 120, w: 220, h: 20 }],
+            buttons: [{ x: 1545, y: 260, w: 22, h: 10, id: "a" }],
+            doors: [], lasers: [], movers: [],
+            traps: [{ x: 240, y: 396, w: 180, h: 8 }, { x: 520, y: 396, w: 240, h: 8 }, { x: 880, y: 396, w: 260, h: 8 }, { x: 1260, y: 396, w: 260, h: 8 }, { x: 1650, y: 396, w: 250, h: 8 }, { x: 2040, y: 396, w: 260, h: 8 }],
+            turrets: [{ x: 2060, y: 166, dir: 1, rate: 1.45 }], drones: [{ x1: 2080, x2: 2320, y: 140, speed: 1.08 }], chronoBots: [{ x1: 1280, x2: 1500, y: 130, speed: 1.1, teleportEvery: 3.2 }], slowZones: [{ x: 2180, y: 100, w: 110, h: 80 }],
+            waterZones: [{ x: 260, y: 250, w: 150, h: 150, flowX: 180, flowY: 70 }],
+            portals: [{ x: 560, y: 322, w: 26, h: 78, toX: 1145, toY: 120, outVx: 20, outVy: -15 }, { x: 1730, y: 322, w: 26, h: 78, toX: 340, toY: 340, fake: true, outVx: 0, outVy: 0 }],
+            gravityZones: [{ x: 620, y: 120, w: 360, h: 180, mode: "flip" }, { x: 1860, y: 120, w: 220, h: 140, pullX: 150, pullY: -80, dampen: 0.99 }],
+            phaseWalls: [{ x: 1670, y: 180, w: 26, h: 120, buttonId: "a", activeWhenHeld: false }],
+            fragilePlatforms: [{ x: 1540, y: 240, w: 90, h: 18, delay: 0.38 }],
+            magRails: [{ x: 900, y: 190, w: 180, h: 30, dir: "right", force: 300 }, { x: 2140, y: 140, w: 180, h: 30, dir: "right", force: 320 }],
+            coins: [{ x: 445, y: 295 }, { x: 785, y: 205 }, { x: 1165, y: 125 }, { x: 1565, y: 205 }, { x: 1925, y: 145 }, { x: 2440, y: 45 }]
+          }),
+          makeLevel("56. Штормовой шлюз", "Вода, фазы и порталы в одном длинном коридоре. Здесь важно не паниковать и держать ритм.", 2380, {
+            style: "archive",
+            spawn: { x: 60, y: 360 }, exit: { x: 2280, y: 114, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 250, h: 90 }, { x: 520, y: 320, w: 120, h: 20 }, { x: 900, y: 260, w: 120, h: 20 }, { x: 1280, y: 200, w: 140, h: 20 }, { x: 1670, y: 240, w: 150, h: 20 }, { x: 2050, y: 180, w: 170, h: 20 }, { x: 2250, y: 160, w: 130, h: 20 }],
+            buttons: [], doors: [], lasers: [], movers: [],
+            traps: [{ x: 250, y: 396, w: 270, h: 8 }, { x: 640, y: 396, w: 260, h: 8 }, { x: 1020, y: 396, w: 260, h: 8 }, { x: 1420, y: 396, w: 250, h: 8 }, { x: 1820, y: 396, w: 230, h: 8 }],
+            turrets: [], drones: [{ x1: 1840, x2: 2140, y: 150, speed: 1.08 }], chronoBots: [], slowZones: [],
+            waterZones: [{ x: 260, y: 240, w: 220, h: 160, flowX: 210, flowY: 80 }, { x: 1450, y: 210, w: 180, h: 160, flowX: -180, flowY: 70 }],
+            portals: [{ x: 700, y: 322, w: 26, h: 78, toX: 1285, toY: 160, outVx: 20, outVy: -10 }],
+            gravityZones: [], phaseWalls: [{ x: 1100, y: 180, w: 26, h: 120, period: 1.9, duty: 0.5 }],
+            fragilePlatforms: [], magRails: [],
+            coins: [{ x: 545, y: 285 }, { x: 925, y: 225 }, { x: 1305, y: 165 }, { x: 2070, y: 145 }, { x: 2300, y: 85 }]
+          }),
+          makeLevel("57. Вертикальный узел", "Смешанный вертикальный маршрут: рельсы, хрупкие платформы и инверсия гравитации.", 2100, {
+            style: "mono",
+            spawn: { x: 60, y: 360 }, exit: { x: 1940, y: 54, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 230, h: 90 }, { x: 420, y: 320, w: 80, h: 20 }, { x: 760, y: 220, w: 90, h: 20 }, { x: 1090, y: 120, w: 90, h: 20 }, { x: 1420, y: 200, w: 100, h: 20 }, { x: 1710, y: 110, w: 120, h: 20 }, { x: 1910, y: 90, w: 190, h: 20 }],
+            buttons: [], doors: [], lasers: [], movers: [],
+            traps: [{ x: 230, y: 396, w: 220, h: 8 }, { x: 500, y: 396, w: 260, h: 8 }, { x: 850, y: 396, w: 570, h: 8 }],
+            turrets: [], drones: [], chronoBots: [], slowZones: [], waterZones: [], portals: [],
+            gravityZones: [{ x: 900, y: 80, w: 360, h: 220, mode: "flip" }],
+            phaseWalls: [],
+            fragilePlatforms: [{ x: 560, y: 270, w: 80, h: 18, delay: 0.42 }, { x: 1260, y: 150, w: 80, h: 18, delay: 0.38 }],
+            magRails: [{ x: 300, y: 300, w: 36, h: 120, dir: "up", force: 260 }, { x: 620, y: 240, w: 36, h: 120, dir: "up", force: 285 }, { x: 1530, y: 160, w: 160, h: 30, dir: "right", force: 290 }],
+            coins: [{ x: 445, y: 285 }, { x: 585, y: 235 }, { x: 785, y: 185 }, { x: 1115, y: 85 }, { x: 1740, y: 75 }, { x: 1960, y: 25 }]
+          }),
+          makeLevel("58. Двойной обман", "Два ложных портала подряд и фазы на выходе. Нужно запомнить правильную цепочку.", 2320, {
+            style: "sand",
+            spawn: { x: 60, y: 360 }, exit: { x: 2220, y: 154, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 240, h: 90 }, { x: 460, y: 330, w: 120, h: 20 }, { x: 860, y: 280, w: 120, h: 20 }, { x: 1260, y: 230, w: 130, h: 20 }, { x: 1640, y: 190, w: 150, h: 20 }, { x: 2020, y: 210, w: 150, h: 20 }, { x: 2200, y: 200, w: 120, h: 20 }],
+            buttons: [], doors: [], lasers: [], movers: [],
+            traps: [{ x: 240, y: 396, w: 220, h: 8 }, { x: 580, y: 396, w: 280, h: 8 }, { x: 980, y: 396, w: 280, h: 8 }, { x: 1390, y: 396, w: 250, h: 8 }, { x: 1790, y: 396, w: 230, h: 8 }],
+            turrets: [], drones: [], chronoBots: [], slowZones: [], waterZones: [], gravityZones: [],
+            portals: [{ x: 260, y: 322, w: 26, h: 78, toX: 1265, toY: 190, outVx: 20, outVy: -10 }, { x: 640, y: 322, w: 26, h: 78, toX: 180, toY: 340, fake: true, outVx: 0, outVy: 0 }, { x: 1040, y: 322, w: 26, h: 78, toX: 520, toY: 290, fake: true, outVx: 0, outVy: -8 }, { x: 1820, y: 322, w: 26, h: 78, toX: 2025, toY: 170, outVx: 18, outVy: -10 }],
+            phaseWalls: [{ x: 2140, y: 170, w: 26, h: 90, period: 1.7, duty: 0.48 }],
+            fragilePlatforms: [], magRails: [],
+            coins: [{ x: 485, y: 295 }, { x: 885, y: 245 }, { x: 1285, y: 195 }, { x: 1665, y: 155 }, { x: 2240, y: 125 }]
+          }),
+          makeLevel("59. Хрупкая спираль", "Паркур по надломленным платформам со смешанными зонами воды и гравитации.", 2240, {
+            style: "archive",
+            spawn: { x: 60, y: 360 }, exit: { x: 2140, y: 84, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 230, h: 90 }, { x: 1840, y: 130, w: 120, h: 20 }, { x: 2100, y: 110, w: 140, h: 20 }],
+            buttons: [], doors: [], lasers: [], movers: [],
+            traps: [{ x: 230, y: 396, w: 1610, h: 8 }],
+            turrets: [], drones: [], chronoBots: [], slowZones: [],
+            waterZones: [{ x: 1160, y: 220, w: 180, h: 150, flowX: 160, flowY: 65 }],
+            portals: [],
+            gravityZones: [{ x: 1450, y: 110, w: 260, h: 210, mode: "flip" }],
+            phaseWalls: [],
+            fragilePlatforms: [{ x: 320, y: 340, w: 80, h: 18, delay: 0.46 }, { x: 470, y: 300, w: 80, h: 18, delay: 0.44 }, { x: 620, y: 260, w: 80, h: 18, delay: 0.42 }, { x: 770, y: 220, w: 80, h: 18, delay: 0.4 }, { x: 940, y: 180, w: 80, h: 18, delay: 0.38 }],
+            magRails: [{ x: 1010, y: 150, w: 120, h: 30, dir: "right", force: 260 }],
+            coins: [{ x: 345, y: 305 }, { x: 645, y: 225 }, { x: 965, y: 145 }, { x: 1185, y: 185 }, { x: 1870, y: 95 }, { x: 2160, y: 45 }]
+          }),
+          makeLevel("60. Фабрика ошибок", "Турели, дроны, фазы и рельсы. Здесь уже всё пытается наказать за лишнюю остановку.", 2460, {
+            style: "industrial",
+            spawn: { x: 60, y: 360 }, exit: { x: 2360, y: 134, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 250, h: 90 }, { x: 540, y: 340, w: 110, h: 20 }, { x: 930, y: 280, w: 120, h: 20 }, { x: 1330, y: 220, w: 130, h: 20 }, { x: 1750, y: 180, w: 140, h: 20 }, { x: 2140, y: 160, w: 140, h: 20 }, { x: 2340, y: 180, w: 120, h: 20 }],
+            buttons: [], doors: [], lasers: [], movers: [],
+            traps: [{ x: 250, y: 396, w: 290, h: 8 }, { x: 650, y: 396, w: 280, h: 8 }, { x: 1050, y: 396, w: 280, h: 8 }, { x: 1460, y: 396, w: 290, h: 8 }, { x: 1890, y: 396, w: 250, h: 8 }],
+            turrets: [{ x: 1010, y: 266, dir: 1, rate: 1.35 }, { x: 2170, y: 146, dir: 1, rate: 1.25 }],
+            drones: [{ x1: 1500, x2: 1820, y: 150, speed: 1.1 }], chronoBots: [], slowZones: [],
+            waterZones: [], portals: [],
+            gravityZones: [], phaseWalls: [{ x: 720, y: 250, w: 26, h: 150, period: 1.8, duty: 0.5 }, { x: 1170, y: 190, w: 26, h: 210, period: 1.8, duty: 0.5, phase: 0.5 }],
+            fragilePlatforms: [], magRails: [{ x: 1900, y: 150, w: 180, h: 30, dir: "right", force: 300 }],
+            coins: [{ x: 565, y: 305 }, { x: 955, y: 245 }, { x: 1355, y: 185 }, { x: 1775, y: 145 }, { x: 2380, y: 105 }]
+          }),
+          makeLevel("61. Лаборатория клонов", "Клон, кнопка, фазовая стена и ложный портал в одном длинном пазле.", 2280, {
+            style: "neon",
+            spawn: { x: 60, y: 360 }, exit: { x: 2180, y: 114, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 250, h: 90 }, { x: 380, y: 330, w: 110, h: 20 }, { x: 720, y: 290, w: 130, h: 20 }, { x: 1110, y: 240, w: 130, h: 20 }, { x: 1490, y: 200, w: 140, h: 20 }, { x: 1890, y: 160, w: 150, h: 20 }, { x: 2160, y: 150, w: 120, h: 20 }],
+            buttons: [{ x: 745, y: 270, w: 22, h: 10, id: "a" }],
+            doors: [{ x: 1710, y: 80, w: 24, h: 320, id: "a", mode: "hold" }],
+            lasers: [], movers: [],
+            traps: [{ x: 250, y: 396, w: 130, h: 8 }, { x: 490, y: 396, w: 230, h: 8 }, { x: 850, y: 396, w: 260, h: 8 }, { x: 1240, y: 396, w: 250, h: 8 }, { x: 1630, y: 396, w: 260, h: 8 }],
+            turrets: [], drones: [], chronoBots: [], slowZones: [], waterZones: [], gravityZones: [],
+            portals: [{ x: 1290, y: 322, w: 26, h: 78, toX: 420, toY: 290, fake: true, outVx: 0, outVy: 0 }],
+            phaseWalls: [{ x: 1020, y: 210, w: 26, h: 120, buttonId: "a", activeWhenHeld: false }],
+            fragilePlatforms: [], magRails: [],
+            coins: [{ x: 405, y: 295 }, { x: 745, y: 245 }, { x: 1135, y: 195 }, { x: 1915, y: 125 }, { x: 2200, y: 85 }]
+          }),
+          makeLevel("62. Речной архив", "Старый архив затопило: вода, рельсы, ложные порталы и один жёсткий финальный прыжок.", 2400, {
+            style: "archive",
+            spawn: { x: 60, y: 360 }, exit: { x: 2300, y: 114, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 240, h: 90 }, { x: 580, y: 340, w: 120, h: 20 }, { x: 970, y: 280, w: 120, h: 20 }, { x: 1370, y: 220, w: 140, h: 20 }, { x: 1770, y: 180, w: 140, h: 20 }, { x: 2260, y: 150, w: 140, h: 20 }],
+            buttons: [], doors: [], lasers: [], movers: [],
+            traps: [{ x: 240, y: 396, w: 340, h: 8 }, { x: 700, y: 396, w: 270, h: 8 }, { x: 1090, y: 396, w: 280, h: 8 }, { x: 1510, y: 396, w: 260, h: 8 }, { x: 1910, y: 396, w: 350, h: 8 }],
+            turrets: [], drones: [], chronoBots: [], slowZones: [],
+            waterZones: [{ x: 260, y: 240, w: 260, h: 160, flowX: 220, flowY: 80 }, { x: 1530, y: 210, w: 200, h: 160, flowX: -200, flowY: 75 }],
+            portals: [{ x: 760, y: 322, w: 26, h: 78, toX: 1375, toY: 180, outVx: 20, outVy: -10 }, { x: 1970, y: 322, w: 26, h: 78, toX: 980, toY: 240, fake: true, outVx: 0, outVy: -8 }],
+            gravityZones: [], phaseWalls: [], fragilePlatforms: [], magRails: [{ x: 2050, y: 170, w: 180, h: 30, dir: "right", force: 300 }],
+            coins: [{ x: 605, y: 305 }, { x: 995, y: 245 }, { x: 1395, y: 185 }, { x: 1795, y: 145 }, { x: 2320, y: 85 }]
+          }),
+          makeLevel("63. Грань фаз", "Плотный участок с фазовыми окнами, турелями и рельсовым финишем.", 2260, {
+            style: "mono",
+            spawn: { x: 60, y: 360 }, exit: { x: 2160, y: 114, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 260, h: 90 }, { x: 500, y: 340, w: 100, h: 20 }, { x: 860, y: 300, w: 100, h: 20 }, { x: 1220, y: 260, w: 110, h: 20 }, { x: 1590, y: 210, w: 120, h: 20 }, { x: 1960, y: 160, w: 120, h: 20 }, { x: 2140, y: 150, w: 120, h: 20 }],
+            buttons: [], doors: [], lasers: [], movers: [],
+            traps: [{ x: 260, y: 396, w: 240, h: 8 }, { x: 600, y: 396, w: 260, h: 8 }, { x: 960, y: 396, w: 260, h: 8 }, { x: 1330, y: 396, w: 260, h: 8 }, { x: 1710, y: 396, w: 250, h: 8 }],
+            turrets: [{ x: 1280, y: 246, dir: 1, rate: 1.3 }], drones: [], chronoBots: [], slowZones: [],
+            waterZones: [], portals: [], gravityZones: [],
+            phaseWalls: [{ x: 380, y: 280, w: 26, h: 120, period: 1.7, duty: 0.5 }, { x: 740, y: 240, w: 26, h: 160, period: 1.7, duty: 0.5, phase: 0.42 }, { x: 1100, y: 200, w: 26, h: 200, period: 1.7, duty: 0.5, phase: 0.84 }, { x: 1470, y: 160, w: 26, h: 240, period: 1.7, duty: 0.5, phase: 1.26 }],
+            fragilePlatforms: [], magRails: [{ x: 1780, y: 170, w: 180, h: 30, dir: "right", force: 290 }],
+            coins: [{ x: 525, y: 305 }, { x: 885, y: 265 }, { x: 1245, y: 225 }, { x: 1615, y: 175 }, { x: 2180, y: 85 }]
+          }),
+          makeLevel("64. Парадокс шахты", "Гравитация, вода, хрупкие плиты и хронобот в одном длинном испытании.", 2500, {
+            style: "industrial",
+            spawn: { x: 60, y: 360 }, exit: { x: 2400, y: 94, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 230, h: 90 }, { x: 620, y: 320, w: 110, h: 20 }, { x: 1030, y: 250, w: 120, h: 20 }, { x: 1460, y: 170, w: 130, h: 20 }, { x: 1920, y: 220, w: 140, h: 20 }, { x: 2380, y: 130, w: 120, h: 20 }],
+            buttons: [], doors: [], lasers: [], movers: [],
+            traps: [{ x: 230, y: 396, w: 390, h: 8 }, { x: 730, y: 396, w: 300, h: 8 }, { x: 1150, y: 396, w: 310, h: 8 }, { x: 1590, y: 396, w: 330, h: 8 }, { x: 2060, y: 396, w: 320, h: 8 }],
+            turrets: [], drones: [], chronoBots: [{ x1: 1980, x2: 2280, y: 180, speed: 1.08, teleportEvery: 3 }],
+            slowZones: [], waterZones: [{ x: 250, y: 240, w: 270, h: 160, flowX: 210, flowY: 80 }],
+            portals: [], gravityZones: [{ x: 1180, y: 110, w: 320, h: 210, mode: "flip" }],
+            phaseWalls: [], fragilePlatforms: [{ x: 820, y: 280, w: 80, h: 18, delay: 0.4 }, { x: 1670, y: 200, w: 80, h: 18, delay: 0.36 }],
+            magRails: [{ x: 540, y: 290, w: 60, h: 30, dir: "right", force: 260 }],
+            coins: [{ x: 645, y: 285 }, { x: 845, y: 245 }, { x: 1055, y: 215 }, { x: 1485, y: 135 }, { x: 1945, y: 185 }, { x: 2420, y: 45 }]
+          }),
+          makeLevel("65. Ядро времени", "Финальный блок из всего, что у нас есть: клоны, вода, фазы, рельсы, ложные порталы, хрупкие платформы и гравитация.", 2760, {
+            style: "neon",
+            spawn: { x: 60, y: 360 }, exit: { x: 2660, y: 74, w: 30, h: 46 },
+            solids: [{ x: 0, y: 400, w: 230, h: 90 }, { x: 440, y: 340, w: 100, h: 20 }, { x: 820, y: 280, w: 110, h: 20 }, { x: 1210, y: 220, w: 120, h: 20 }, { x: 1600, y: 170, w: 130, h: 20 }, { x: 2010, y: 250, w: 140, h: 20 }, { x: 2440, y: 160, w: 140, h: 20 }, { x: 2640, y: 120, w: 120, h: 20 }],
+            buttons: [{ x: 2040, y: 230, w: 22, h: 10, id: "a" }],
+            doors: [{ x: 2280, y: 70, w: 24, h: 330, id: "a", mode: "hold" }],
+            lasers: [], movers: [],
+            traps: [{ x: 230, y: 396, w: 210, h: 8 }, { x: 540, y: 396, w: 280, h: 8 }, { x: 930, y: 396, w: 280, h: 8 }, { x: 1330, y: 396, w: 270, h: 8 }, { x: 1730, y: 396, w: 280, h: 8 }, { x: 2150, y: 396, w: 290, h: 8 }],
+            turrets: [{ x: 2510, y: 146, dir: 1, rate: 1.3 }],
+            drones: [{ x1: 1710, x2: 1980, y: 140, speed: 1.08 }],
+            chronoBots: [{ x1: 2320, x2: 2580, y: 120, speed: 1.05, teleportEvery: 2.9 }],
+            slowZones: [{ x: 2560, y: 90, w: 90, h: 70 }],
+            waterZones: [{ x: 250, y: 240, w: 170, h: 160, flowX: 210, flowY: 80 }, { x: 2070, y: 200, w: 180, h: 170, flowX: -180, flowY: 70 }],
+            portals: [{ x: 620, y: 322, w: 26, h: 78, toX: 1215, toY: 180, outVx: 20, outVy: -10 }, { x: 1850, y: 322, w: 26, h: 78, toX: 500, toY: 300, fake: true, outVx: 0, outVy: -8 }],
+            gravityZones: [{ x: 980, y: 130, w: 320, h: 190, mode: "flip" }],
+            phaseWalls: [{ x: 1430, y: 150, w: 26, h: 150, period: 1.7, duty: 0.5 }, { x: 2210, y: 150, w: 26, h: 120, buttonId: "a", activeWhenHeld: false }],
+            fragilePlatforms: [{ x: 1660, y: 210, w: 80, h: 18, delay: 0.36 }],
+            magRails: [{ x: 540, y: 300, w: 180, h: 30, dir: "right", force: 280 }, { x: 2450, y: 140, w: 150, h: 30, dir: "right", force: 310 }],
+            coins: [{ x: 465, y: 305 }, { x: 845, y: 245 }, { x: 1235, y: 185 }, { x: 1625, y: 135 }, { x: 2040, y: 205 }, { x: 2465, y: 125 }, { x: 2680, y: 35 }]
+          })];
+        const labels = [
+          ["36. Гравитон", "Гравитационные поля меняют маршрут. Здесь важно понять, когда прыжок лучше отпустить раньше, а когда довериться зоне."],
+          ["37. Потолок другой", "Часть уровня проходится в перевёрнутой гравитации. Здесь надо привыкнуть, что безопасный путь иногда идёт по потолку."],
+          ["38. Фазный ритм", "Фазовые стены мигают по таймеру. Набери темп, следи за окнами и проходи участок в нужный момент."],
+          ["39. Фаза и клон", "Клон удерживает кнопку, а настоящий игрок проходит через фазовую стену дальше по маршруту."],
+          ["40. Хрупкий мост", "Платформы трескаются после касания. Здесь нельзя долго думать на месте: нужно двигаться без пауз."],
+          ["41. Один шанс", "Хрупкие плиты и кнопка заставляют продумать запись клона заранее. Ошибся раз, и путь уже рушится."],
+          ["42. Магнитный путь", "Магнитные рельсы тянут вдоль трассы. Нужно вовремя соскочить или использовать рывок в нужной точке."],
+          ["43. Рельсовый шахтёр", "Вертикальные и горизонтальные рельсы на одном маршруте. Тут надо читать траекторию, а не только бежать вперёд."],
+          ["44. Ложный вход", "Один портал помогает, а другой уводит назад. Здесь важно запомнить, какой вход ведёт дальше."],
+          ["45. Память порталов", "Лабиринт из ложных порталов. Правильный путь открывается только после нескольких проб и хорошей памяти."],
+          ["46. Обратный реактор", "Гравитация и фазовые стены работают вместе. Здесь надо одновременно читать и ритм, и направление падения."],
+          ["47. Скол и рельс", "Хрупкие платформы выводят на магнитный маршрут. Если задержаться, мост рухнет раньше времени."],
+          ["48. Лабиринт искривлений", "Порталы перебрасывают между ярусами одного лабиринта. Нужно удерживать в голове всю схему уровня."],
+          ["49. Комната перевёртышей", "Большая секция с инверсией гравитации, где привычное направление больше не работает."],
+          ["50. Фазовый напор", "Стены то есть, то нет, а турели не дают ждать спокойно. Здесь нужен уверенный темп."],
+          ["51. Магнитная печь", "Вода, рельсы и гравитация смешиваются в одном индустриальном участке. Тут маршрут постоянно пытается увести тебя не туда."],
+          ["52. Атлас обмана", "Ложные порталы и фазовые стены ломают привычную навигацию. Ошибочный выбор здесь легко отбрасывает назад."],
+          ["53. Хрупкая башня", "Серия надломленных платформ и вертикальный подъём. Здесь особенно важно не тратить лишние секунды."],
+          ["54. Магнитный лабиринт", "Рельсы тянут в разные стороны, и нужно выбираться через коридоры, не теряя контроль над движением."],
+          ["55. Узел искажений", "Финальный новый уровень: все механики собраны в одном длинном маршруте и требуют точности, памяти и темпа."]
+        ];
+        labels.forEach(([name, hint], index) => {
+          if (pack[index]) {
+            pack[index].name = name;
+            pack[index].hint = hint;
+          }
+        });
+        return pack;
       }
 
       function makeLevel(name, hint, width, data) {
@@ -1262,7 +1906,13 @@
           turrets: [],
           drones: [],
           chronoBots: [],
-          slowZones: []
+          slowZones: [],
+          waterZones: [],
+          portals: [],
+          gravityZones: [],
+          phaseWalls: [],
+          fragilePlatforms: [],
+          magRails: []
         });
       }
 
@@ -1445,6 +2095,38 @@
         })
       ];
 
+      const baseCampaignLevels = levels.map((level) => cloneLevelData(level));
+      const baseCampaignLabels = [
+        { name: "1. Разделение", hint: "Нажми кнопку и перемотай время, чтобы клон удержал дверь." },
+        { name: "2. Окно", hint: "Клон открывает путь, настоящий игрок прыгает выше." },
+        { name: "3. Двойник", hint: "Сделай два цикла: один клон на кнопку, второй помогает дальше." },
+        { name: "4. Рывок", hint: "Используй SHIFT, чтобы перескочить разрыв после перемотки." },
+        { name: "5. Лазерная линия", hint: "Перемотай время так, чтобы клон выключил луч." },
+        { name: "6. Платформа времени", hint: "Клон едет на платформе, а ты идёшь вторым циклом." },
+        { name: "7. Медленный сектор", hint: "В замедлении проще пережить турель и синхронизировать кнопку." },
+        { name: "8. Дрон", hint: "Дрон охраняет коридор, а клон нажимает кнопку позади." },
+        { name: "9. Турели", hint: "Перемотка помогает пройти под огнём сразу нескольких турелей." },
+        { name: "10. Три ритма", hint: "Построй цепочку из нескольких клонов." },
+        { name: "11. Шахматный коридор", hint: "Лазеры и двери нужно удержать в правильной последовательности." },
+        { name: "12. Выход из сетки", hint: "Платформа, турель и лазер требуют точного тайминга." },
+        { name: "13. Рой", hint: "Дроны и двойные двери требуют нескольких временных слоёв." },
+        { name: "14. Парадокс", hint: "Почти всё сразу: slow motion, турели, кнопки, перемещение." },
+        { name: "15. Time Hacker", hint: "Финальный уровень: собери всё, что выучил, в одну временную схему." }
+      ];
+
+      function restoreBaseCampaign() {
+        const restored = baseCampaignLevels.map((level, index) => {
+          const clone = cloneLevelData(level);
+          const meta = baseCampaignLabels[index];
+          if (meta) {
+            clone.name = meta.name;
+            clone.hint = meta.hint;
+          }
+          return clone;
+        });
+        levels.splice(0, levels.length, ...restored);
+      }
+
       function buildAdvancedLevels() {
         const created = [];
         for (let i = 0; i < 15; i += 1) {
@@ -1495,7 +2177,7 @@
       levels.push(...buildAdvancedLevels());
 
       function hideAllScreens() {
-        [dom.mainMenu, dom.levelsMenu, dom.editorMenu, dom.settingsMenu, dom.howMenu, dom.pauseMenu, dom.completeMenu].forEach((el) => el.classList.remove("active"));
+        [dom.mainMenu, dom.levelsMenu, dom.shopMenu, dom.editorMenu, dom.settingsMenu, dom.howMenu, dom.pauseMenu, dom.completeMenu].forEach((el) => el.classList.remove("active"));
       }
 
       function showScreen(name) {
@@ -1518,8 +2200,8 @@
         state.level = structuredClone(levelData);
         state.player = setupPlayerLoadout(createPlayer(state.level.spawn.x, state.level.spawn.y, COLORS.cyan), "p1");
         state.player2 = state.coopEnabled ? setupPlayerLoadout(createPlayer(state.level.spawn.x + 26, state.level.spawn.y, COLORS.green), "p2") : null;
-        state.player.blocksLeft = state.coopEnabled ? 1 : 2;
-        if (state.player2) state.player2.blocksLeft = 1;
+        state.player.blocksLeft = startingBlocks(state.coopEnabled);
+        if (state.player2) state.player2.blocksLeft = startingBlocks(true);
         state.level.coins = (state.level.coins || []).map((coin) => ({ ...coin, collected: false, bob: Math.random() * Math.PI * 2 }));
         state.clones = [];
         state.drones = (state.level.drones || []).map((d) => ({
@@ -1585,6 +2267,33 @@
         });
       }
 
+      function skinPreviewExtras(item) {
+        let html = "";
+        if (item.wings) html += `<div class="wing left"></div><div class="wing right"></div>`;
+        if (item.hat) html += `<div class="hat ${item.hat}"></div>`;
+        if (item.accessory) html += `<div class="prop ${item.accessory}"></div>`;
+        if (item.badge) html += `<div class="badge ${item.badge}"></div>`;
+        return html;
+      }
+
+      function boostPreviewTone(item) {
+        if (item.key === "armor") return "rgba(75,231,255,0.12)";
+        if (item.key === "dash") return "rgba(255,139,85,0.12)";
+        if (item.key === "rewind") return "rgba(159,113,255,0.12)";
+        if (item.key === "regen") return "rgba(141,255,118,0.14)";
+        if (item.key === "builder") return "rgba(255,207,106,0.14)";
+        return "rgba(255,122,223,0.12)";
+      }
+
+      function boostFlavor(item) {
+        if (item.key === "armor") return "Визуально даёт более плотный запас HP.";
+        if (item.key === "dash") return "Добавляет ещё один заряд для комбо-рывков.";
+        if (item.key === "rewind") return "Делает шкалу перемотки экономнее.";
+        if (item.key === "regen") return "Медленно восстанавливает HP, если тебя сейчас не бьют.";
+        if (item.key === "builder") return "Увеличивает запас строительных блоков.";
+        return "Делает движение и рывок более агрессивными.";
+      }
+
       function renderShopCards(container, items, slot = null, type = "skin") {
         container.innerHTML = "";
         items.forEach((item) => {
@@ -1601,6 +2310,7 @@
           const preview = type === "skin"
             ? `<div class="shop-preview skin">
                 <div class="shop-stick" style="--eye:${item.visor || "#ffffff"}; filter: drop-shadow(0 0 ${Math.round(10 * (item.glow || 1))}px ${item.tint || "#4be7ff"}55);">
+                  ${skinPreviewExtras(item)}
                   <div class="head" style="background:${item.tint || "#4be7ff"}"></div>
                   <div class="body" style="background:${item.tint || "#4be7ff"}"></div>
                   <div class="arm left" style="background:${item.accent || "#ecfbff"}"></div>
@@ -1611,12 +2321,16 @@
                 </div>
               </div>`
             : `<div class="shop-preview boost">
-                <div class="shop-boost-icon ${item.key}" style="background:${item.key === "armor" ? "rgba(75,231,255,0.12)" : item.key === "dash" ? "rgba(255,139,85,0.12)" : "rgba(159,113,255,0.12)"}"></div>
+                <div class="shop-boost-icon ${item.key}" style="background:${boostPreviewTone(item)}"></div>
               </div>`;
-          const extraVisual = type === "boost"
+          let extraVisual = type === "boost"
             ? `<p>${item.key === "armor" ? "Визуально даёт более плотный запас HP." : item.key === "dash" ? "Добавляет ещё один заряд для комбо-рывков." : "Делает шкалу перемотки экономнее."}</p>`
             : `<p>${owned ? (equipped ? "Сейчас надет" : "Уже куплен") : "Можно купить и сразу надеть"}</p>`;
           card.innerHTML = `${preview}<h3>${item.name}</h3><p>${item.desc || "Визуальный стиль персонажа"}</p>${extraVisual}<p>${item.price === 0 ? "Бесплатно" : `${item.price} монет`}</p>`;
+          if (type === "boost") extraVisual = `<p>${boostFlavor(item)}</p>`;
+          if (type === "boost") {
+            card.innerHTML = `${preview}<h3>${item.name}</h3><p>${item.desc || "Визуальный стиль персонажа"}</p>${extraVisual}<p>${item.price === 0 ? "Бесплатно" : `${item.price} монет`}</p>`;
+          }
           const btn = document.createElement("button");
           btn.className = "btn" + (owned ? " alt" : "");
           if (!owned) btn.textContent = `Купить`;
@@ -1652,6 +2366,71 @@
         renderShopCards(dom.shopP1Skins, SKINS, "p1", "skin");
         renderShopCards(dom.shopP2Skins, SKINS, "p2", "skin");
         renderShopCards(dom.shopBoosts, BOOSTS, null, "boost");
+      }
+
+      function renderShopCards(container, items, slot = null, type = "skin") {
+        container.innerHTML = "";
+        items.forEach((item) => {
+          const card = document.createElement("div");
+          card.className = "card";
+          let owned = true;
+          let equipped = false;
+          if (type === "skin") {
+            owned = (state.save.ownedSkins?.[slot] || []).includes(item.key);
+            equipped = state.save.equippedSkins?.[slot] === item.key;
+          } else {
+            owned = hasBoost(item.key);
+          }
+
+          const preview = type === "skin"
+            ? `<div class="shop-preview skin">
+                <div class="shop-stick" style="--eye:${item.visor || "#ffffff"}; filter: drop-shadow(0 0 ${Math.round(10 * (item.glow || 1))}px ${item.tint || "#4be7ff"}55);">
+                  ${skinPreviewExtras(item)}
+                  <div class="head" style="background:${item.tint || "#4be7ff"}"></div>
+                  <div class="body" style="background:${item.tint || "#4be7ff"}"></div>
+                  <div class="arm left" style="background:${item.accent || "#ecfbff"}"></div>
+                  <div class="arm right" style="background:${item.accent || "#ecfbff"}"></div>
+                  <div class="leg left" style="background:${item.accent || "#ecfbff"}"></div>
+                  <div class="leg right" style="background:${item.accent || "#ecfbff"}"></div>
+                  <div class="eyes"></div>
+                </div>
+              </div>`
+            : `<div class="shop-preview boost">
+                <div class="shop-boost-icon ${item.key}" style="background:${boostPreviewTone(item)}"></div>
+              </div>`;
+
+          const desc = item.desc || "Визуальный стиль персонажа";
+          const statusText = type === "boost"
+            ? boostFlavor(item)
+            : (owned ? (equipped ? "Сейчас надет" : "Уже куплен") : "Можно купить и сразу надеть");
+          const priceText = item.price === 0 ? "Бесплатно" : `${item.price} монет`;
+          card.innerHTML = `${preview}<h3>${item.name}</h3><p>${desc}</p><p>${statusText}</p><p>${priceText}</p>`;
+
+          const btn = document.createElement("button");
+          btn.className = "btn" + (owned ? " alt" : "");
+          if (!owned) btn.textContent = "Купить";
+          else if (type === "skin") btn.textContent = equipped ? "Надет" : "Надеть";
+          else btn.textContent = "Куплено";
+          btn.disabled = type === "boost" && owned;
+          btn.addEventListener("click", () => {
+            if (!owned) {
+              if ((state.save.coins || 0) < item.price) {
+                showTip("Не хватает монет");
+                return;
+              }
+              state.save.coins -= item.price;
+              if (type === "skin") state.save.ownedSkins[slot].push(item.key);
+              else state.save.boughtBoosts.push(item.key);
+            }
+            if (type === "skin") state.save.equippedSkins[slot] = item.key;
+            saveMeta();
+            loadMetaToMenu();
+            renderShop();
+            showTip(type === "skin" ? "Скин обновлён" : "Усиление куплено");
+          });
+          card.appendChild(btn);
+          container.appendChild(card);
+        });
       }
 
       const editorTools = [
@@ -1797,7 +2576,7 @@
         });
       }
 
-      function trimCampaignLevels(maxCampaignLevels = 30) {
+      function trimCampaignLevels(maxCampaignLevels = 65) {
         let campaignSeen = 0;
         for (let i = levels.length - 1; i >= 0; i -= 1) {
           if (levels[i].customMade) continue;
@@ -1853,6 +2632,18 @@
         return set;
       }
 
+      function phaseWallActive(wall, active = activeButtons()) {
+        if (wall.buttonId) {
+          const held = active.has(wall.buttonId);
+          return wall.activeWhenHeld ? held : !held;
+        }
+        const period = Math.max(0.6, wall.period || 2.2);
+        const duty = clamp(wall.duty ?? 0.55, 0.1, 0.9);
+        const offset = wall.phase || 0;
+        const tick = (state.time + offset) % period;
+        return tick < period * duty;
+      }
+
       function solidRects() {
         const list = [...state.level.solids];
         const active = activeButtons();
@@ -1864,6 +2655,13 @@
           }
         });
         state.level.movers.forEach((m) => list.push(m));
+        state.level.phaseWalls?.forEach((wall) => {
+          wall.active = phaseWallActive(wall, active);
+          if (wall.active) list.push(wall);
+        });
+        state.level.fragilePlatforms?.forEach((platform) => {
+          if (!platform.broken) list.push(platform);
+        });
         state.placedBlocks.forEach((b) => list.push(b));
         return list;
       }
@@ -1954,12 +2752,21 @@
             else if (entity.vx < 0) entity.x = rect.x + rect.w;
             entity.vx = 0;
           } else {
-            if (entity.vy > 0) {
-              entity.y = rect.y - entity.h;
-              entity.vy = 0;
-              entity.onGround = true;
+            if (entity.gravityDir >= 0) {
+              if (entity.vy > 0) {
+                entity.y = rect.y - entity.h;
+                entity.vy = 0;
+                entity.onGround = true;
+              } else if (entity.vy < 0) {
+                entity.y = rect.y + rect.h;
+                entity.vy = 0;
+              }
             } else if (entity.vy < 0) {
               entity.y = rect.y + rect.h;
+              entity.vy = 0;
+              entity.onGround = true;
+            } else if (entity.vy > 0) {
+              entity.y = rect.y - entity.h;
               entity.vy = 0;
             }
           }
@@ -1972,25 +2779,29 @@
         const slowScale = p.slowTimer > 0 ? 0.45 : 1;
         p.invuln = Math.max(0, p.invuln - delta);
         p.hitFlash = Math.max(0, p.hitFlash - delta * 2.4);
+        p.portalCooldown = Math.max(0, p.portalCooldown - delta);
+        p.waterTimer = Math.max(0, p.waterTimer - delta);
+        p.magRailTimer = Math.max(0, p.magRailTimer - delta);
         p.coyote = p.onGround ? 0.16 : Math.max(0, p.coyote - delta * slowScale);
         p.jumpBuffer = controls.jumpPressed ? 0.18 : Math.max(0, p.jumpBuffer - delta * slowScale);
         p.dashTimer = Math.max(0, p.dashTimer - delta);
         p.dashJumpWindow = Math.max(0, p.dashJumpWindow - delta);
         p.slowTimer = Math.max(0, p.slowTimer - delta);
+        p.gravityMix = lerp(p.gravityMix || 0, p.gravityDir < 0 ? 1 : 0, 0.18);
         if (p.onGround) {
           p.dashCharges = p.maxDashCharges || 3;
           p.dashJumpWindow = 0;
         }
         if (wasDashing && p.dashTimer <= 0 && !p.onGround) p.dashJumpWindow = 0.12;
-        const accel = 840 * slowScale;
-        const maxSpeed = p.dashTimer > 0 ? 320 : 130;
+        const accel = 840 * slowScale * (hasBoost("overclock") ? 1.08 : 1);
+        const maxSpeed = p.dashTimer > 0 ? (hasBoost("overclock") ? 360 : 320) : (hasBoost("overclock") ? 145 : 130);
         if (controls.left) { p.vx -= accel * delta; p.face = -1; }
         if (controls.right) { p.vx += accel * delta; p.face = 1; }
         if (!controls.left && !controls.right && p.onGround) p.vx *= 0.8;
         p.vx = clamp(p.vx, -maxSpeed, maxSpeed);
         if (p.jumpBuffer > 0 && (p.onGround || p.coyote > 0 || p.dashJumpWindow > 0)) {
           const dashJump = p.dashJumpWindow > 0 && !p.onGround && p.coyote <= 0;
-          p.vy = dashJump ? -360 : -520;
+          p.vy = p.gravityDir * (dashJump ? -360 : -520);
           if (dashJump) p.vx *= 0.45;
           p.onGround = false;
           p.coyote = 0;
@@ -2002,19 +2813,19 @@
         if (controls.dashPressed && p.dashCharges > 0) {
           p.dashTimer = 0.15;
           p.dashCharges -= 1;
-          p.vx = p.face * 340;
-          p.vy = Math.min(p.vy, -30);
+          p.vx = p.face * (hasBoost("overclock") ? 390 : 340);
+          p.vy = p.gravityDir > 0 ? Math.min(p.vy, -30) : Math.max(p.vy, 30);
           state.audio.dash();
           state.camera.shake = 7;
         }
-        p.vy = clamp(p.vy + GRAVITY * delta * slowScale, -700, MAX_FALL);
+        p.vy = clamp(p.vy + GRAVITY * p.gravityDir * delta * slowScale, -MAX_FALL, MAX_FALL);
         p.x += p.vx * delta;
         collideEntity(p, "x");
         p.y += p.vy * delta;
         p.onGround = false;
         collideEntity(p, "y");
         if (!p.onGround) p.vx *= 0.992;
-        if (p.y > 560) damagePlayer(p, 100, "void");
+        if (p.y > 560 || p.y < -180) damagePlayer(p, 100, "void");
       }
 
       function updateClone(clone) {
@@ -2058,15 +2869,15 @@
         const framesBack = Math.min(state.recording.length - 1, Math.floor(state.recording.length * 0.7));
         const rewindFrame = state.recording[Math.max(0, state.recording.length - 1 - framesBack)];
         state.player = setupPlayerLoadout(createPlayer(rewindFrame.p1.x, rewindFrame.p1.y, COLORS.cyan), "p1");
-        state.player.blocksLeft = state.coopEnabled ? 1 : 2;
+        state.player.blocksLeft = startingBlocks(state.coopEnabled);
         state.player.face = rewindFrame.p1.face;
         if (state.coopEnabled && rewindFrame.p2) {
           state.player2 = setupPlayerLoadout(createPlayer(rewindFrame.p2.x, rewindFrame.p2.y, COLORS.green), "p2");
-          state.player2.blocksLeft = 1;
+          state.player2.blocksLeft = startingBlocks(true);
           state.player2.face = rewindFrame.p2.face;
         } else {
           state.player2 = state.coopEnabled ? setupPlayerLoadout(createPlayer(state.level.spawn.x + 26, state.level.spawn.y, COLORS.green), "p2") : null;
-          if (state.player2) state.player2.blocksLeft = 1;
+          if (state.player2) state.player2.blocksLeft = startingBlocks(true);
         }
         state.placedBlocks = [];
         state.recording = [];
@@ -2143,6 +2954,105 @@
             emitBurst(coin.x, coin.y, 9, "#ffd95e", 90);
             showTip("+1 монета", 0.7);
           }
+        });
+      }
+
+      function updateWaterAndPortals(delta) {
+        const targets = [state.player, state.player2].filter((p) => p?.alive && !p.exited);
+        state.level.waterZones?.forEach((zone) => {
+          targets.forEach((p) => {
+            if (!rectsIntersect(entityRect(p), zone)) return;
+            const flowX = zone.flowX ?? 0;
+            const flowY = zone.flowY ?? 0;
+            p.vx += flowX * 1.18 * delta;
+            p.vy += (flowY + 180) * 1.2 * delta;
+            p.vx *= 0.989;
+            p.vy = Math.min(p.vy, 420);
+            p.waterTimer = 0.12;
+          });
+        });
+
+        state.level.portals?.forEach((portal) => {
+          const portalRect = { x: portal.x, y: portal.y, w: portal.w, h: portal.h };
+          targets.forEach((p) => {
+            if (p.portalCooldown > 0 || !rectsIntersect(entityRect(p), portalRect)) return;
+            p.x = portal.toX;
+            p.y = portal.toY;
+            p.vx = portal.keepVelocity ? p.vx : (portal.outVx ?? 0);
+            p.vy = portal.keepVelocity ? p.vy : (portal.outVy ?? 0);
+            p.portalCooldown = 0.7;
+            state.camera.shake = Math.max(state.camera.shake, 8);
+            emitBurst(portal.x + portal.w * 0.5, portal.y + portal.h * 0.5, 10, COLORS.violet, 120);
+            emitBurst(portal.toX + 18, portal.toY + 22, 10, COLORS.cyan, 120);
+            showTip("Телепорт", 0.6);
+          });
+        });
+      }
+
+      function updateAdvancedFields(delta) {
+        const targets = [state.player, state.player2].filter((p) => p?.alive && !p.exited);
+        targets.forEach((p) => {
+          p.gravityDir = 1;
+        });
+
+        state.level.gravityZones?.forEach((zone) => {
+          targets.forEach((p) => {
+            if (!rectsIntersect(entityRect(p), zone)) return;
+            if (zone.mode === "flip") {
+              p.gravityDir = -1;
+            }
+            if (zone.pullX) p.vx += zone.pullX * delta;
+            if (zone.pullY) p.vy += zone.pullY * delta;
+            if (zone.dampen) {
+              p.vx *= zone.dampen;
+              p.vy *= zone.dampen;
+            }
+          });
+        });
+
+        state.level.magRails?.forEach((rail) => {
+          const railRect = { x: rail.x, y: rail.y, w: rail.w, h: rail.h };
+          targets.forEach((p) => {
+            if (!rectsIntersect(entityRect(p), railRect)) return;
+            const force = rail.force || 280;
+            const centerX = rail.x + rail.w * 0.5 - p.w * 0.5;
+            const centerY = rail.y + rail.h * 0.5 - p.h * 0.5;
+            if (rail.dir === "right" || rail.dir === "left") {
+              p.y = lerp(p.y, centerY, 0.28);
+              p.vy *= 0.76;
+              p.vx = rail.dir === "right" ? Math.max(p.vx, force) : Math.min(p.vx, -force);
+              p.face = rail.dir === "right" ? 1 : -1;
+            } else {
+              p.x = lerp(p.x, centerX, 0.28);
+              p.vx *= 0.82;
+              p.vy = rail.dir === "down" ? Math.max(p.vy, force) : Math.min(p.vy, -force);
+            }
+            p.magRailTimer = 0.12;
+          });
+        });
+
+        const fragileBodies = [
+          ...targets,
+          ...state.clones.filter((c) => c?.alive)
+        ];
+        state.level.fragilePlatforms?.forEach((platform) => {
+          if (platform.broken) return;
+          const touched = fragileBodies.some((entity) => {
+            const body = entityRect(entity);
+            const feet = { x: body.x + 2, y: body.y + body.h - 2, w: body.w - 4, h: 6 };
+            return rectsIntersect(feet, { x: platform.x, y: platform.y - 2, w: platform.w, h: platform.h + 4 });
+          });
+          if (touched) {
+            platform.crumble = (platform.crumble || 0) + delta;
+            if (platform.crumble > (platform.delay || 0.4)) {
+              platform.broken = true;
+              platform.breakFlash = 0.4;
+              emitBurst(platform.x + platform.w * 0.5, platform.y + platform.h * 0.5, 12, COLORS.orange, 90);
+            }
+          } else {
+            platform.crumble = Math.max(0, (platform.crumble || 0) - delta * 0.25);
+          }
+          platform.breakFlash = Math.max(0, (platform.breakFlash || 0) - delta);
         });
       }
 
@@ -2340,6 +3250,7 @@
         state.rewindMeter = clamp(state.rewindMeter + delta * 0.04, 0, 1);
         state.rewindVisual = Math.max(0, state.rewindVisual - delta * 1.6);
         updateDoorsAndSystems(delta);
+        updateAdvancedFields(delta);
         updatePlayer(delta, state.player, input.p1);
         if (state.player2) updatePlayer(delta, state.player2, input.p2);
         state.clones.forEach(updateClone);
@@ -2349,6 +3260,12 @@
         updateChronoBots(delta);
         updateHazards(delta);
         updateCoins();
+        updateWaterAndPortals(delta);
+        if (hasBoost("regen")) {
+          [state.player, state.player2].filter((p) => p?.alive && !p.exited).forEach((p) => {
+            if (p.invuln <= 0 && p.hp < p.maxHp) p.hp = clamp(p.hp + delta * 3.4, 0, p.maxHp);
+          });
+        }
         updateParticles(delta);
         updateCamera(delta);
         pushRecordFrame();
@@ -2602,6 +3519,123 @@
           ctx.strokeRect(x, y, z.w * state.camera.zoom, z.h * state.camera.zoom);
         });
 
+        state.level.waterZones?.forEach((z) => {
+          const x = worldToScreenX(z.x), y = worldToScreenY(z.y);
+          const w = z.w * state.camera.zoom, h = z.h * state.camera.zoom;
+          ctx.fillStyle = "rgba(70,170,255,0.18)";
+          ctx.fillRect(x, y, w, h);
+          ctx.strokeStyle = "rgba(135,220,255,0.42)";
+          ctx.strokeRect(x, y, w, h);
+          for (let i = 0; i < 4; i += 1) {
+            const oy = y + 10 + i * (h / 4);
+            ctx.strokeStyle = "rgba(210,245,255,0.25)";
+            ctx.beginPath();
+            ctx.moveTo(x + 6, oy + Math.sin(state.time * 4 + i) * 3);
+            ctx.lineTo(x + w - 6, oy + Math.sin(state.time * 4 + i + 1.3) * 3);
+            ctx.stroke();
+          }
+        });
+
+        state.level.portals?.forEach((p) => {
+          const x = worldToScreenX(p.x), y = worldToScreenY(p.y);
+          const w = p.w * state.camera.zoom, h = p.h * state.camera.zoom;
+          const outer = p.fake ? "rgba(255,118,80,0.96)" : "rgba(159,113,255,0.95)";
+          const inner = p.fake ? "rgba(255,220,135,0.9)" : "rgba(75,231,255,0.85)";
+          ctx.strokeStyle = outer;
+          ctx.lineWidth = 3;
+          ctx.shadowColor = p.fake ? COLORS.orange : COLORS.violet;
+          ctx.shadowBlur = 16;
+          ctx.strokeRect(x, y, w, h);
+          ctx.shadowBlur = 0;
+          ctx.strokeStyle = inner;
+          ctx.strokeRect(x + 4, y + 4, Math.max(4, w - 8), Math.max(8, h - 8));
+          ctx.fillStyle = p.fake ? "rgba(255,118,80,0.14)" : "rgba(159,113,255,0.12)";
+          ctx.fillRect(x + 3, y + 3, w - 6, h - 6);
+          if (p.fake) {
+            ctx.fillStyle = "rgba(255,245,200,0.8)";
+            ctx.font = "11px Courier New";
+            ctx.fillText("?", x + w * 0.38, y + h * 0.56);
+          }
+        });
+
+        state.level.gravityZones?.forEach((z) => {
+          const x = worldToScreenX(z.x), y = worldToScreenY(z.y);
+          const w = z.w * state.camera.zoom, h = z.h * state.camera.zoom;
+          ctx.fillStyle = z.mode === "flip" ? "rgba(255,105,210,0.08)" : "rgba(75,231,255,0.08)";
+          ctx.fillRect(x, y, w, h);
+          ctx.strokeStyle = z.mode === "flip" ? "rgba(255,105,210,0.5)" : "rgba(75,231,255,0.42)";
+          ctx.strokeRect(x, y, w, h);
+          ctx.fillStyle = "rgba(255,255,255,0.6)";
+          for (let i = 0; i < 3; i += 1) {
+            const px = x + 14 + i * (w / 3);
+            const py = y + h * 0.5 + Math.sin(state.time * 4 + i) * 6;
+            ctx.beginPath();
+            ctx.moveTo(px, py);
+            ctx.lineTo(px + 8, py - (z.mode === "flip" ? 10 : -10));
+            ctx.lineTo(px - 8, py - (z.mode === "flip" ? 10 : -10));
+            ctx.closePath();
+            ctx.fill();
+          }
+        });
+
+        state.level.phaseWalls?.forEach((wall) => {
+          const x = worldToScreenX(wall.x), y = worldToScreenY(wall.y);
+          const w = wall.w * state.camera.zoom, h = wall.h * state.camera.zoom;
+          const activeNow = wall.active ?? phaseWallActive(wall);
+          if (activeNow) {
+            drawBeveledPanel(x, y, w, h, "rgba(120,58,255,0.4)", COLORS.violet, "rgba(210,180,255,0.9)");
+            ctx.fillStyle = "rgba(255,255,255,0.18)";
+            for (let yy = y + 4; yy < y + h - 4; yy += 12) ctx.fillRect(x + 3, yy, w - 6, 2);
+          } else {
+            ctx.strokeStyle = "rgba(180,150,255,0.24)";
+            ctx.setLineDash([8, 7]);
+            ctx.strokeRect(x, y, w, h);
+            ctx.setLineDash([]);
+          }
+        });
+
+        state.level.fragilePlatforms?.forEach((platform) => {
+          if (platform.broken) return;
+          const x = worldToScreenX(platform.x), y = worldToScreenY(platform.y);
+          const w = platform.w * state.camera.zoom, h = platform.h * state.camera.zoom;
+          const crack = clamp((platform.crumble || 0) / (platform.delay || 0.4), 0, 1);
+          drawBeveledPanel(x, y, w, h, `rgba(120, 156, 176, ${0.55 + crack * 0.2})`, COLORS.white, "rgba(225,245,255,0.7)");
+          ctx.strokeStyle = `rgba(70, 34, 18, ${0.35 + crack * 0.5})`;
+          ctx.beginPath();
+          ctx.moveTo(x + w * 0.18, y + h * 0.28);
+          ctx.lineTo(x + w * 0.44, y + h * 0.7);
+          ctx.lineTo(x + w * 0.68, y + h * 0.36);
+          ctx.lineTo(x + w * 0.82, y + h * 0.8);
+          ctx.stroke();
+        });
+
+        state.level.magRails?.forEach((rail) => {
+          const x = worldToScreenX(rail.x), y = worldToScreenY(rail.y);
+          const w = rail.w * state.camera.zoom, h = rail.h * state.camera.zoom;
+          drawBeveledPanel(x, y, w, h, "rgba(36,82,92,0.32)", COLORS.cyan, "rgba(140,240,255,0.58)");
+          ctx.strokeStyle = "rgba(220,255,255,0.85)";
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          if (rail.dir === "right" || rail.dir === "left") {
+            const cy = y + h * 0.5;
+            ctx.moveTo(x + 8, cy);
+            ctx.lineTo(x + w - 8, cy);
+            const tip = rail.dir === "right" ? x + w - 10 : x + 10;
+            ctx.lineTo(tip - (rail.dir === "right" ? 8 : -8), cy - 7);
+            ctx.moveTo(tip, cy);
+            ctx.lineTo(tip - (rail.dir === "right" ? 8 : -8), cy + 7);
+          } else {
+            const cx = x + w * 0.5;
+            ctx.moveTo(cx, y + 8);
+            ctx.lineTo(cx, y + h - 8);
+            const tip = rail.dir === "down" ? y + h - 10 : y + 10;
+            ctx.lineTo(cx - 7, tip - (rail.dir === "down" ? 8 : -8));
+            ctx.moveTo(cx, tip);
+            ctx.lineTo(cx + 7, tip - (rail.dir === "down" ? 8 : -8));
+          }
+          ctx.stroke();
+        });
+
         const ex = worldToScreenX(state.level.exit.x), ey = worldToScreenY(state.level.exit.y);
         const exitW = state.level.exit.w * state.camera.zoom, exitH = state.level.exit.h * state.camera.zoom;
         drawBeveledPanel(ex, ey, exitW, exitH, "rgba(18,74,42,0.68)", COLORS.green, "rgba(131,221,115,0.94)");
@@ -2642,6 +3676,25 @@
         ctx.shadowColor = baseColor;
         ctx.shadowBlur = 16 * (entity.skinGlow || 1);
 
+        if (entity.skinWings) {
+          ctx.fillStyle = `${baseColor}66`;
+          ctx.beginPath();
+          ctx.moveTo(torsoX, torsoY + torsoH * 0.15);
+          ctx.lineTo(torsoX - w * 0.42, torsoY + torsoH * 0.48);
+          ctx.lineTo(torsoX - w * 0.14, torsoY + torsoH * 0.92);
+          ctx.closePath();
+          ctx.fill();
+          ctx.beginPath();
+          ctx.moveTo(torsoX + torsoW, torsoY + torsoH * 0.15);
+          ctx.lineTo(torsoX + torsoW + w * 0.42, torsoY + torsoH * 0.48);
+          ctx.lineTo(torsoX + torsoW + w * 0.14, torsoY + torsoH * 0.92);
+          ctx.closePath();
+          ctx.fill();
+          ctx.strokeStyle = `${accentColor}aa`;
+          ctx.lineWidth = Math.max(1, state.camera.zoom * 0.55);
+          ctx.stroke();
+        }
+
         ctx.fillStyle = baseColor;
         ctx.fillRect(headX, headY, head, head);
         ctx.fillRect(torsoX, torsoY, torsoW, torsoH);
@@ -2655,6 +3708,58 @@
         ctx.fillStyle = visorColor;
         ctx.fillRect(headX + head * 0.2, headY + head * 0.24, head * 0.18, head * 0.12);
         ctx.fillRect(headX + head * 0.62, headY + head * 0.24, head * 0.18, head * 0.12);
+
+        if (entity.skinHat === "crown") {
+          ctx.fillStyle = "#ffd95e";
+          ctx.fillRect(headX + head * 0.08, headY - head * 0.18, head * 0.84, head * 0.14);
+          ctx.beginPath();
+          ctx.moveTo(headX + head * 0.08, headY - head * 0.04);
+          ctx.lineTo(headX + head * 0.24, headY - head * 0.28);
+          ctx.lineTo(headX + head * 0.42, headY - head * 0.06);
+          ctx.lineTo(headX + head * 0.5, headY - head * 0.32);
+          ctx.lineTo(headX + head * 0.58, headY - head * 0.06);
+          ctx.lineTo(headX + head * 0.76, headY - head * 0.28);
+          ctx.lineTo(headX + head * 0.92, headY - head * 0.04);
+          ctx.closePath();
+          ctx.fill();
+        } else if (entity.skinHat === "cap") {
+          ctx.fillStyle = "#5caeff";
+          ctx.fillRect(headX + head * 0.06, headY - head * 0.14, head * 0.82, head * 0.22);
+          ctx.fillRect(headX + head * 0.48, headY + head * 0.02, head * 0.42, head * 0.08);
+        } else if (entity.skinHat === "horns") {
+          ctx.fillStyle = "#ff9a78";
+          ctx.beginPath();
+          ctx.moveTo(headX + head * 0.12, headY + head * 0.08);
+          ctx.lineTo(headX + head * 0.22, headY - head * 0.18);
+          ctx.lineTo(headX + head * 0.34, headY + head * 0.08);
+          ctx.closePath();
+          ctx.fill();
+          ctx.beginPath();
+          ctx.moveTo(headX + head * 0.88, headY + head * 0.08);
+          ctx.lineTo(headX + head * 0.78, headY - head * 0.18);
+          ctx.lineTo(headX + head * 0.66, headY + head * 0.08);
+          ctx.closePath();
+          ctx.fill();
+        }
+
+        if (entity.skinAccessory === "orb") {
+          ctx.shadowColor = accentColor;
+          ctx.shadowBlur = 12;
+          ctx.fillStyle = accentColor;
+          ctx.beginPath();
+          ctx.arc(torsoX + torsoW + limbW * 1.3, torsoY + torsoH * 0.35, Math.max(2.5, w * 0.09), 0, Math.PI * 2);
+          ctx.fill();
+          ctx.shadowBlur = 0;
+        } else if (entity.skinAccessory === "scarf") {
+          ctx.fillStyle = accentColor;
+          ctx.fillRect(torsoX - limbW * 0.15, torsoY - h * 0.03, torsoW + limbW * 0.3, h * 0.08);
+          ctx.fillRect(torsoX + torsoW * 0.68, torsoY + h * 0.02, limbW * 0.8, h * 0.2);
+        }
+
+        if (entity.skinBadge === "star") {
+          ctx.fillStyle = "#ffd95e";
+          ctx.fillRect(torsoX + torsoW * 0.34, torsoY + torsoH * 0.28, Math.max(3, torsoW * 0.28), Math.max(3, torsoW * 0.28));
+        }
 
         ctx.strokeStyle = state.theme === "dark" ? "rgba(6,12,20,0.9)" : "rgba(210,230,240,0.95)";
         ctx.lineWidth = Math.max(1, state.camera.zoom * 0.65);
@@ -2825,7 +3930,10 @@
           else await document.documentElement.requestFullscreen?.();
         });
         dom.levelsBackBtn.addEventListener("click", () => showScreen("main"));
-        dom.shopBackBtn.addEventListener("click", () => showScreen("main"));
+        dom.shopBackBtn.addEventListener("click", () => {
+          renderLevelsMenu();
+          showScreen("levels");
+        });
         dom.settingsBackBtn.addEventListener("click", () => showScreen("main"));
         dom.editorBackBtn.addEventListener("click", () => showScreen("main"));
         dom.editorToggleBtn.addEventListener("click", () => {
@@ -2945,9 +4053,27 @@
             else input.p1.dashPressed = true;
           }
           if (event.code === "KeyR") input.rewindPressed = true;
-          if (event.code === "Escape" && state.screen === "game") {
-            state.paused = !state.paused;
-            showScreen(state.paused ? "pause" : null);
+          if (event.code === "Escape") {
+            event.preventDefault();
+            if (state.screen === "game") {
+              state.paused = true;
+              showScreen("pause");
+              return;
+            }
+            if (state.screen === "pause") {
+              state.paused = false;
+              renderLevelsMenu();
+              showScreen("levels");
+              return;
+            }
+            if (state.screen === "levels") {
+              showScreen("main");
+              return;
+            }
+            if (state.screen === "shop" || state.screen === "settings" || state.screen === "how") {
+              showScreen("main");
+              return;
+            }
           }
         });
         addEventListener("keyup", (event) => {
@@ -3027,8 +4153,9 @@
       }
 
       function init() {
+        restoreBaseCampaign();
         addCampaignExtensionLevels();
-        trimCampaignLevels(30);
+        trimCampaignLevels(65);
         applyTheme("dark");
         resize();
         bindUi();
