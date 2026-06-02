@@ -953,6 +953,9 @@
         <h3>Усиления</h3>
         <div class="levels" id="shopBoosts"></div>
       </div>
+      <div class="grid" style="margin-top:12px;">
+        <button class="btn alt" id="promoBtn">Промокоды</button>
+      </div>
       <div class="grid" style="margin-top:16px;">
         <button class="btn alt" id="shopBackBtn">Назад</button>
       </div>
@@ -1228,6 +1231,7 @@
         playBtn: document.getElementById("playBtn"),
         levelsBtn: document.getElementById("levelsBtn"),
         shopBtn: document.getElementById("shopBtn"),
+        promoBtn: document.getElementById("promoBtn"),
         editorBtn: document.getElementById("editorBtn"),
         settingsBtn: document.getElementById("settingsBtn"),
         howBtn: document.getElementById("howBtn"),
@@ -1413,6 +1417,7 @@
             totalClones: 0,
             bestTime: 0,
             coins: 0,
+            promoUsed: {},
             ownedSkins,
             equippedSkins: {
               p1: equippedP1,
@@ -1427,6 +1432,7 @@
             totalClones: 0,
             bestTime: 0,
             coins: 0,
+            promoUsed: {},
             ownedSkins: { p1: ["classic"], p2: ["classic"] },
             equippedSkins: { p1: "classic", p2: "classic" },
             boughtBoosts: []
@@ -2930,6 +2936,7 @@
         state.rewinding = false;
         state.rewindVisual = 0;
         state.deathTimer = 0;
+        state.tutorialShown = {};
         state.camera.x = Math.max(0, state.player.x - 140);
         state.camera.y = Math.max(0, state.player.y - 110);
         state.camera.zoom = innerWidth < 900 ? 1.9 : 2.3;
@@ -3064,6 +3071,33 @@
         renderShopCards(dom.shopP1Skins, SKINS, "p1", "skin");
         renderShopCards(dom.shopP2Skins, SKINS, "p2", "skin");
         renderShopCards(dom.shopBoosts, BOOSTS, null, "boost");
+      }
+
+      function redeemPromo() {
+        const raw = prompt("Введи промокод");
+        if (raw == null) return;
+        const code = raw.trim().toLowerCase();
+        if (!code) {
+          showTip("Промокод не введён", 1.8);
+          return;
+        }
+        state.save.promoUsed = state.save.promoUsed || {};
+        if (code !== "motegk") {
+          showTip("Промокод не сработал: такого кода нет", 2.4);
+          return;
+        }
+        if (state.save.promoUsed[code]) {
+          showTip("Промокод уже был использован: награда повторно не выдаётся", 2.8);
+          return;
+        }
+        state.save.promoUsed[code] = true;
+        state.save.coins = (state.save.coins || 0) + 100;
+        state.save.bestLevel = Math.max(state.save.bestLevel || 0, 15);
+        saveMeta();
+        loadMetaToMenu();
+        renderLevelsMenu();
+        renderShop();
+        showTip("Промокод сработал: +100 монет, уровни до 15 открыты", 3.2);
       }
 
       function renderShopCards(container, items, slot = null, type = "skin") {
@@ -4118,6 +4152,39 @@
           }
           return;
         }
+        if (state.levelIndex === 0) {
+          if (!state.tutorialShown.move) {
+            showTip("A/D или стрелки - движение", 2.2);
+            state.tutorialShown.move = true;
+          } else if (!state.tutorialShown.button && state.player.x > 150) {
+            showTip("Наступи на кнопку слева на платформе", 2.2);
+            state.tutorialShown.button = true;
+          } else if (!state.tutorialShown.rewind && state.player.x > 300) {
+            showTip("Теперь нажми R, чтобы создать клона", 2.2);
+            state.tutorialShown.rewind = true;
+          }
+        }
+        if (state.levelIndex === 1) {
+          if (!state.tutorialShown.jump) {
+            showTip("W, Space или стрелка вверх - прыжок", 2.2);
+            state.tutorialShown.jump = true;
+          } else if (!state.tutorialShown.climb && state.player.x > 170) {
+            showTip("Жми кнопку, потом перематывай и прыгай выше", 2.2);
+            state.tutorialShown.climb = true;
+          }
+        }
+        if (state.levelIndex === 2) {
+          if (!state.tutorialShown.double) {
+            showTip("Здесь нужно уже 2 цикла перемотки", 2.2);
+            state.tutorialShown.double = true;
+          } else if (!state.tutorialShown.firstClone && state.player.x > 170) {
+            showTip("Сначала оставь первого клона на первой кнопке", 2.2);
+            state.tutorialShown.firstClone = true;
+          } else if (!state.tutorialShown.secondClone && state.player.x > 380) {
+            showTip("Потом доберись до второй кнопки и снова жми R", 2.4);
+            state.tutorialShown.secondClone = true;
+          }
+        }
         updateDoorsAndSystems(delta);
         updateAdvancedFields(delta);
         updatePlayer(delta, state.player, input.p1);
@@ -4840,6 +4907,7 @@
         dom.playBtn.addEventListener("click", () => resetLevel(clamp(state.save.bestLevel, 0, levels.length - 1)));
         dom.levelsBtn.addEventListener("click", () => { renderLevelsMenu(); showScreen("levels"); });
         dom.shopBtn.addEventListener("click", () => { renderShop(); showScreen("shop"); });
+        dom.promoBtn.addEventListener("click", () => redeemPromo());
         dom.editorBtn.addEventListener("click", () => openEditor());
         dom.settingsBtn.addEventListener("click", () => {
           dom.coopStatus.textContent = `Сейчас: ${state.coopEnabled ? "2 игрока" : "1 игрок"}`;
