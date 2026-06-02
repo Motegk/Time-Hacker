@@ -666,6 +666,7 @@
     <div class="panel">
       <h1 class="title">Time Hacker</h1>
       <p class="subtitle">Платформер-головоломка, где ты взламываешь время. Перематывай назад, оставляй клонов, удерживай кнопки прошлыми версиями себя и проходи через сложные киберпанк-схемы.</p>
+      <p class="subtitle" style="margin-top:-4px; font-size:13px; opacity:0.78;">by Motegk (shanmat)</p>
       <div class="grid">
         <button class="btn" id="playBtn">Играть</button>
         <button class="btn alt" id="levelsBtn">Уровни</button>
@@ -701,6 +702,221 @@
         <h3>Тема</h3>
         <p id="themeStatus">Сейчас: тёмная</p>
         <button class="btn alt" id="themeToggleBtn">Переключить на светлую тему</button>
+      </div>
+      <div class="card">
+        <h3>Механики и враги</h3>
+        <p><strong>Клон</strong> — повторяет твои прошлые действия после перемотки времени.</p>
+        <p><strong>Кнопка</strong> — активирует связанные с ней двери, лазеры или фазовые стены.</p>
+        <p><strong>Дверь</strong> — перекрывает путь, пока не нажата правильная кнопка.</p>
+        <p><strong>Лазер</strong> — наносит урон, если проходить через луч.</p>
+        <p><strong>Обычная платформа</strong> — простая опора для движения и прыжков.</p>
+        <p><strong>Движущаяся платформа</strong> — возит игрока по траектории, если стоять сверху.</p>
+        <p><strong>Шипы и ловушки</strong> — наносят сильный урон при касании.</p>
+        <p><strong>Зона замедления</strong> — замедляет игрока и делает движение тяжелее.</p>
+        <p><strong>Дрон</strong> — летает по маршруту и стреляет очередями в ближайшего игрока.</p>
+        <p><strong>Турель</strong> — стоит на месте и стреляет по линии обзора.</p>
+        <p><strong>Хронобот</strong> — преследует игрока, телепортируется ближе и бьёт вблизи.</p>
+        <p><strong>Вода</strong> — тянет вниз и уносит в сторону, может смыть в пропасть.</p>
+        <p><strong>Портал</strong> — переносит в другую часть того же уровня.</p>
+        <p><strong>Ложный портал</strong> — выглядит полезным, но может отправить назад или в плохое место.</p>
+        <p><strong>Гравитационное поле</strong> — меняет падение, переворачивает маршрут или тянет по новой траектории.</p>
+        <p><strong>Фазовая стена</strong> — то твёрдая, то прозрачная; может зависеть от таймера или кнопки.</p>
+        <p><strong>Хрупкая платформа</strong> — трескается после касания и вскоре ломается.</p>
+        <p><strong>Магнитные рельсы</strong> — тянут игрока по линии, пока ты не спрыгнешь или не сделаешь рывок.</p>
+        <p><strong>Монеты</strong> — собираются в уровне и тратятся в магазине.</p>
+        <p><strong>Блоки</strong> — временные строительные блоки, которые игроки могут ставить во время прохождения.</p>
+      </div>
+      <div class="card">
+        <h3>Усиления из магазина</h3>
+        <p><strong>Броня</strong> — увеличивает максимум HP.</p>
+        <p><strong>Рывок+</strong> — даёт дополнительный заряд рывка.</p>
+        <p><strong>Якорь времени</strong> — делает перемотку экономнее.</p>
+        <p><strong>Реген</strong> — медленно восстанавливает HP, если тебя не бьют.</p>
+        <p><strong>Инженер</strong> — увеличивает запас строительных блоков.</p>
+        <p><strong>Овердрайв</strong> — немного усиливает движение и рывок.</p>
+      </div>
+      <div class="card">
+        <h3>Визуальный справочник</h3>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px;">
+          <div class="card" style="margin:0;">
+            <div style="height:74px; position:relative; background:rgba(255,255,255,0.03); border:1px solid rgba(75,231,255,0.18);">
+              <div style="position:absolute; left:18px; top:14px; width:18px; height:18px; background:#9f71ff;"></div>
+              <div style="position:absolute; left:20px; top:34px; width:14px; height:18px; background:#9f71ff;"></div>
+            </div>
+            <p><strong>Клон</strong><br>Повторяет твои прошлые действия.</p>
+          </div>
+          <div class="card" style="margin:0;">
+            <div style="height:74px; position:relative; background:rgba(255,255,255,0.03); border:1px solid rgba(75,231,255,0.18);">
+              <div style="position:absolute; left:18px; top:48px; width:34px; height:10px; background:rgba(255,122,223,0.8); border:2px solid #ff7adf;"></div>
+              <div style="position:absolute; right:20px; top:18px; width:24px; height:44px; background:rgba(72,20,74,0.86); border:2px solid #ff7adf;"></div>
+            </div>
+            <p><strong>Кнопка и дверь</strong><br>Кнопка открывает связанную дверь.</p>
+          </div>
+          <div class="card" style="margin:0;">
+            <div style="height:74px; position:relative; background:rgba(255,255,255,0.03); border:1px solid rgba(75,231,255,0.18);">
+              <div style="position:absolute; left:26px; top:10px; width:16px; height:54px; background:rgba(255,120,140,0.7); border:2px solid #ff5d73;"></div>
+              <div style="position:absolute; left:58px; top:46px; width:0; height:0; border-left:10px solid transparent; border-right:10px solid transparent; border-bottom:18px solid #ff8b55;"></div>
+            </div>
+            <p><strong>Лазер и шипы</strong><br>Оба наносят урон при касании.</p>
+          </div>
+          <div class="card" style="margin:0;">
+            <div style="height:74px; position:relative; background:rgba(255,255,255,0.03); border:1px solid rgba(75,231,255,0.18);">
+              <div style="position:absolute; left:16px; top:20px; width:42px; height:18px; background:rgba(159,113,255,0.18); border:2px solid #9f71ff;"></div>
+              <div style="position:absolute; right:16px; top:20px; width:42px; height:18px; background:rgba(255,178,125,0.18); border:2px solid #ffb27d;"></div>
+            </div>
+            <p><strong>Порталы</strong><br>Полезный переносит дальше, ложный может увести не туда.</p>
+          </div>
+          <div class="card" style="margin:0;">
+            <div style="height:74px; position:relative; background:rgba(255,255,255,0.03); border:1px solid rgba(75,231,255,0.18);">
+              <div style="position:absolute; left:12px; top:12px; width:54px; height:48px; background:rgba(70,170,255,0.18); border:2px solid rgba(135,220,255,0.55);"></div>
+              <div style="position:absolute; right:12px; top:12px; width:54px; height:48px; background:rgba(255,105,210,0.08); border:2px solid rgba(255,105,210,0.55);"></div>
+            </div>
+            <p><strong>Вода и гравиполе</strong><br>Вода уносит, поле меняет падение и маршрут.</p>
+          </div>
+          <div class="card" style="margin:0;">
+            <div style="height:74px; position:relative; background:rgba(255,255,255,0.03); border:1px solid rgba(75,231,255,0.18);">
+              <div style="position:absolute; left:12px; top:18px; width:18px; height:42px; background:rgba(120,58,255,0.35); border:2px solid rgba(210,180,255,0.85);"></div>
+              <div style="position:absolute; left:42px; top:38px; width:28px; height:10px; background:rgba(170,210,230,0.55); border:2px solid rgba(225,245,255,0.8);"></div>
+            </div>
+            <p><strong>Фазостена и хрупкая платформа</strong><br>Одна мигает, другая ломается после касания.</p>
+          </div>
+          <div class="card" style="margin:0;">
+            <div style="height:74px; position:relative; background:rgba(255,255,255,0.03); border:1px solid rgba(75,231,255,0.18);">
+              <div style="position:absolute; left:10px; top:22px; width:58px; height:18px; background:rgba(36,82,92,0.32); border:2px solid rgba(140,240,255,0.58);"></div>
+              <div style="position:absolute; left:22px; top:29px; width:34px; height:2px; background:#ecfbff;"></div>
+            </div>
+            <p><strong>Магнитные рельсы</strong><br>Тянут игрока по линии, пока не спрыгнешь.</p>
+          </div>
+          <div class="card" style="margin:0;">
+            <div style="height:74px; position:relative; background:rgba(255,255,255,0.03); border:1px solid rgba(75,231,255,0.18);">
+              <div style="position:absolute; left:16px; top:20px; width:22px; height:22px; background:#ff8b55; border:2px solid #ffd4a8;"></div>
+              <div style="position:absolute; left:52px; top:14px; width:24px; height:30px; background:#9f71ff; border:2px solid #ecfbff;"></div>
+            </div>
+            <p><strong>Дрон и хронобот</strong><br>Дрон стреляет, хронобот преследует и телепортируется.</p>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Визуальный справочник</h3>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px;">
+          <div class="card" style="margin:0;">
+            <div style="height:74px; position:relative; background:rgba(255,255,255,0.03); border:1px solid rgba(75,231,255,0.18);">
+              <div style="position:absolute; left:18px; top:14px; width:18px; height:18px; background:#9f71ff;"></div>
+              <div style="position:absolute; left:20px; top:34px; width:14px; height:18px; background:#9f71ff;"></div>
+            </div>
+            <p><strong>Клон</strong><br>Повторяет твои прошлые действия.</p>
+          </div>
+          <div class="card" style="margin:0;">
+            <div style="height:74px; position:relative; background:rgba(255,255,255,0.03); border:1px solid rgba(75,231,255,0.18);">
+              <div style="position:absolute; left:18px; top:48px; width:34px; height:10px; background:rgba(255,122,223,0.8); border:2px solid #ff7adf;"></div>
+              <div style="position:absolute; right:20px; top:18px; width:24px; height:44px; background:rgba(72,20,74,0.86); border:2px solid #ff7adf;"></div>
+            </div>
+            <p><strong>Кнопка и дверь</strong><br>Кнопка открывает связанную дверь.</p>
+          </div>
+          <div class="card" style="margin:0;">
+            <div style="height:74px; position:relative; background:rgba(255,255,255,0.03); border:1px solid rgba(75,231,255,0.18);">
+              <div style="position:absolute; left:26px; top:10px; width:16px; height:54px; background:rgba(255,120,140,0.7); border:2px solid #ff5d73;"></div>
+              <div style="position:absolute; left:58px; top:46px; width:0; height:0; border-left:10px solid transparent; border-right:10px solid transparent; border-bottom:18px solid #ff8b55;"></div>
+            </div>
+            <p><strong>Лазер и шипы</strong><br>Оба наносят урон при касании.</p>
+          </div>
+          <div class="card" style="margin:0;">
+            <div style="height:74px; position:relative; background:rgba(255,255,255,0.03); border:1px solid rgba(75,231,255,0.18);">
+              <div style="position:absolute; left:16px; top:20px; width:42px; height:18px; background:rgba(159,113,255,0.18); border:2px solid #9f71ff;"></div>
+              <div style="position:absolute; right:16px; top:20px; width:42px; height:18px; background:rgba(255,178,125,0.18); border:2px solid #ffb27d;"></div>
+            </div>
+            <p><strong>Порталы</strong><br>Обычный переносит, ложный обманывает.</p>
+          </div>
+          <div class="card" style="margin:0;">
+            <div style="height:74px; position:relative; background:rgba(255,255,255,0.03); border:1px solid rgba(75,231,255,0.18);">
+              <div style="position:absolute; left:12px; top:12px; width:54px; height:48px; background:rgba(70,170,255,0.18); border:2px solid rgba(135,220,255,0.55);"></div>
+              <div style="position:absolute; right:12px; top:12px; width:54px; height:48px; background:rgba(255,105,210,0.08); border:2px solid rgba(255,105,210,0.55);"></div>
+            </div>
+            <p><strong>Вода и гравиполе</strong><br>Вода уносит, поле меняет падение.</p>
+          </div>
+          <div class="card" style="margin:0;">
+            <div style="height:74px; position:relative; background:rgba(255,255,255,0.03); border:1px solid rgba(75,231,255,0.18);">
+              <div style="position:absolute; left:12px; top:18px; width:18px; height:42px; background:rgba(120,58,255,0.35); border:2px solid rgba(210,180,255,0.85);"></div>
+              <div style="position:absolute; left:42px; top:38px; width:28px; height:10px; background:rgba(170,210,230,0.55); border:2px solid rgba(225,245,255,0.8);"></div>
+            </div>
+            <p><strong>Фазостена и хрупкая платформа</strong><br>Одна мигает, другая ломается.</p>
+          </div>
+          <div class="card" style="margin:0;">
+            <div style="height:74px; position:relative; background:rgba(255,255,255,0.03); border:1px solid rgba(75,231,255,0.18);">
+              <div style="position:absolute; left:10px; top:22px; width:58px; height:18px; background:rgba(36,82,92,0.32); border:2px solid rgba(140,240,255,0.58);"></div>
+              <div style="position:absolute; left:22px; top:29px; width:34px; height:2px; background:#ecfbff;"></div>
+            </div>
+            <p><strong>Магнитные рельсы</strong><br>Тянут игрока по линии.</p>
+          </div>
+          <div class="card" style="margin:0;">
+            <div style="height:74px; position:relative; background:rgba(255,255,255,0.03); border:1px solid rgba(75,231,255,0.18);">
+              <div style="position:absolute; left:16px; top:20px; width:22px; height:22px; background:#ff8b55; border:2px solid #ffd4a8;"></div>
+              <div style="position:absolute; left:52px; top:14px; width:24px; height:30px; background:#9f71ff; border:2px solid #ecfbff;"></div>
+            </div>
+            <p><strong>Дрон и хронобот</strong><br>Дрон стреляет, хронобот охотится.</p>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>ВИЗУАЛЬНЫЙ СПРАВОЧНИК</h3>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px;">
+          <div class="card" style="margin:0;">
+            <div style="height:74px; position:relative; background:rgba(255,255,255,0.03); border:1px solid rgba(75,231,255,0.18);">
+              <div style="position:absolute; left:18px; top:14px; width:18px; height:18px; background:#9f71ff;"></div>
+              <div style="position:absolute; left:20px; top:34px; width:14px; height:18px; background:#9f71ff;"></div>
+            </div>
+            <p><strong>КЛОН</strong><br>Повторяет твои прошлые действия.</p>
+          </div>
+          <div class="card" style="margin:0;">
+            <div style="height:74px; position:relative; background:rgba(255,255,255,0.03); border:1px solid rgba(75,231,255,0.18);">
+              <div style="position:absolute; left:18px; top:48px; width:34px; height:10px; background:rgba(255,122,223,0.8); border:2px solid #ff7adf;"></div>
+              <div style="position:absolute; right:20px; top:18px; width:24px; height:44px; background:rgba(72,20,74,0.86); border:2px solid #ff7adf;"></div>
+            </div>
+            <p><strong>КНОПКА И ДВЕРЬ</strong><br>Кнопка открывает связанную дверь.</p>
+          </div>
+          <div class="card" style="margin:0;">
+            <div style="height:74px; position:relative; background:rgba(255,255,255,0.03); border:1px solid rgba(75,231,255,0.18);">
+              <div style="position:absolute; left:26px; top:10px; width:16px; height:54px; background:rgba(255,120,140,0.7); border:2px solid #ff5d73;"></div>
+              <div style="position:absolute; left:58px; top:46px; width:0; height:0; border-left:10px solid transparent; border-right:10px solid transparent; border-bottom:18px solid #ff8b55;"></div>
+            </div>
+            <p><strong>ЛАЗЕР И ШИПЫ</strong><br>Оба наносят урон при касании.</p>
+          </div>
+          <div class="card" style="margin:0;">
+            <div style="height:74px; position:relative; background:rgba(255,255,255,0.03); border:1px solid rgba(75,231,255,0.18);">
+              <div style="position:absolute; left:16px; top:20px; width:42px; height:18px; background:rgba(159,113,255,0.18); border:2px solid #9f71ff;"></div>
+              <div style="position:absolute; right:16px; top:20px; width:42px; height:18px; background:rgba(255,178,125,0.18); border:2px solid #ffb27d;"></div>
+            </div>
+            <p><strong>ПОРТАЛЫ</strong><br>Обычный переносит, ложный обманывает.</p>
+          </div>
+          <div class="card" style="margin:0;">
+            <div style="height:74px; position:relative; background:rgba(255,255,255,0.03); border:1px solid rgba(75,231,255,0.18);">
+              <div style="position:absolute; left:12px; top:12px; width:54px; height:48px; background:rgba(70,170,255,0.18); border:2px solid rgba(135,220,255,0.55);"></div>
+              <div style="position:absolute; right:12px; top:12px; width:54px; height:48px; background:rgba(255,105,210,0.08); border:2px solid rgba(255,105,210,0.55);"></div>
+            </div>
+            <p><strong>ВОДА И ГРАВИПОЛЕ</strong><br>Вода уносит, поле меняет падение.</p>
+          </div>
+          <div class="card" style="margin:0;">
+            <div style="height:74px; position:relative; background:rgba(255,255,255,0.03); border:1px solid rgba(75,231,255,0.18);">
+              <div style="position:absolute; left:12px; top:18px; width:18px; height:42px; background:rgba(120,58,255,0.35); border:2px solid rgba(210,180,255,0.85);"></div>
+              <div style="position:absolute; left:42px; top:38px; width:28px; height:10px; background:rgba(170,210,230,0.55); border:2px solid rgba(225,245,255,0.8);"></div>
+            </div>
+            <p><strong>ФАЗОСТЕНА И ХРУПКАЯ ПЛАТФОРМА</strong><br>Одна мигает, другая ломается.</p>
+          </div>
+          <div class="card" style="margin:0;">
+            <div style="height:74px; position:relative; background:rgba(255,255,255,0.03); border:1px solid rgba(75,231,255,0.18);">
+              <div style="position:absolute; left:10px; top:22px; width:58px; height:18px; background:rgba(36,82,92,0.32); border:2px solid rgba(140,240,255,0.58);"></div>
+              <div style="position:absolute; left:22px; top:29px; width:34px; height:2px; background:#ecfbff;"></div>
+            </div>
+            <p><strong>МАГНИТНЫЕ РЕЛЬСЫ</strong><br>Тянут игрока по линии.</p>
+          </div>
+          <div class="card" style="margin:0;">
+            <div style="height:74px; position:relative; background:rgba(255,255,255,0.03); border:1px solid rgba(75,231,255,0.18);">
+              <div style="position:absolute; left:16px; top:20px; width:22px; height:22px; background:#ff8b55; border:2px solid #ffd4a8;"></div>
+              <div style="position:absolute; left:52px; top:14px; width:24px; height:30px; background:#9f71ff; border:2px solid #ecfbff;"></div>
+            </div>
+            <p><strong>ДРОН И ХРОНОБОТ</strong><br>Дрон стреляет, хронобот охотится.</p>
+          </div>
+        </div>
       </div>
       <div class="grid" style="margin-top:16px;">
         <button class="btn alt" id="settingsBackBtn">Назад</button>
@@ -790,6 +1006,122 @@
         <h3>Управление</h3>
         <p>Стрелки влево и вправо или A/D для движения, W, стрелка вверх или SPACE для прыжка, SHIFT для рывка, R для перемотки времени. На мобильном есть экранные кнопки.</p>
       </div>
+      <div class="card" style="margin-top:12px;">
+        <h3>Визуальный справочник</h3>
+        <div class="levels" style="margin-top:12px;">
+          <div class="level-card" style="min-height:170px;">
+            <div style="height:82px; position:relative; border:1px solid var(--border); background:linear-gradient(180deg, rgba(75,231,255,0.14), rgba(6,14,22,0.85)); overflow:hidden;">
+              <div style="position:absolute; left:14px; top:44px; width:50px; height:10px; background:#142739;"></div>
+              <div style="position:absolute; left:22px; top:16px; width:18px; height:18px; border:2px solid var(--border); background:rgba(75,231,255,0.12); box-shadow:0 0 12px rgba(75,231,255,0.5);"></div>
+              <div style="position:absolute; left:25px; top:36px; width:12px; height:18px; border-left:2px solid var(--border); border-right:2px solid var(--border);"></div>
+              <div style="position:absolute; left:18px; top:32px; width:26px; height:2px; background:var(--border);"></div>
+              <div style="position:absolute; left:22px; top:54px; width:2px; height:18px; background:var(--border); transform:rotate(20deg); transform-origin:top;"></div>
+              <div style="position:absolute; left:38px; top:54px; width:2px; height:18px; background:var(--border); transform:rotate(-20deg); transform-origin:top;"></div>
+              <div style="position:absolute; left:58px; top:16px; width:18px; height:18px; border:2px solid var(--accent); background:rgba(255,75,216,0.12); box-shadow:0 0 12px rgba(255,75,216,0.5);"></div>
+              <div style="position:absolute; left:61px; top:36px; width:12px; height:18px; border-left:2px solid var(--accent); border-right:2px solid var(--accent);"></div>
+              <div style="position:absolute; left:54px; top:32px; width:26px; height:2px; background:var(--accent);"></div>
+              <div style="position:absolute; left:58px; top:54px; width:2px; height:18px; background:var(--accent); transform:rotate(20deg); transform-origin:top;"></div>
+              <div style="position:absolute; left:74px; top:54px; width:2px; height:18px; background:var(--accent); transform:rotate(-20deg); transform-origin:top;"></div>
+            </div>
+            <strong>Клон</strong>
+            <p>После перемотки повторяет твои прошлые действия.</p>
+          </div>
+          <div class="level-card" style="min-height:170px;">
+            <div style="height:82px; position:relative; border:1px solid var(--border); background:linear-gradient(180deg, rgba(255,75,216,0.12), rgba(8,16,26,0.9)); overflow:hidden;">
+              <div style="position:absolute; left:10px; bottom:12px; width:28px; height:12px; background:#29384e; border:2px solid var(--accent); border-radius:12px;"></div>
+              <div style="position:absolute; left:14px; bottom:18px; width:20px; height:8px; background:linear-gradient(180deg, #ffd5ef, #ff4bd8); border-radius:10px; box-shadow:0 3px 0 #7f295f;"></div>
+              <div style="position:absolute; right:10px; bottom:12px; width:22px; height:54px; border:2px solid #b684ff; background:linear-gradient(180deg, rgba(200,160,255,0.95), rgba(73,33,122,0.85)); box-shadow:0 0 12px rgba(159,113,255,0.45);"></div>
+              <div style="position:absolute; right:8px; top:12px; width:26px; height:6px; background:#d9c0ff; box-shadow:0 0 12px rgba(200,170,255,0.5);"></div>
+            </div>
+            <strong>Кнопка и дверь</strong>
+            <p>Кнопка открывает путь, а дверь поднимается вверх.</p>
+          </div>
+          <div class="level-card" style="min-height:170px;">
+            <div style="height:82px; position:relative; border:1px solid var(--border); background:linear-gradient(180deg, rgba(255,139,85,0.12), rgba(8,16,26,0.9)); overflow:hidden;">
+              <div style="position:absolute; left:8px; right:42px; top:34px; height:4px; background:linear-gradient(90deg, rgba(255,91,115,0.1), rgba(255,91,115,1), rgba(255,91,115,0.1)); box-shadow:0 0 16px rgba(255,91,115,0.9);"></div>
+              <div style="position:absolute; right:8px; bottom:12px; width:0; height:0; border-left:10px solid transparent; border-right:10px solid transparent; border-bottom:22px solid #ff8b55;"></div>
+              <div style="position:absolute; right:24px; bottom:12px; width:0; height:0; border-left:10px solid transparent; border-right:10px solid transparent; border-bottom:22px solid #ff8b55;"></div>
+            </div>
+            <strong>Лазер и шипы</strong>
+            <p>Касание луча или шипов наносит урон.</p>
+          </div>
+          <div class="level-card" style="min-height:170px;">
+            <div style="height:82px; position:relative; border:1px solid var(--border); background:linear-gradient(180deg, rgba(79,113,255,0.12), rgba(8,16,26,0.9)); overflow:hidden;">
+              <div style="position:absolute; left:10px; top:18px; width:20px; height:46px; border:3px solid var(--border); border-radius:20px; box-shadow:0 0 16px rgba(75,231,255,0.8);"></div>
+              <div style="position:absolute; left:15px; top:23px; width:10px; height:36px; border:2px dashed rgba(75,231,255,0.8); border-radius:12px;"></div>
+              <div style="position:absolute; right:10px; top:18px; width:20px; height:46px; border:3px solid var(--accent); border-radius:20px; box-shadow:0 0 16px rgba(255,75,216,0.8);"></div>
+              <div style="position:absolute; right:15px; top:23px; width:10px; height:36px; border:2px dashed rgba(255,75,216,0.8); border-radius:12px;"></div>
+            </div>
+            <strong>Порталы</strong>
+            <p>Обычный переносит вперёд, ложный может увести в плохое место.</p>
+          </div>
+          <div class="level-card" style="min-height:170px;">
+            <div style="height:82px; position:relative; border:1px solid var(--border); background:linear-gradient(180deg, rgba(79,133,255,0.12), rgba(8,16,26,0.9)); overflow:hidden;">
+              <div style="position:absolute; left:8px; right:44px; bottom:10px; height:24px; background:linear-gradient(180deg, rgba(80,170,255,0.9), rgba(28,83,181,0.95)); box-shadow:inset 0 4px 0 rgba(255,255,255,0.2), 0 0 16px rgba(80,170,255,0.45);"></div>
+              <div style="position:absolute; right:10px; top:10px; width:28px; height:60px; background:linear-gradient(180deg, rgba(159,113,255,0.25), rgba(159,113,255,0.75)); border:2px solid #b684ff;"></div>
+              <div style="position:absolute; right:16px; top:16px; width:16px; height:48px; border-top:2px solid #fff; border-bottom:2px solid #fff; opacity:0.8;"></div>
+            </div>
+            <strong>Вода и гравиполе</strong>
+            <p>Вода тянет вниз, а поле меняет траекторию прыжка.</p>
+          </div>
+          <div class="level-card" style="min-height:170px;">
+            <div style="height:82px; position:relative; border:1px solid var(--border); background:linear-gradient(180deg, rgba(200,170,255,0.12), rgba(8,16,26,0.9)); overflow:hidden;">
+              <div style="position:absolute; left:8px; bottom:12px; width:30px; height:48px; border:2px dashed #c7a3ff; background:rgba(180,120,255,0.18);"></div>
+              <div style="position:absolute; right:8px; bottom:12px; width:34px; height:12px; background:linear-gradient(180deg, #ffd47a, #ff8b55); border:2px solid #ffcf8d; box-shadow:0 0 12px rgba(255,160,90,0.6);"></div>
+              <div style="position:absolute; right:8px; bottom:26px; width:34px; height:4px; background:rgba(255,212,122,0.55);"></div>
+            </div>
+            <strong>Фазостена и хрупкая платформа</strong>
+            <p>Фазостена то пропускает, то блокирует, а хрупкая платформа ломается.</p>
+          </div>
+          <div class="level-card" style="min-height:170px;">
+            <div style="height:82px; position:relative; border:1px solid var(--border); background:linear-gradient(180deg, rgba(75,231,255,0.12), rgba(8,16,26,0.9)); overflow:hidden;">
+              <div style="position:absolute; left:8px; right:8px; top:40px; height:4px; background:linear-gradient(90deg, rgba(75,231,255,0.15), rgba(75,231,255,1), rgba(75,231,255,0.15)); box-shadow:0 0 14px rgba(75,231,255,0.8);"></div>
+              <div style="position:absolute; left:18px; top:28px; width:14px; height:14px; border:2px solid #fff; background:rgba(75,231,255,0.2);"></div>
+              <div style="position:absolute; right:12px; top:18px; color:var(--border); font-size:11px; font-weight:700;">MAG</div>
+            </div>
+            <strong>Магнитные рельсы</strong>
+            <p>Тянут игрока по линии, пока не сорвёшься прыжком или рывком.</p>
+          </div>
+          <div class="level-card" style="min-height:170px;">
+            <div style="height:82px; position:relative; border:1px solid var(--border); background:linear-gradient(180deg, rgba(255,91,115,0.12), rgba(8,16,26,0.9)); overflow:hidden;">
+              <div style="position:absolute; left:10px; top:18px; width:22px; height:22px; border-radius:50%; border:2px solid var(--warn); box-shadow:0 0 12px rgba(255,139,85,0.75);"></div>
+              <div style="position:absolute; left:18px; top:42px; width:6px; height:20px; background:var(--warn);"></div>
+              <div style="position:absolute; right:12px; top:14px; width:22px; height:22px; border:2px solid var(--accent); background:rgba(255,75,216,0.15); box-shadow:0 0 14px rgba(255,75,216,0.75);"></div>
+              <div style="position:absolute; right:17px; top:40px; width:12px; height:24px; border-left:2px solid var(--accent); border-right:2px solid var(--accent);"></div>
+            </div>
+            <strong>Дрон и хронобот</strong>
+            <p>Дрон стреляет издалека, а хронобот телепортируется и бьёт вблизи.</p>
+          </div>
+          <div class="level-card" style="min-height:170px;">
+            <div style="height:82px; position:relative; border:1px solid var(--border); background:linear-gradient(180deg, rgba(141,255,118,0.12), rgba(8,16,26,0.9)); overflow:hidden;">
+              <div style="position:absolute; left:28px; top:14px; width:18px; height:54px; background:rgba(16,33,51,0.95); border:2px solid rgba(141,255,118,0.55);"></div>
+              <div style="position:absolute; left:66px; top:20px; width:18px; height:18px; border:2px solid var(--border); background:rgba(75,231,255,0.12); box-shadow:0 0 12px rgba(75,231,255,0.5); transform:rotate(10deg);"></div>
+              <div style="position:absolute; left:71px; top:40px; width:10px; height:16px; border-left:2px solid var(--border); border-right:2px solid var(--border);"></div>
+              <div style="position:absolute; left:62px; top:38px; width:22px; height:2px; background:var(--border);"></div>
+              <div style="position:absolute; left:66px; top:55px; width:2px; height:16px; background:var(--border); transform:rotate(30deg); transform-origin:top;"></div>
+              <div style="position:absolute; left:80px; top:55px; width:2px; height:16px; background:var(--border); transform:rotate(-25deg); transform-origin:top;"></div>
+              <div style="position:absolute; left:50px; top:28px; width:14px; height:2px; background:rgba(141,255,118,0.9); transform:rotate(-30deg); transform-origin:right center;"></div>
+            </div>
+            <strong>Отскок от стены</strong>
+            <p>Упрись в стену в воздухе и сразу жми прыжок, чтобы отлететь в другую сторону.</p>
+          </div>
+          <div class="level-card" style="min-height:170px;">
+            <div style="height:82px; position:relative; border:1px solid var(--border); background:linear-gradient(180deg, rgba(255,75,216,0.14), rgba(8,16,26,0.9)); overflow:hidden;">
+              <div style="position:absolute; left:26px; top:8px; width:28px; height:50px; border:2px solid var(--accent); background:rgba(255,75,216,0.15); box-shadow:0 0 14px rgba(255,75,216,0.75);"></div>
+              <div style="position:absolute; left:31px; top:60px; width:18px; height:8px; background:rgba(255,75,216,0.9);"></div>
+              <div style="position:absolute; left:34px; top:2px; width:12px; height:8px; background:#ffd95e; clip-path:polygon(50% 0%, 100% 35%, 82% 100%, 18% 100%, 0% 35%);"></div>
+              <div style="position:absolute; left:102px; top:10px; width:18px; height:18px; border:2px solid var(--border); background:rgba(75,231,255,0.12); box-shadow:0 0 12px rgba(75,231,255,0.5);"></div>
+              <div style="position:absolute; left:106px; top:30px; width:10px; height:16px; border-left:2px solid var(--border); border-right:2px solid var(--border);"></div>
+              <div style="position:absolute; left:98px; top:28px; width:24px; height:2px; background:var(--border);"></div>
+              <div style="position:absolute; left:102px; top:46px; width:2px; height:16px; background:var(--border); transform:rotate(18deg); transform-origin:top;"></div>
+              <div style="position:absolute; left:116px; top:46px; width:2px; height:16px; background:var(--border); transform:rotate(-18deg); transform-origin:top;"></div>
+              <div style="position:absolute; left:110px; top:4px; width:6px; height:6px; background:rgba(255,139,85,0.95); border-radius:50%; box-shadow:0 0 10px rgba(255,139,85,0.8);"></div>
+            </div>
+            <strong>СиксСевен 67</strong>
+            <p>Босс стреляет и ставит блоки. Наноси ему урон прыжками сверху по голове.</p>
+          </div>
+        </div>
+      </div>
       <div class="grid" style="margin-top:16px;">
         <button class="btn alt" id="howBackBtn">Назад</button>
       </div>
@@ -860,6 +1192,7 @@
         root.style.setProperty("--text", dark ? "#dffcff" : "#1f3849");
         root.style.setProperty("--soft", dark ? "#8ab7c7" : "#648295");
         document.body.style.background = dark ? "#03070d" : "#dfeaf2";
+        if (typeof renderHowGuide === "function") renderHowGuide();
         Object.assign(COLORS, dark ? {
           bg: "#04101b", bg2: "#08192a", cyan: "#4be7ff", cyanSoft: "rgba(75,231,255,0.16)", pink: "#ff4bd8", orange: "#ff8b55", violet: "#9f71ff", green: "#8dff76", red: "#ff5d73", white: "#ecfbff", steel: "#6f89a0", dark: "#0a1521"
         } : {
@@ -967,6 +1300,7 @@
         clones: [],
         drones: [],
         chronoBots: [],
+        boss: null,
         placedBlocks: [],
         particles: [],
         bullets: [],
@@ -977,6 +1311,7 @@
         rewindMeter: 1,
         rewinding: false,
         rewindVisual: 0,
+        deathTimer: 0,
         runCoins: 0,
         toastTimer: 0,
         camera: { x: 0, y: 0, zoom: 2.2, shake: 0, sx: 0, sy: 0 },
@@ -1070,6 +1405,9 @@
           };
           if (!ownedSkins.p1.includes("classic")) ownedSkins.p1.unshift("classic");
           if (!ownedSkins.p2.includes("classic")) ownedSkins.p2.unshift("classic");
+          const equippedP1 = ownedSkins.p1.includes(parsed?.equippedSkins?.p1) ? parsed?.equippedSkins?.p1 : "classic";
+          const equippedP2Raw = ownedSkins.p2.includes(parsed?.equippedSkins?.p2) ? parsed?.equippedSkins?.p2 : "classic";
+          const equippedP2 = equippedP2Raw === "forest" && !ownedSkins.p2.includes("forest") ? "classic" : equippedP2Raw;
           return {
             bestLevel: 0,
             totalClones: 0,
@@ -1077,8 +1415,8 @@
             coins: 0,
             ownedSkins,
             equippedSkins: {
-              p1: parsed?.equippedSkins?.p1 || "classic",
-              p2: parsed?.equippedSkins?.p2 || "classic"
+              p1: equippedP1,
+              p2: equippedP2
             },
             boughtBoosts: Array.isArray(parsed?.boughtBoosts) ? parsed.boughtBoosts : [],
             ...parsed
@@ -1142,15 +1480,17 @@
 
       function setupPlayerLoadout(player, slot = "p1") {
         const skin = skinByKey(state.save.equippedSkins?.[slot] || "classic");
+        const useP1ClassicLook = slot === "p2" && skin.key === "forest";
         player.skinKey = skin.key;
-        player.skinAccent = skin.accent;
-        player.skinVisor = skin.visor;
+        player.skinAccent = useP1ClassicLook ? null : skin.accent;
+        player.skinVisor = useP1ClassicLook ? null : skin.visor;
         player.skinGlow = skin.glow || 1;
         player.skinHat = skin.hat || null;
         player.skinWings = skin.wings || null;
         player.skinAccessory = skin.accessory || null;
         player.skinBadge = skin.badge || null;
-        if (skin.tint) player.tint = skin.tint;
+        if (useP1ClassicLook) player.tint = COLORS.cyan;
+        else if (skin.tint) player.tint = skin.tint;
         player.maxHp = hasBoost("armor") ? 120 : 100;
         player.hp = player.maxHp;
         player.maxDashCharges = hasBoost("dash") ? 4 : 3;
@@ -1176,7 +1516,7 @@
           x, y, w: 18, h: 30, vx: 0, vy: 0, face: 1, onGround: false, coyote: 0, jumpBuffer: 0,
           dashTimer: 0, dashCharges: 3, dashJumpWindow: 0, alive: true, slowTimer: 0, tint, blocksLeft: 0, exited: false,
           maxHp: 100, hp: 100, invuln: 0, hitFlash: 0, portalCooldown: 0, waterTimer: 0,
-          gravityDir: 1, gravityMix: 0, magRailTimer: 0
+          gravityDir: 1, gravityMix: 0, magRailTimer: 0, wallCoyote: 0, wallSide: 0, wallKickTimer: 0
         };
       }
 
@@ -1893,6 +2233,90 @@
         return { name, hint, width, ...data };
       }
 
+      function addWallJumpBossLevels() {
+        levels.push(
+          makeLevel("66. Башня отскоков", "Новая механика: прыгай у стены, чтобы оттолкнуться в другую сторону и добраться выше.", 1860, {
+            style: "archive",
+            spawn: { x: 60, y: 360 }, exit: { x: 1730, y: 74, w: 30, h: 46 },
+            solids: [
+              { x: 0, y: 400, w: 220, h: 90 }, { x: 320, y: 300, w: 32, h: 100 }, { x: 520, y: 220, w: 32, h: 180 },
+              { x: 720, y: 150, w: 32, h: 250 }, { x: 930, y: 240, w: 110, h: 20 }, { x: 1120, y: 140, w: 32, h: 260 },
+              { x: 1320, y: 220, w: 120, h: 20 }, { x: 1500, y: 110, w: 32, h: 290 }, { x: 1680, y: 120, w: 180, h: 20 }
+            ],
+            buttons: [], doors: [], lasers: [], movers: [],
+            traps: [{ x: 220, y: 396, w: 100, h: 8 }, { x: 352, y: 396, w: 168, h: 8 }, { x: 552, y: 396, w: 168, h: 8 }, { x: 752, y: 396, w: 360, h: 8 }],
+            turrets: [], drones: [], chronoBots: [], slowZones: [], waterZones: [], portals: [],
+            gravityZones: [], phaseWalls: [], fragilePlatforms: [], magRails: [],
+            coins: [{ x: 385, y: 275 }, { x: 585, y: 195 }, { x: 785, y: 125 }, { x: 1185, y: 115 }, { x: 1740, y: 35 }]
+          }),
+          makeLevel("67. СиксСевен 67", "В конце ждёт босс. Он стреляет, подходит и ставит блоки. Побеждай его прыжками сверху по голове.", 2300, {
+            style: "industrial",
+            spawn: { x: 60, y: 360 }, exit: { x: 2170, y: 314, w: 30, h: 46 },
+            solids: [
+              { x: 0, y: 400, w: 340, h: 90 }, { x: 460, y: 320, w: 120, h: 20 }, { x: 700, y: 250, w: 34, h: 150 },
+              { x: 900, y: 320, w: 130, h: 20 }, { x: 1120, y: 170, w: 34, h: 230 }, { x: 1320, y: 240, w: 140, h: 20 },
+              { x: 1540, y: 110, w: 34, h: 290 }, { x: 1700, y: 340, w: 540, h: 60 }, { x: 1700, y: 120, w: 26, h: 220 },
+              { x: 2050, y: 120, w: 26, h: 220 }, { x: 2080, y: 340, w: 180, h: 20 }
+            ],
+            buttons: [], doors: [], lasers: [{ x: 1600, y: 290, w: 16, h: 110, id: "z", activeWhen: false, on: true }], movers: [],
+            traps: [{ x: 340, y: 396, w: 120, h: 8 }, { x: 580, y: 396, w: 320, h: 8 }, { x: 1030, y: 396, w: 290, h: 8 }],
+            turrets: [], drones: [], chronoBots: [], slowZones: [],
+            waterZones: [], portals: [], gravityZones: [], phaseWalls: [], fragilePlatforms: [], magRails: [],
+            boss: { x: 1790, y: 300, w: 34, h: 52, x1: 1715, x2: 2010, hp: 420, speed: 138, shootEvery: 1.6, placeEvery: 2.15 },
+            coins: [{ x: 505, y: 285 }, { x: 945, y: 285 }, { x: 1370, y: 205 }, { x: 1880, y: 85 }, { x: 2140, y: 285 }]
+          }),
+          makeLevel("68. Коридор рикошетов", "Чередуй рывок и отскок от стены. Здесь уже нужно быстро читать расстояние между шахтами.", 2040, {
+            style: "mono",
+            spawn: { x: 60, y: 360 }, exit: { x: 1910, y: 94, w: 30, h: 46 },
+            solids: [
+              { x: 0, y: 400, w: 220, h: 90 }, { x: 330, y: 300, w: 30, h: 100 }, { x: 480, y: 360, w: 90, h: 20 },
+              { x: 650, y: 240, w: 30, h: 160 }, { x: 820, y: 320, w: 90, h: 20 }, { x: 980, y: 170, w: 30, h: 230 },
+              { x: 1160, y: 280, w: 100, h: 20 }, { x: 1330, y: 120, w: 30, h: 280 }, { x: 1510, y: 220, w: 100, h: 20 },
+              { x: 1710, y: 120, w: 30, h: 280 }, { x: 1860, y: 140, w: 180, h: 20 }
+            ],
+            buttons: [], doors: [], lasers: [], movers: [],
+            traps: [{ x: 220, y: 396, w: 110, h: 8 }, { x: 360, y: 396, w: 290, h: 8 }, { x: 680, y: 396, w: 300, h: 8 }, { x: 1010, y: 396, w: 320, h: 8 }, { x: 1360, y: 396, w: 350, h: 8 }],
+            turrets: [], drones: [{ x1: 1480, x2: 1810, y: 140, speed: 1.1 }], chronoBots: [], slowZones: [], waterZones: [], portals: [],
+            gravityZones: [], phaseWalls: [], fragilePlatforms: [{ x: 1860, y: 140, w: 80, h: 18, delay: 0.38 }], magRails: [],
+            coins: [{ x: 385, y: 275 }, { x: 705, y: 215 }, { x: 1035, y: 145 }, { x: 1385, y: 95 }, { x: 1900, y: 85 }]
+          }),
+          makeLevel("69. Колодец рельс", "Магнитные рельсы помогают занять позицию, а дальше снова решают отскоки от стен и вертикальный паркур.", 2140, {
+            style: "neon",
+            spawn: { x: 60, y: 360 }, exit: { x: 1990, y: 54, w: 30, h: 46 },
+            solids: [
+              { x: 0, y: 400, w: 220, h: 90 }, { x: 360, y: 320, w: 36, h: 100 }, { x: 560, y: 250, w: 36, h: 150 },
+              { x: 760, y: 180, w: 36, h: 220 }, { x: 960, y: 120, w: 36, h: 280 }, { x: 1190, y: 230, w: 130, h: 20 },
+              { x: 1420, y: 140, w: 36, h: 260 }, { x: 1610, y: 80, w: 36, h: 320 }, { x: 1900, y: 80, w: 240, h: 20 }
+            ],
+            buttons: [], doors: [], lasers: [], movers: [],
+            traps: [{ x: 220, y: 396, w: 140, h: 8 }, { x: 396, y: 396, w: 164, h: 8 }, { x: 596, y: 396, w: 164, h: 8 }, { x: 796, y: 396, w: 624, h: 8 }],
+            turrets: [], drones: [], chronoBots: [{ x1: 1700, x2: 1880, y: 160, speed: 1.05, teleportEvery: 3.1 }], slowZones: [],
+            waterZones: [], portals: [], gravityZones: [],
+            phaseWalls: [], fragilePlatforms: [],
+            magRails: [{ x: 260, y: 300, w: 36, h: 120, dir: "up", force: 270 }, { x: 1320, y: 190, w: 120, h: 30, dir: "right", force: 300 }],
+            coins: [{ x: 425, y: 295 }, { x: 625, y: 225 }, { x: 825, y: 155 }, { x: 1025, y: 95 }, { x: 1940, y: 45 }]
+          }),
+          makeLevel("70. Паркур сингулярности", "Финальный паркур-пак: стены, фазы, ложный портал и один длинный вертикальный маршрут наверх.", 2460, {
+            style: "archive",
+            spawn: { x: 60, y: 360 }, exit: { x: 2320, y: 34, w: 30, h: 46 },
+            solids: [
+              { x: 0, y: 400, w: 230, h: 90 }, { x: 360, y: 320, w: 36, h: 100 }, { x: 600, y: 250, w: 36, h: 150 },
+              { x: 840, y: 170, w: 36, h: 230 }, { x: 1100, y: 250, w: 130, h: 20 }, { x: 1320, y: 120, w: 36, h: 280 },
+              { x: 1560, y: 220, w: 130, h: 20 }, { x: 1760, y: 100, w: 36, h: 300 }, { x: 1980, y: 60, w: 36, h: 340 }, { x: 2260, y: 60, w: 200, h: 20 }
+            ],
+            buttons: [], doors: [], lasers: [], movers: [],
+            traps: [{ x: 230, y: 396, w: 130, h: 8 }, { x: 396, y: 396, w: 204, h: 8 }, { x: 636, y: 396, w: 204, h: 8 }, { x: 876, y: 396, w: 444, h: 8 }],
+            turrets: [], drones: [], chronoBots: [], slowZones: [],
+            waterZones: [], portals: [{ x: 1460, y: 322, w: 26, h: 78, toX: 2050, toY: 30, outVx: 20, outVy: -10 }, { x: 1820, y: 322, w: 26, h: 78, toX: 540, toY: 340, fake: true, outVx: 0, outVy: 0 }],
+            gravityZones: [],
+            phaseWalls: [{ x: 2100, y: 100, w: 26, h: 120, period: 1.7, duty: 0.52 }],
+            fragilePlatforms: [{ x: 2320, y: 60, w: 80, h: 18, delay: 0.34 }],
+            magRails: [],
+            coins: [{ x: 445, y: 295 }, { x: 685, y: 225 }, { x: 925, y: 145 }, { x: 1345, y: 95 }, { x: 2085, y: 25 }, { x: 2345, y: 5 }]
+          })
+        );
+      }
+
       function emptyLevelData(name = "Мой уровень", hint = "Собери свой временной пазл.", width = 1600) {
         return makeLevel(name, hint, width, {
           spawn: { x: 60, y: 360 },
@@ -1912,7 +2336,8 @@
           gravityZones: [],
           phaseWalls: [],
           fragilePlatforms: [],
-          magRails: []
+          magRails: [],
+          boss: null
         });
       }
 
@@ -2192,6 +2617,261 @@
         if (name === "pause") dom.pauseMenu.classList.add("active");
         if (name === "complete") dom.completeMenu.classList.add("active");
         dom.hud.hidden = name !== null;
+        if (name === "how") renderHowGuide();
+      }
+
+      function miniBevel(g, x, y, w, h, baseFill, glowColor, strokeColor) {
+        g.save();
+        g.shadowColor = glowColor;
+        g.shadowBlur = 12;
+        g.fillStyle = baseFill;
+        g.fillRect(x, y, w, h);
+        g.shadowBlur = 0;
+        g.fillStyle = "rgba(255,255,255,0.08)";
+        g.fillRect(x + 2, y + 2, Math.max(0, w - 4), Math.max(2, h * 0.18));
+        g.fillStyle = "rgba(0,0,0,0.16)";
+        g.fillRect(x + 2, y + h - Math.max(3, h * 0.16), Math.max(0, w - 4), Math.max(2, h * 0.16));
+        g.strokeStyle = strokeColor;
+        g.lineWidth = 2;
+        g.strokeRect(x, y, w, h);
+        g.restore();
+      }
+
+      function miniEntity(g, x, y, w, h, color, accent = COLORS.white, extras = {}) {
+        const head = Math.max(10, w * 0.5);
+        const headX = x + (w - head) * 0.5;
+        const headY = y + h * 0.04;
+        const torsoW = Math.max(8, w * 0.34);
+        const torsoH = h * 0.34;
+        const torsoX = x + (w - torsoW) * 0.5;
+        const torsoY = y + h * 0.34;
+        const limbW = Math.max(3, w * 0.12);
+        const armH = h * 0.22;
+        const legH = h * 0.24;
+        g.save();
+        g.shadowColor = color;
+        g.shadowBlur = 12;
+        if (extras.wings) {
+          g.fillStyle = `${color}66`;
+          g.beginPath();
+          g.moveTo(torsoX, torsoY + torsoH * 0.15);
+          g.lineTo(torsoX - w * 0.34, torsoY + torsoH * 0.44);
+          g.lineTo(torsoX - w * 0.1, torsoY + torsoH * 0.86);
+          g.closePath();
+          g.fill();
+          g.beginPath();
+          g.moveTo(torsoX + torsoW, torsoY + torsoH * 0.15);
+          g.lineTo(torsoX + torsoW + w * 0.34, torsoY + torsoH * 0.44);
+          g.lineTo(torsoX + torsoW + w * 0.1, torsoY + torsoH * 0.86);
+          g.closePath();
+          g.fill();
+        }
+        g.fillStyle = color;
+        g.fillRect(headX, headY, head, head);
+        g.fillRect(torsoX, torsoY, torsoW, torsoH);
+        g.fillStyle = accent;
+        g.fillRect(torsoX - limbW, torsoY + h * 0.03, limbW, armH);
+        g.fillRect(torsoX + torsoW, torsoY + h * 0.03, limbW, armH);
+        g.fillRect(torsoX + torsoW * 0.18, torsoY + torsoH, limbW, legH);
+        g.fillRect(torsoX + torsoW * 0.68, torsoY + torsoH, limbW, legH);
+        g.fillStyle = "rgba(7,14,24,0.58)";
+        g.fillRect(headX + head * 0.18, headY + head * 0.28, head * 0.64, head * 0.2);
+        g.restore();
+      }
+
+      function renderHowGuide() {
+        const cards = [...dom.howMenu.querySelectorAll(".level-card")];
+        if (cards.length < 10) return;
+        const dark = state.theme !== "light";
+        const bg = dark ? "#091521" : "#e9f4fa";
+
+        const ensureCanvas = (card, id) => {
+          let canvas = card.querySelector("canvas.guide-preview");
+          if (!canvas) {
+            canvas = document.createElement("canvas");
+            canvas.width = 220;
+            canvas.height = 82;
+            canvas.className = "guide-preview";
+            canvas.style.cssText = "display:block;width:100%;height:82px;margin-bottom:10px;border:1px solid var(--border);background:transparent;";
+            const first = card.firstElementChild;
+            if (first) first.replaceWith(canvas);
+            else card.prepend(canvas);
+          }
+          canvas.dataset.guideId = id;
+          return canvas;
+        };
+
+        const drawBase = (g, accentA, accentB) => {
+          g.clearRect(0, 0, 220, 82);
+          const grad = g.createLinearGradient(0, 0, 0, 82);
+          grad.addColorStop(0, accentA);
+          grad.addColorStop(1, bg);
+          g.fillStyle = grad;
+          g.fillRect(0, 0, 220, 82);
+          g.strokeStyle = accentB;
+          g.globalAlpha = 0.12;
+          for (let x = 12; x < 220; x += 26) g.strokeRect(x, 8, 12, 66);
+          g.globalAlpha = 1;
+        };
+
+        const drawFns = [
+          (g) => {
+            drawBase(g, "rgba(75,231,255,0.14)", "rgba(75,231,255,0.18)");
+            miniBevel(g, 10, 56, 70, 12, "rgba(16,33,51,0.95)", COLORS.cyanSoft, "rgba(75,231,255,0.35)");
+            miniEntity(g, 22, 16, 24, 50, COLORS.cyan, COLORS.white);
+            miniEntity(g, 62, 16, 24, 50, COLORS.pink, COLORS.white);
+          },
+          (g) => {
+            drawBase(g, "rgba(255,75,216,0.14)", "rgba(255,75,216,0.18)");
+            miniBevel(g, 18, 56, 42, 10, "rgba(12,24,34,0.9)", COLORS.cyanSoft, "rgba(90,184,255,0.28)");
+            miniBevel(g, 20, 48, 38, 12, "rgba(131,221,115,0.72)", COLORS.green, "rgba(73,150,63,0.95)");
+            miniBevel(g, 146, 8, 30, 66, "rgba(8,18,28,0.5)", COLORS.pink, "rgba(255,122,223,0.2)");
+            miniBevel(g, 150, -6, 22, 72, "rgba(72,20,74,0.86)", COLORS.pink, "rgba(255,122,223,0.9)");
+          },
+          (g) => {
+            drawBase(g, "rgba(255,139,85,0.14)", "rgba(255,139,85,0.18)");
+            miniBevel(g, 18, 18, 18, 46, "rgba(78,18,30,0.55)", COLORS.red, "rgba(176,74,88,0.95)");
+            g.fillStyle = "rgba(255,200,210,0.75)";
+            g.fillRect(24, 18, 6, 46);
+            miniBevel(g, 130, 56, 56, 12, "rgba(82,48,28,0.86)", COLORS.orange, "rgba(173,104,57,0.95)");
+            g.fillStyle = "rgba(255,215,185,0.5)";
+            for (let tx = 134; tx < 178; tx += 12) {
+              g.beginPath();
+              g.moveTo(tx, 68);
+              g.lineTo(tx + 5, 56);
+              g.lineTo(tx + 10, 68);
+              g.fill();
+            }
+          },
+          (g) => {
+            drawBase(g, "rgba(159,113,255,0.14)", "rgba(159,113,255,0.18)");
+            g.save();
+            g.strokeStyle = "rgba(159,113,255,0.95)";
+            g.lineWidth = 3;
+            g.shadowColor = COLORS.violet;
+            g.shadowBlur = 14;
+            g.strokeRect(20, 16, 22, 48);
+            g.shadowBlur = 0;
+            g.strokeStyle = "rgba(75,231,255,0.85)";
+            g.strokeRect(24, 20, 14, 40);
+            g.fillStyle = "rgba(159,113,255,0.12)";
+            g.fillRect(23, 19, 16, 42);
+            g.strokeStyle = "rgba(255,118,80,0.96)";
+            g.shadowColor = COLORS.orange;
+            g.shadowBlur = 14;
+            g.strokeRect(148, 16, 22, 48);
+            g.shadowBlur = 0;
+            g.strokeStyle = "rgba(255,220,135,0.9)";
+            g.strokeRect(152, 20, 14, 40);
+            g.fillStyle = "rgba(255,118,80,0.14)";
+            g.fillRect(151, 19, 16, 42);
+            g.fillStyle = "rgba(255,245,200,0.8)";
+            g.font = "bold 14px Courier New";
+            g.fillText("?", 156, 46);
+            g.restore();
+          },
+          (g) => {
+            drawBase(g, "rgba(80,170,255,0.14)", "rgba(80,170,255,0.18)");
+            g.fillStyle = "rgba(70,170,255,0.18)";
+            g.fillRect(10, 24, 92, 42);
+            g.strokeStyle = "rgba(135,220,255,0.42)";
+            g.strokeRect(10, 24, 92, 42);
+            for (let i = 0; i < 3; i += 1) {
+              const oy = 36 + i * 10;
+              g.strokeStyle = "rgba(210,245,255,0.25)";
+              g.beginPath();
+              g.moveTo(16, oy);
+              g.lineTo(96, oy + (i % 2 ? -3 : 3));
+              g.stroke();
+            }
+            g.fillStyle = "rgba(255,105,210,0.08)";
+            g.fillRect(134, 14, 56, 52);
+            g.strokeStyle = "rgba(255,105,210,0.5)";
+            g.strokeRect(134, 14, 56, 52);
+            g.fillStyle = "rgba(255,255,255,0.6)";
+            for (let i = 0; i < 3; i += 1) {
+              const px = 148 + i * 14;
+              const py = 42 + (i % 2 ? -3 : 3);
+              g.beginPath();
+              g.moveTo(px, py);
+              g.lineTo(px + 6, py - 10);
+              g.lineTo(px - 6, py - 10);
+              g.closePath();
+              g.fill();
+            }
+          },
+          (g) => {
+            drawBase(g, "rgba(200,170,255,0.14)", "rgba(200,170,255,0.18)");
+            miniBevel(g, 18, 16, 28, 50, "rgba(120,58,255,0.4)", COLORS.violet, "rgba(210,180,255,0.9)");
+            g.fillStyle = "rgba(255,255,255,0.18)";
+            for (let yy = 22; yy < 58; yy += 12) g.fillRect(21, yy, 22, 2);
+            miniBevel(g, 120, 48, 58, 12, "rgba(120,156,176,0.55)", COLORS.white, "rgba(225,245,255,0.7)");
+            g.strokeStyle = "rgba(70,34,18,0.55)";
+            g.beginPath();
+            g.moveTo(130, 52);
+            g.lineTo(146, 60);
+            g.lineTo(162, 50);
+            g.lineTo(173, 58);
+            g.stroke();
+          },
+          (g) => {
+            drawBase(g, "rgba(75,231,255,0.14)", "rgba(75,231,255,0.18)");
+            miniBevel(g, 20, 34, 164, 16, "rgba(36,82,92,0.32)", COLORS.cyan, "rgba(140,240,255,0.58)");
+            g.strokeStyle = "rgba(220,255,255,0.85)";
+            g.lineWidth = 2;
+            g.beginPath();
+            g.moveTo(28, 42);
+            g.lineTo(176, 42);
+            g.stroke();
+            miniEntity(g, 88, 14, 22, 44, COLORS.cyan, COLORS.white);
+          },
+          (g) => {
+            drawBase(g, "rgba(255,91,115,0.14)", "rgba(255,91,115,0.18)");
+            miniEntity(g, 132, 12, 28, 54, COLORS.violet, COLORS.white);
+            miniBevel(g, 32, 18, 22, 22, "rgba(78,48,28,0.88)", COLORS.orange, "rgba(255,178,125,0.92)");
+            g.fillStyle = COLORS.white;
+            g.fillRect(44, 27, 8, 4);
+            g.beginPath();
+            g.arc(48, 56, 4, 0, Math.PI * 2);
+            g.fillStyle = COLORS.red;
+            g.fill();
+          },
+          (g) => {
+            drawBase(g, "rgba(141,255,118,0.14)", "rgba(141,255,118,0.18)");
+            miniBevel(g, 26, 14, 18, 52, "rgba(16,33,51,0.95)", "rgba(141,255,118,0.35)", "rgba(141,255,118,0.55)");
+            miniEntity(g, 64, 16, 24, 48, COLORS.cyan, COLORS.white);
+            g.strokeStyle = "rgba(141,255,118,0.95)";
+            g.lineWidth = 3;
+            g.beginPath();
+            g.moveTo(60, 40);
+            g.lineTo(48, 30);
+            g.stroke();
+          },
+          (g) => {
+            drawBase(g, "rgba(255,75,216,0.16)", "rgba(255,75,216,0.2)");
+            miniEntity(g, 96, 12, 24, 48, COLORS.cyan, COLORS.white);
+            miniEntity(g, 24, 8, 30, 56, COLORS.pink, COLORS.orange, { wings: true });
+            g.fillStyle = "#ffd95e";
+            g.beginPath();
+            g.moveTo(40, 4);
+            g.lineTo(48, 10);
+            g.lineTo(45, 18);
+            g.lineTo(35, 18);
+            g.lineTo(32, 10);
+            g.closePath();
+            g.fill();
+            g.fillStyle = "rgba(255,139,85,0.95)";
+            g.beginPath();
+            g.arc(108, 8, 4, 0, Math.PI * 2);
+            g.fill();
+          }
+        ];
+
+        cards.slice(0, drawFns.length).forEach((card, index) => {
+          const canvas = ensureCanvas(card, `guide-${index}`);
+          const g = canvas.getContext("2d");
+          drawFns[index](g);
+        });
       }
 
       function loadLevelState(levelData, index = -1, customLevel = null) {
@@ -2221,6 +2901,23 @@
           teleportCooldown: b.teleportEvery || 3.5,
           attackCooldown: 0
         }));
+        state.boss = state.level.boss ? {
+          ...state.level.boss,
+          x: state.level.boss.x,
+          y: state.level.boss.y,
+          y0: state.level.boss.y,
+          baseY: state.level.boss.y,
+          vx: 0,
+          vy: 0,
+          dir: -1,
+          hp: state.level.boss.hp || 320,
+          maxHp: state.level.boss.hp || 320,
+          shootCooldown: state.level.boss.shootEvery || 2.2,
+          placeCooldown: state.level.boss.placeEvery || 3.1,
+          jumpCooldown: 0.9,
+          hitCooldown: 0,
+          dead: false
+        } : null;
         state.placedBlocks = [];
         state.particles = [];
         state.bullets = [];
@@ -2232,6 +2929,7 @@
         state.rewindMeter = 1;
         state.rewinding = false;
         state.rewindVisual = 0;
+        state.deathTimer = 0;
         state.camera.x = Math.max(0, state.player.x - 140);
         state.camera.y = Math.max(0, state.player.y - 110);
         state.camera.zoom = innerWidth < 900 ? 1.9 : 2.3;
@@ -2381,17 +3079,22 @@
           } else {
             owned = hasBoost(item.key);
           }
+          const isP2Classic = type === "skin" && slot === "p2" && item.key === "classic";
+          const isP2ForestClassic = type === "skin" && slot === "p2" && item.key === "forest";
+          const previewTint = isP2ForestClassic ? COLORS.cyan : (item.tint || (isP2Classic ? COLORS.green : "#4be7ff"));
+          const previewAccent = isP2ForestClassic ? "#ecfbff" : (item.accent || (isP2Classic ? "#d8ffd1" : "#ecfbff"));
+          const previewVisor = isP2ForestClassic ? "#ffffff" : (item.visor || "#ffffff");
 
           const preview = type === "skin"
             ? `<div class="shop-preview skin">
-                <div class="shop-stick" style="--eye:${item.visor || "#ffffff"}; filter: drop-shadow(0 0 ${Math.round(10 * (item.glow || 1))}px ${item.tint || "#4be7ff"}55);">
+                <div class="shop-stick" style="--eye:${previewVisor}; filter: drop-shadow(0 0 ${Math.round(10 * (item.glow || 1))}px ${previewTint}55);">
                   ${skinPreviewExtras(item)}
-                  <div class="head" style="background:${item.tint || "#4be7ff"}"></div>
-                  <div class="body" style="background:${item.tint || "#4be7ff"}"></div>
-                  <div class="arm left" style="background:${item.accent || "#ecfbff"}"></div>
-                  <div class="arm right" style="background:${item.accent || "#ecfbff"}"></div>
-                  <div class="leg left" style="background:${item.accent || "#ecfbff"}"></div>
-                  <div class="leg right" style="background:${item.accent || "#ecfbff"}"></div>
+                  <div class="head" style="background:${previewTint}"></div>
+                  <div class="body" style="background:${previewTint}"></div>
+                  <div class="arm left" style="background:${previewAccent}"></div>
+                  <div class="arm right" style="background:${previewAccent}"></div>
+                  <div class="leg left" style="background:${previewAccent}"></div>
+                  <div class="leg right" style="background:${previewAccent}"></div>
                   <div class="eyes"></div>
                 </div>
               </div>`
@@ -2488,6 +3191,7 @@
         state.clones = [];
         state.drones = (state.level.drones || []).map((d) => ({ ...d, x: d.x1, dir: 1, baseY: d.y, yOffset: Math.random() * Math.PI * 2, shootCooldown: 6 }));
         state.chronoBots = (state.level.chronoBots || []).map((b) => ({ ...b, x: b.x1, y: b.y, dir: 1, baseY: b.y, teleportCooldown: b.teleportEvery || 3.5, attackCooldown: 0 }));
+        state.boss = null;
         state.bullets = [];
         state.placedBlocks = [];
         state.camera.x = state.editor.cameraX;
@@ -2748,15 +3452,25 @@
         for (const rect of solidRects()) {
           if (!rectsIntersect(entityRect(entity), rect)) continue;
           if (axis === "x") {
+            const side = entity.vx > 0 ? 1 : entity.vx < 0 ? -1 : 0;
             if (entity.vx > 0) entity.x = rect.x - entity.w;
             else if (entity.vx < 0) entity.x = rect.x + rect.w;
             entity.vx = 0;
+            if (!entity.onGround && side) {
+              entity.wallSide = side;
+              entity.wallCoyote = 0.18;
+              if (entity.gravityDir > 0 && entity.vy > 80) entity.vy = 80;
+              if (entity.gravityDir < 0 && entity.vy < -80) entity.vy = -80;
+            }
           } else {
             if (entity.gravityDir >= 0) {
               if (entity.vy > 0) {
                 entity.y = rect.y - entity.h;
                 entity.vy = 0;
                 entity.onGround = true;
+                entity.wallCoyote = 0;
+                entity.wallSide = 0;
+                entity.wallKickTimer = 0;
               } else if (entity.vy < 0) {
                 entity.y = rect.y + rect.h;
                 entity.vy = 0;
@@ -2765,6 +3479,9 @@
               entity.y = rect.y + rect.h;
               entity.vy = 0;
               entity.onGround = true;
+              entity.wallCoyote = 0;
+              entity.wallSide = 0;
+              entity.wallKickTimer = 0;
             } else if (entity.vy > 0) {
               entity.y = rect.y - entity.h;
               entity.vy = 0;
@@ -2782,6 +3499,8 @@
         p.portalCooldown = Math.max(0, p.portalCooldown - delta);
         p.waterTimer = Math.max(0, p.waterTimer - delta);
         p.magRailTimer = Math.max(0, p.magRailTimer - delta);
+        p.wallCoyote = Math.max(0, p.wallCoyote - delta);
+        p.wallKickTimer = Math.max(0, p.wallKickTimer - delta);
         p.coyote = p.onGround ? 0.16 : Math.max(0, p.coyote - delta * slowScale);
         p.jumpBuffer = controls.jumpPressed ? 0.18 : Math.max(0, p.jumpBuffer - delta * slowScale);
         p.dashTimer = Math.max(0, p.dashTimer - delta);
@@ -2791,6 +3510,8 @@
         if (p.onGround) {
           p.dashCharges = p.maxDashCharges || 3;
           p.dashJumpWindow = 0;
+          p.wallCoyote = 0;
+          p.wallSide = 0;
         }
         if (wasDashing && p.dashTimer <= 0 && !p.onGround) p.dashJumpWindow = 0.12;
         const accel = 840 * slowScale * (hasBoost("overclock") ? 1.08 : 1);
@@ -2799,10 +3520,19 @@
         if (controls.right) { p.vx += accel * delta; p.face = 1; }
         if (!controls.left && !controls.right && p.onGround) p.vx *= 0.8;
         p.vx = clamp(p.vx, -maxSpeed, maxSpeed);
-        if (p.jumpBuffer > 0 && (p.onGround || p.coyote > 0 || p.dashJumpWindow > 0)) {
+        const wallJump = !p.onGround && p.coyote <= 0 && p.wallCoyote > 0;
+        if (p.jumpBuffer > 0 && (p.onGround || p.coyote > 0 || p.dashJumpWindow > 0 || wallJump)) {
           const dashJump = p.dashJumpWindow > 0 && !p.onGround && p.coyote <= 0;
-          p.vy = p.gravityDir * (dashJump ? -360 : -520);
-          if (dashJump) p.vx *= 0.45;
+          if (wallJump && !dashJump) {
+            p.vy = p.gravityDir * -500;
+            p.vx = -p.wallSide * 245;
+            p.face = -p.wallSide;
+            p.wallKickTimer = 0.24;
+            p.wallCoyote = 0;
+          } else {
+            p.vy = p.gravityDir * (dashJump ? -360 : -520);
+            if (dashJump) p.vx *= 0.45;
+          }
           p.onGround = false;
           p.coyote = 0;
           p.jumpBuffer = 0;
@@ -2885,6 +3615,7 @@
         state.rewindMeter = clamp(state.rewindMeter - (hasBoost("rewind") ? 0.2 : 0.28), 0, 1);
         state.rewinding = true;
         state.rewindVisual = 1;
+        state.deathTimer = 0;
         state.audio.rewind();
         state.camera.shake = 10;
         emitBurst(state.player.x + state.player.w / 2, state.player.y + state.player.h / 2, 22, COLORS.pink, 160);
@@ -2893,6 +3624,12 @@
 
       function updateDoorsAndSystems(delta) {
         const active = activeButtons();
+        for (let i = state.placedBlocks.length - 1; i >= 0; i -= 1) {
+          const block = state.placedBlocks[i];
+          if (block.ttl == null) continue;
+          block.ttl -= delta;
+          if (block.ttl <= 0) state.placedBlocks.splice(i, 1);
+        }
         state.level.lasers?.forEach((laser) => {
           const signal = active.has(laser.id);
           laser.on = laser.activeWhen ? signal : !signal;
@@ -3157,6 +3894,126 @@
         });
       }
 
+      function damageBoss(amount, sourcePlayer = null) {
+        if (!state.boss || state.boss.dead || (state.boss.hitCooldown || 0) > 0) return false;
+        state.boss.hp = clamp(state.boss.hp - amount, 0, state.boss.maxHp);
+        state.boss.hitCooldown = 0.22;
+        state.camera.shake = Math.max(state.camera.shake, 10);
+        emitBurst(state.boss.x + state.boss.w * 0.5, state.boss.y + state.boss.h * 0.45, 16, COLORS.pink, 150);
+        if (sourcePlayer) {
+          sourcePlayer.vx = sourcePlayer.face * -160;
+          sourcePlayer.vy = -240;
+        }
+        if (state.boss.hp <= 0) {
+          state.boss.dead = true;
+          state.boss.hp = 0;
+          emitBurst(state.boss.x + state.boss.w * 0.5, state.boss.y + state.boss.h * 0.5, 32, COLORS.violet, 220);
+          showTip("СиксСевен 67 побеждён", 1.6);
+        }
+        return true;
+      }
+
+      function updateBoss(delta) {
+        const boss = state.boss;
+        if (!boss || boss.dead) return;
+        const targets = [state.player, state.player2].filter((p) => p?.alive && !p.exited);
+        if (!targets.length) return;
+        const target = targets.reduce((best, candidate) => {
+          if (!best) return candidate;
+          const bestDist = Math.abs((best.x + best.w * 0.5) - (boss.x + boss.w * 0.5));
+          const candidateDist = Math.abs((candidate.x + candidate.w * 0.5) - (boss.x + boss.w * 0.5));
+          return candidateDist < bestDist ? candidate : best;
+        }, null);
+        const hpRatio = boss.maxHp > 0 ? boss.hp / boss.maxHp : 1;
+        boss.hitCooldown = Math.max(0, (boss.hitCooldown || 0) - delta);
+        boss.shootCooldown = (boss.shootCooldown ?? boss.shootEvery ?? 2.2) - delta;
+        boss.placeCooldown = (boss.placeCooldown ?? boss.placeEvery ?? 3.1) - delta;
+        boss.jumpCooldown = Math.max(0, (boss.jumpCooldown ?? 0) - delta);
+        boss.dir = target.x + target.w * 0.5 >= boss.x + boss.w * 0.5 ? 1 : -1;
+        const targetX = target.x + target.w * 0.5;
+        const bossCenterX = boss.x + boss.w * 0.5;
+        const enraged = hpRatio < 0.5;
+        const targetSpeed = Math.abs(targetX - bossCenterX) > 56 ? boss.dir * ((boss.speed || 110) + (enraged ? 24 : 0)) : 0;
+        boss.vx = lerp(boss.vx || 0, targetSpeed, 0.12);
+        boss.x = clamp(boss.x + boss.vx * delta, boss.x1 ?? 0, (boss.x2 ?? state.level.width) - boss.w);
+        boss.baseY = boss.baseY ?? boss.y;
+        boss.y = boss.baseY + Math.sin(state.time * (enraged ? 4.2 : 2.6)) * (enraged ? 7 : 4);
+
+        if (boss.jumpCooldown <= 0 && Math.abs(target.y - boss.y) > 70 && Math.abs(target.x - boss.x) < 240) {
+          boss.baseY = Math.max(80, boss.baseY - (enraged ? 60 : 40));
+          boss.jumpCooldown = enraged ? 1.05 : 1.6;
+        } else if (boss.baseY < (boss.y0 ?? boss.y)) {
+          boss.baseY = Math.min((boss.y0 ?? boss.y), boss.baseY + delta * (enraged ? 110 : 70));
+        }
+
+        if (boss.shootCooldown <= 0) {
+          const tx = target.x + target.w * 0.5;
+          const ty = target.y + target.h * 0.4;
+          const bx = boss.x + boss.w * 0.5;
+          const by = boss.y + boss.h * 0.38;
+          const baseAngle = Math.atan2(ty - by, tx - bx);
+          const pattern = enraged ? [-0.28, -0.12, 0, 0.12, 0.28] : [-0.18, 0, 0.18];
+          pattern.forEach((offset) => {
+            const angle = baseAngle + offset;
+            state.bullets.push({
+              x: bx,
+              y: by,
+              vx: Math.cos(angle) * (enraged ? 320 : 280),
+              vy: Math.sin(angle) * (enraged ? 320 : 280),
+              r: 4,
+              life: 4
+            });
+          });
+          boss.shootCooldown = (boss.shootEvery || 2.2) * (enraged ? 0.72 : 1);
+          state.audio.laser();
+        }
+
+        if (boss.placeCooldown <= 0) {
+          const placements = enraged ? [16, 52] : [26];
+          placements.forEach((forward) => {
+            const bx = Math.floor((target.x + target.face * forward) / 20) * 20;
+            const by = Math.floor((target.y + target.h + 6) / 20) * 20 - 20;
+            const bossBlock = { x: bx, y: by, w: 40, h: 20, bossOwned: true, ttl: enraged ? 6.6 : 5.6 };
+            const blocked = solidRects().some((r) => rectsIntersect(bossBlock, r)) ||
+              rectsIntersect(bossBlock, entityRect(state.player)) ||
+              (state.player2 && rectsIntersect(bossBlock, entityRect(state.player2)));
+            if (!blocked) {
+              state.placedBlocks.push(bossBlock);
+              emitBurst(bx + 20, by + 10, 10, COLORS.orange, 100);
+            }
+          });
+          if (enraged && Math.abs(targetX - bossCenterX) < 120) {
+            damagePlayer(target, 12, "boss");
+          }
+          boss.placeCooldown = (boss.placeEvery || 3.1) * (enraged ? 0.68 : 1);
+        }
+
+        const body = { x: boss.x, y: boss.y, w: boss.w, h: boss.h };
+        targets.forEach((p) => {
+          if (!rectsIntersect(body, entityRect(p))) return;
+          const stompHit =
+            p.vy > 120 &&
+            p.y + p.h * 0.72 < boss.y + 10 &&
+            p.x + p.w > boss.x + 6 &&
+            p.x < boss.x + boss.w - 6;
+          if (stompHit) {
+            damageBoss(54, p);
+            p.vy = -340;
+            p.onGround = false;
+            p.coyote = 0;
+            p.invuln = 0.18;
+            emitBurst(p.x + p.w * 0.5, boss.y + 6, 12, COLORS.orange, 130);
+          } else if (p.wallKickTimer > 0) {
+            damageBoss(42, p);
+            p.wallKickTimer = 0;
+            p.invuln = 0.12;
+          } else {
+            damagePlayer(p, 22, "boss");
+            p.vx = boss.dir * 120;
+          }
+        });
+      }
+
       function updateCamera(delta) {
         if (state.screen === "editor" && state.editor) {
           const panSpeed = 520 * delta;
@@ -3217,10 +4074,8 @@
         const victim = target || state.player;
         emitBurst(victim.x + victim.w / 2, victim.y + victim.h / 2, 20, COLORS.red, 140);
         state.camera.shake = 16;
-        setTimeout(() => {
-          if (state.levelIndex >= 0) resetLevel(state.levelIndex);
-          else if (state.customLevel) startCustomLevel(state.customLevel);
-        }, 800);
+        state.deathTimer = 0.8;
+        showTip("Нажми R, чтобы откатиться", 0.8);
       }
 
       function levelComplete() {
@@ -3249,6 +4104,20 @@
         state.runTime += delta;
         state.rewindMeter = clamp(state.rewindMeter + delta * 0.04, 0, 1);
         state.rewindVisual = Math.max(0, state.rewindVisual - delta * 1.6);
+        if (state.deathTimer > 0) {
+          state.deathTimer = Math.max(0, state.deathTimer - delta);
+          if (input.rewindPressed && state.recording.length >= 20 && state.rewindMeter > 0.05) {
+            rewindTime();
+            return;
+          }
+          updateParticles(delta);
+          updateCamera(delta);
+          if (state.deathTimer <= 0) {
+            if (state.levelIndex >= 0) resetLevel(state.levelIndex);
+            else if (state.customLevel) startCustomLevel(state.customLevel);
+          }
+          return;
+        }
         updateDoorsAndSystems(delta);
         updateAdvancedFields(delta);
         updatePlayer(delta, state.player, input.p1);
@@ -3258,6 +4127,7 @@
         updateTurrets(delta);
         updateDrones(delta);
         updateChronoBots(delta);
+        updateBoss(delta);
         updateHazards(delta);
         updateCoins();
         updateWaterAndPortals(delta);
@@ -3271,6 +4141,8 @@
         pushRecordFrame();
         const p1Exit = !state.player.exited && rectsIntersect(entityRect(state.player), state.level.exit);
         const p2Exit = state.player2 ? (!state.player2.exited && rectsIntersect(entityRect(state.player2), state.level.exit)) : true;
+        const bossGate = !state.boss || state.boss.dead;
+        if (!bossGate && (p1Exit || (state.player2 && p2Exit))) showTip("Сначала победи босса", 0.35);
         if (state.coopEnabled && state.player2) {
           if (p1Exit) {
             state.player.exited = true;
@@ -3281,12 +4153,12 @@
             emitBurst(state.player2.x + state.player2.w / 2, state.player2.y + state.player2.h / 2, 10, COLORS.green, 80);
           }
           if (state.coopExitMode === "either") {
-            if (state.player.exited || state.player2.exited) levelComplete();
+            if ((state.player.exited || state.player2.exited) && bossGate) levelComplete();
           } else if (state.player.exited && state.player2.exited) {
-            levelComplete();
+            if (bossGate) levelComplete();
           }
         } else {
-          if (p1Exit) levelComplete();
+          if (p1Exit && bossGate) levelComplete();
         }
         state.audio.musicTick(time);
       }
@@ -3297,12 +4169,15 @@
         dom.hudTime.textContent = `${state.runTime.toFixed(1)}с / ${state.clones.length}`;
         dom.hudHint.textContent = state.coopEnabled
           ? `${state.level.hint} | Игрок 1: стрелки + правый Shift + ПКМ блок | Игрок 2: W/A/D + левый Shift + ЛКМ блок | Финиш: ${state.coopExitMode === "both" ? "ждать обоих" : "достаточно одного"} | R общая перемотка`
-          : `${state.level.hint} | W/A/D движение, W/SPACE/↑ прыжок, Shift рывок, R перемотка, ЛКМ или ПКМ ставит блок`;
+          : `${state.level.hint} | W/A/D движение, W/SPACE/↑ прыжок, Shift рывок, R перемотка, ЛКМ или ПКМ ставит блок, прыжок у стены = отскок${state.boss && !state.boss.dead ? ", боссу урон прыжком сверху" : ""}`;
         const hp1 = Math.ceil((state.player.hp / state.player.maxHp) * 100);
         const hp2 = state.player2 ? Math.ceil((state.player2.hp / state.player2.maxHp) * 100) : 0;
-        dom.hudStats.textContent = state.coopEnabled
+        const baseStats = state.coopEnabled
           ? `HP ${hp1}-${hp2} / рывки ${state.player.dashCharges}-${state.player2?.dashCharges ?? 0} / блоки ${state.player.blocksLeft}-${state.player2?.blocksLeft ?? 0} / монеты ${state.runCoins} / ${Math.round(state.fps)} fps`
           : `HP ${hp1} / рывки ${state.player.dashCharges} / блоки ${state.player.blocksLeft} / монеты ${state.runCoins} / ${Math.round(state.fps)} fps`;
+        dom.hudStats.textContent = state.boss && !state.boss.dead
+          ? `${baseStats} / Босс ${Math.ceil(state.boss.hp)}/${state.boss.maxHp}`
+          : baseStats;
         const leadX = state.player2 ? Math.max(state.player.x, state.player2.x) : state.player.x;
         dom.progressFill.style.width = `${clamp((leadX / state.level.width) * 100, 0, 100)}%`;
         dom.rewindFill.style.width = `${state.rewindMeter * 100}%`;
@@ -3465,8 +4340,11 @@
 
         state.placedBlocks.forEach((b) => {
           const x = worldToScreenX(b.x), y = worldToScreenY(b.y);
-          drawGlowRect(x, y, b.w * state.camera.zoom, b.h * state.camera.zoom, COLORS.green, "rgba(131,221,115,0.18)");
-          ctx.strokeStyle = "rgba(73,150,63,0.95)";
+          const color = b.bossOwned ? COLORS.orange : COLORS.green;
+          const fill = b.bossOwned ? "rgba(255,139,85,0.18)" : "rgba(131,221,115,0.18)";
+          const stroke = b.bossOwned ? "rgba(173,104,57,0.95)" : "rgba(73,150,63,0.95)";
+          drawGlowRect(x, y, b.w * state.camera.zoom, b.h * state.camera.zoom, color, fill);
+          ctx.strokeStyle = stroke;
           ctx.strokeRect(x, y, b.w * state.camera.zoom, b.h * state.camera.zoom);
         });
 
@@ -3857,6 +4735,53 @@
         });
       }
 
+      function drawBoss() {
+        if (!state.boss || state.boss.dead) return;
+        const boss = state.boss;
+        const x = worldToScreenX(boss.x);
+        const bodyY = worldToScreenY(boss.y);
+        const w = boss.w * state.camera.zoom;
+        const h = boss.h * state.camera.zoom;
+        const y = bodyY - 18;
+        ctx.save();
+        const grad = ctx.createLinearGradient(x, bodyY, x + w, bodyY + h);
+        grad.addColorStop(0, "#ff8b55");
+        grad.addColorStop(0.45, "#ffd95e");
+        grad.addColorStop(1, "#ff4bd8");
+        ctx.fillStyle = grad;
+        ctx.font = `bold ${Math.max(28, Math.floor(h * 0.88))}px Courier New`;
+        ctx.textBaseline = "top";
+        ctx.fillText("67", x + 1, bodyY - 1);
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = "rgba(255,250,255,0.92)";
+        ctx.shadowColor = COLORS.orange;
+        ctx.shadowBlur = 12;
+        ctx.strokeText("67", x + 1, bodyY - 1);
+        ctx.shadowBlur = 0;
+        ctx.fillStyle = "rgba(255,255,255,0.92)";
+        ctx.fillRect(x + w * 0.56, bodyY + h * 0.26, 4, 4);
+        ctx.fillRect(x + w * 0.74, bodyY + h * 0.3, 4, 4);
+        ctx.fillStyle = "rgba(7,14,24,0.9)";
+        ctx.fillRect(x + w * 0.57, bodyY + h * 0.27, 1.5, 1.5);
+        ctx.fillRect(x + w * 0.75, bodyY + h * 0.31, 1.5, 1.5);
+        ctx.strokeStyle = "rgba(255,139,85,0.95)";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(x + w * 0.54, bodyY + h * 0.58);
+        ctx.lineTo(x + w * 0.78, bodyY + h * 0.64);
+        ctx.stroke();
+        ctx.restore();
+        ctx.fillStyle = "rgba(8,15,24,0.75)";
+        ctx.fillRect(x, y, w, 8);
+        ctx.fillStyle = COLORS.pink;
+        ctx.fillRect(x, y, w * (boss.hp / boss.maxHp), 8);
+        ctx.strokeStyle = "rgba(255,255,255,0.38)";
+        ctx.strokeRect(x, y, w, 8);
+        ctx.fillStyle = COLORS.white;
+        ctx.font = "12px Courier New";
+        ctx.fillText("СИКССЕВЕН 67", x, y - 6);
+      }
+
       function drawBullets() {
         state.bullets.forEach((b) => {
           ctx.shadowColor = COLORS.red;
@@ -3896,6 +4821,7 @@
         drawClones();
         drawDrones();
         drawChronoBots();
+        drawBoss();
         if (state.player.alive && !state.player.exited) drawEntity(state.player, state.player.slowTimer > 0 ? COLORS.orange : COLORS.cyan, 1, false);
         if (state.player2?.alive && !state.player2.exited) drawEntity(state.player2, state.player2.slowTimer > 0 ? COLORS.orange : COLORS.green, 1, false);
         drawBullets();
@@ -4052,7 +4978,7 @@
             if (state.coopEnabled) input.p2.dashPressed = true;
             else input.p1.dashPressed = true;
           }
-          if (event.code === "KeyR") input.rewindPressed = true;
+          if (event.code === "KeyR" || event.code === "Numpad0" || event.code === "Insert") input.rewindPressed = true;
           if (event.code === "Escape") {
             event.preventDefault();
             if (state.screen === "game") {
@@ -4128,6 +5054,14 @@
         bindTouch(dom.touchRewind, () => input.rewindPressed = true, () => {});
       }
 
+      function cleanupMenus() {
+        const settingsPanel = dom.settingsMenu?.querySelector(".panel");
+        if (settingsPanel) {
+          const cards = Array.from(settingsPanel.querySelectorAll(":scope > .card"));
+          cards.slice(3).forEach((card) => card.remove());
+        }
+      }
+
       function loop(ts) {
         const time = ts / 1000;
         if (!state.lastFrame) state.lastFrame = time;
@@ -4155,11 +5089,14 @@
       function init() {
         restoreBaseCampaign();
         addCampaignExtensionLevels();
-        trimCampaignLevels(65);
+        addWallJumpBossLevels();
+        trimCampaignLevels(70);
         applyTheme("dark");
         resize();
         bindUi();
+        cleanupMenus();
         loadMetaToMenu();
+        renderHowGuide();
         renderShop();
         renderLevelsMenu();
         showScreen("main");
